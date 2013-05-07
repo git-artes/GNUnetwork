@@ -1,0 +1,225 @@
+====
+==== mac_frcl.txt : a doctest file for module formats.
+====
+
+>>> import os
+>>> import mac_frcl
+>>> import mac_api
+>>> import mac_data
+
+>>> dc_frmobjs = mac_api.mkdcfrmobjs()
+
+
+===
+=== DATA
+===
+
+Set values for Data frame
+>>> mac_dc_fldvals = { \
+...     'frame_ctrl' : 0, \
+...     'duration'   : 23, \
+...     'address_1'  : 'addr_1', \
+...     'address_2'  : 'addr_2', \
+...     'address_3'  : 'addr_3', \
+...     'seq_ctrl'   : 0, \
+...     'qos'        : 0, \
+...     'ht'         : 0, \
+...     'address_4'  : 'addr_4', \
+...     'frame_body' : 'this is the frame body!', \
+...     'fcs'         : 0 }
+
+>>> data_fr = mac_data.DATAframe(mac_dc_fldvals)
+>>> data_fr.prt_dc_fields()
+frame_ctrl: bytes, no bitmask    0    2  False     !H
+  duration: bytes, no bitmask    2    4  False     !H
+ address_1: bytes, no bitmask    4   10  False    !6s
+ address_2: bytes, no bitmask   10   16  False    !6s
+ address_3: bytes, no bitmask   16   22  False    !6s
+  seq_ctrl: bytes, no bitmask   22   24  False     !H
+       qos: bytes, no bitmask   24   26  False     !H
+        ht: bytes, no bitmask   26   30  False     !I
+ address_4: bytes, no bitmask   30   36  False    !6s
+frame_body: frame_body, bytes   36   59  False   !23s
+       fcs: fcs, bytes          59   63  False     !I
+
+>>> data_fr.prt_dc_fldvals()
+frame_ctrl: 0
+  duration: 23
+ address_1: addr_1
+ address_2: addr_2
+ address_3: addr_3
+  seq_ctrl: 0
+       qos: 0
+        ht: 0
+ address_4: addr_4
+frame_body: this is the frame body!
+       fcs: 0
+
+>>> pkdata = data_fr.mkpkt()
+>>> pkdata, len(pkdata)
+('\x00\x00\x00\x17addr_1addr_2addr_3\x00\x00\x00\x00\x00\x00\x00\x00addr_4this is the frame body!\x00\x00\x00\x00', 63)
+
+>>> fr_fc = mac_frcl.FCframe()
+>>> fr_fc.setfctype('DATA')
+>>> pkt_fc = fr_fc.mkpkt()
+>>> pkt_fc, len(pkt_fc)
+('\x08\x00', 2)
+
+>>> pk_data = pkt_fc + pkdata[2:]
+>>> pk_data, len(pk_data)
+('\x08\x00\x00\x17addr_1addr_2addr_3\x00\x00\x00\x00\x00\x00\x00\x00addr_4this is the frame body!\x00\x00\x00\x00', 63)
+
+>>> f = open('aux/pk_data.bin', 'w'); f.write(pk_data); f.close()
+>>> os.system('cat aux/pk_data.bin | od -Ax -tx1 -v > ./aux/pk_data.hex')
+0
+
+A null data frame:
+>>> data_fr.updtfldvals( {'frame_body':''} )
+>>> nullpkdata = pkt_fc + data_fr.mkpkt()[2:]
+>>> nullpkdata, len(nullpkdata)
+('\x08\x00\x00\x17addr_1addr_2addr_3\x00\x00\x00\x00\x00\x00\x00\x00addr_4\x00\x00\x00\x00', 40)
+
+
+===
+=== Decode a data frame
+===
+
+Decode frame control field, first two bytes; determine type of packet
+>>> fc_dc_vals = fr_fc.mkdic(pk_data[:2])   # make dictionary for frame control
+>>> fr_fc.prt_dc_fldvals(fc_dc_vals)
+   ProtVer: 0
+      Type: 2
+   SubType: 0
+      ToDS: 0
+    FromDS: 0
+ MoreFrags: 0
+     Retry: 0
+   PwrMgmt: 0
+  MoreData: 0
+ Protected: 0
+     Order: 0
+
+>>> data_fr.dc_fldvals = {}    # empty values from data frame object
+>>> data_dc_fldvals = data_fr.mkdic('fc'+pkdata[2:])  # substitute frame_ctrl for something printable
+>>> data_fr.prt_dc_fldvals(data_dc_fldvals)
+frame_ctrl: 26211
+  duration: 23
+ address_1: addr_1
+ address_2: addr_2
+ address_3: addr_3
+  seq_ctrl: 0
+       qos: 0
+        ht: 0
+ address_4: addr_4
+frame_body: this is the frame body!
+       fcs: 0
+
+>>> dc_frmobjs['FC'].setfctype('DATA')
+>>> dc_frmobjs['FC'].mkpkt() + dc_frmobjs['DATA'].mkpkt()[2:]
+'\x08\x00\x00\x00dt-ad1dt-ad2dt-ad3\x00\x00\x00\x00\x00\x00\x00\x00dt-ad2\x00\x00\x00\x00'
+
+>>> dc_frmobjs['DATA'].updtfldvals( {'frame_body':'this is the frame body'} )
+>>> pk_data = dc_frmobjs['FC'].mkpkt() + dc_frmobjs['DATA'].mkpkt()[2:]
+>>> pk_data
+'\x08\x00\x00\x00dt-ad1dt-ad2dt-ad3\x00\x00\x00\x00\x00\x00\x00\x00dt-ad2this is the frame body\x00\x00\x00\x00'
+
+Change content in object before using to decode, to verify real decode
+>>> dc_frmobjs['DATA'].updtfldvals( {'frame_body':'this is the ALTERED frame body'} )
+>>> dc_data = dc_frmobjs['DATA'].mkdic(pk_data)
+>>> dc_frmobjs['DATA'].prt_dc_fldvals(dc_data)      # print external dictionary
+frame_ctrl: 2048
+  duration: 0
+ address_1: dt-ad1
+ address_2: dt-ad2
+ address_3: dt-ad3
+  seq_ctrl: 0
+       qos: 0
+        ht: 0
+ address_4: dt-ad2
+frame_body: this is the frame body
+       fcs: 0
+
+
+=== A complete encoding:
+=
+>>> pk_data2 = mac_api.mkfrpkt('DATA', dc_frmobjs, \
+...     fc_dc_fldvals={'ToDS':1, 'FromDS':1, 'Retry':1}, \
+...     fr_dc_fldvals={'frame_body':'a new frame body!', 'duration':3, 'fcs':55})
+>>> pk_data2
+'\x08\x0b\x00\x03dt-ad1dt-ad2dt-ad3\x00\x00\x00\x00\x00\x00\x00\x00dt-ad2a new frame body!\x00\x00\x007'
+
+
+===
+=== Frame decoding: unpacking and construction of FC and frame dictionaries
+===
+
+>>> fc_dic = dc_frmobjs['FC'].mkdic(pk_data2[:2])
+>>> dc_frmobjs['FC'].prt_dc_fldvals(fc_dic)
+   ProtVer: 0
+      Type: 2
+   SubType: 0
+      ToDS: 1
+    FromDS: 1
+ MoreFrags: 0
+     Retry: 1
+   PwrMgmt: 0
+  MoreData: 0
+ Protected: 0
+     Order: 0
+
+>>> dc_data2 = dc_frmobjs['DATA'].mkdic(pk_data2)
+>>> dc_frmobjs['DATA'].prt_dc_fldvals(dc_data2)      # print external dictionary
+frame_ctrl: 2059
+  duration: 3
+ address_1: dt-ad1
+ address_2: dt-ad2
+ address_3: dt-ad3
+  seq_ctrl: 0
+       qos: 0
+        ht: 0
+ address_4: dt-ad2
+frame_body: a new frame body!
+       fcs: 55
+
+
+=== A complete decoding:
+=
+>>> frmtype, fc_dic, fr_dic = mac_api.mkdics(pk_data2, dc_frmobjs)
+>>> frmtype
+'DATA'
+>>> dc_frmobjs['FC'].prt_dc_fldvals(fc_dic)
+   ProtVer: 0
+      Type: 2
+   SubType: 0
+      ToDS: 1
+    FromDS: 1
+ MoreFrags: 0
+     Retry: 1
+   PwrMgmt: 0
+  MoreData: 0
+ Protected: 0
+     Order: 0
+>>> dc_frmobjs[frmtype].prt_dc_fldvals(fr_dic)
+frame_ctrl: 2059
+  duration: 3
+ address_1: dt-ad1
+ address_2: dt-ad2
+ address_3: dt-ad3
+  seq_ctrl: 0
+       qos: 0
+        ht: 0
+ address_4: dt-ad2
+frame_body: a new frame body!
+       fcs: 55
+       
+>>> #type(pk_data2); pk_data2
+
+== Create files for wireshark reading
+
+>>> f= open('aux/pk_data.bin', 'w'); f.write(pk_data); f.close()
+>>> os.system('cat aux/pk_data.bin | od -Ax -tx1 -v > ./aux/pk_data.hex')
+0
+>>> f= open('aux/pk_data2.bin', 'w'); f.write(pk_data2); f.close()
+>>> os.system('cat aux/pk_data2.bin | od -Ax -tx1 -v > ./aux/pk_data2.hex')
+0
+

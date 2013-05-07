@@ -1,0 +1,62 @@
+>>> import struct
+
+>>> p1 = struct.pack('!ccc','\n','1','0')
+>>> p1
+'\n10'
+>>> struct.unpack('!ccc',p1)
+('\n', '1', '0')
+
+>>> p2 = struct.pack('!BBB', 1,2,255)
+>>> p3 = struct.pack('!3c','\n','1','0')
+>>> struct.unpack('!3c', p3)
+('\n', '1', '0')
+
+>>> rec = '11122333333'
+>>> struct.calcsize('!3c2c6c')
+11
+>>> fc, fld2, fld3 = struct.unpack('!3s2s6s',rec)
+>>> fc, fld2, fld3
+('111', '22', '333333')
+
+>>> from collections import namedtuple
+>>> st = namedtuple('st', 'fc, fld2, fld3')
+>>> st._make(struct.unpack('!3s2s6s', rec))
+st(fc='111', fld2='22', fld3='333333')
+
+>>> lsfields = ['frame_ctrl', 'duration', 'address_1', 'address_2', 'address_3','seq_ctrl', 'address_4', 'frame_body', 'cs']
+>>> lsfields
+['frame_ctrl', 'duration', 'address_1', 'address_2', 'address_3', 'seq_ctrl', 'address_4', 'frame_body', 'cs']
+
+>>> MacFrame = namedtuple('MacFrame', 'frame_ctrl, duration, address_1, address_2, address_3, seq_ctrl, address_4, frame_body, cs')
+>>> mf1 = MacFrame._make(['Fc','00','Addr01','Addr02','Addr03','01','Addr04','Hello World','0000'])
+>>> mf1
+MacFrame(frame_ctrl='Fc', duration='00', address_1='Addr01', address_2='Addr02', address_3='Addr03', seq_ctrl='01', address_4='Addr04', frame_body='Hello World', cs='0000')
+>>> for fld in mf1._fields:
+... 	print fld, 
+frame_ctrl duration address_1 address_2 address_3 seq_ctrl address_4 frame_body cs
+
+>>> getattr(mf1,'cs')
+'0000'
+
+>>> mf1pak = ''
+>>> for fld in mf1._fields:
+... 	mf1pak += getattr(mf1,fld)
+>>> mf1pak
+'Fc00Addr01Addr02Addr0301Addr04Hello World0000'
+
+>>> pk1 = struct.pack(str(len(mf1pak))+"s", mf1pak)
+>>> pk1
+'Fc00Addr01Addr02Addr0301Addr04Hello World0000'
+
+>>> struct.calcsize('2s2s6s6s6s2s6s11s4s')
+45
+>>> len(mf1pak)
+45
+>>> p2 = MacFrame._make(struct.unpack('2s2s6s6s6s2s6s11s4s', mf1pak))
+>>> p2
+MacFrame(frame_ctrl='Fc', duration='00', address_1='Addr01', address_2='Addr02', address_3='Addr03', seq_ctrl='01', address_4='Addr04', frame_body='Hello World', cs='0000')
+
+
+
+
+

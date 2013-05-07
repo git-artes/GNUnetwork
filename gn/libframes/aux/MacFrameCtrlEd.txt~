@@ -1,0 +1,69 @@
+# Byte 1
+# Protocol version 00, type, subtype 
+00000000 00 Management 0000 Association request
+00001000 00 Management 0001 Association response
+00000100 00 Management 0010 Reassociation request
+00001100 00 Management 0011 Reassociation response
+00000010 00 Management 0100 Probe request
+00001010 00 Management 0101 Probe response
+00000110 00 Management 0110 Reserved
+00001110 00 Management 0111 Reserved
+00000001 00 Management 1000 Beacon
+00001001 00 Management 1001 Announcement traffic indication frame (ATIM)
+00000101 00 Management 1010 Disassociation
+00001101 00 Management 1011 Authentication
+00000011 00 Management 1100 Deauthentication
+00001011 00 Management 1101 Reserved
+00000111 00 Management 1110 Reserved
+00001111 00 Management 1111 Reserved
+00100101 01 Control    1010 PS-Poll
+00101101 01 Control    1011 RTS
+00100011 01 Control    1100 CTS
+00101011 01 Control    1101 Acknowledgment (ACK)
+00100111 01 Control    1110 CF-End
+00101111 01 Control    1111 CF-End+CF-Ack
+00100000 10 Data       0000 Data
+00101000 10 Data       0001 Data+CF-Ack
+00100100 10 Data       0010 Data+CF-Poll
+00101100 10 Data       0011 Data+CF-Ack+CF-Poll
+00100010 10 Data       0100 Null function (no data)
+00101010 10 Data       0101 CF-Ack (no data)
+00100110 10 Data       0110 CF-Poll (no data)
+00101110 10 Data       0111 CF-Ack+CF-Poll (no data)
+00100001 10 Data       1000 Reserved
+00101001 10 Data       1001 Reserved
+00100101 10 Data       1010 Reserved
+00101101 10 Data       1011 Reserved
+00100011 10 Data       1100 Reserved
+00101011 10 Data       1101 Reserved
+00100111 10 Data       1110 Reserved
+00101111 10 Data       1111 Reserved
+00110000 11 Reserved   0000 Reserved
+00111000 11 Reserved   0001 Reserved
+00110100 11 Reserved   0010 Reserved
+00111100 11 Reserved   0011 Reserved
+00110010 11 Reserved   0100 Reserved
+00111010 11 Reserved   0101 Reserved
+00110110 11 Reserved   0110 Reserved
+00111110 11 Reserved   0111 Reserved
+00110001 11 Reserved   1000 Reserved
+00111001 11 Reserved   1001 Reserved
+00110101 11 Reserved   1010 Reserved
+00111101 11 Reserved   1011 Reserved
+00110011 11 Reserved   1100 Reserved
+00111011 11 Reserved   1101 Reserved
+00110111 11 Reserved   1110 Reserved
+00111111 11 Reserved   1111 Reserved
+
+# Byte 2
+00000001 10000000           ToDS
+00000010 01000000           FromDS
+00000100 00100000           MoreFrags
+00001000 00010000           Retry
+00010000 00001000           PowerMgmt
+00100000 00000100           MoreData
+01000000 00000010           WEP
+10000000 00000001           Order
+
+
+

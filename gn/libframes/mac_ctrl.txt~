@@ -1,0 +1,92 @@
+====
+==== mac_frcl.txt : a doctest file for module formats.
+====
+
+>>> import os
+>>> import mac_frcl
+>>> import mac_ctrl
+>>> import mac_api
+>>> import frames
+
+
+===
+=== RTS
+===
+>>> mac_dc_fldvals = { \
+...     #'frame_ctrl' : 0, \  # if set may alter frame type!
+...     'duration'   : 23, \
+...     'ra'         : 'rxaddr', \
+...     'ta'         : 'txaddr', \
+...     'fcs'         : 0 }
+>>> rts_fr = mac_ctrl.RTSframe(mac_dc_fldvals)
+>>> rts_fr.prt_dc_fields()
+frame_ctrl: bytes, no bitmask    0    2  False     !H
+  duration: bytes, no bitmask    2    4  False     !H
+        ra: bytes, no bitmask    4   10  False    !6s
+        ta: bytes, no bitmask   10   16  False    !6s
+       fcs: bytes, no bitmask   16   20  False     !I
+>>> rts_fr.prt_dc_fldvals()
+frame_ctrl: 46080
+  duration: 23
+        ra: rxaddr
+        ta: txaddr
+       fcs: 0
+>>> pkrts = rts_fr.mkpkt()
+>>> pkrts, len(pkrts)
+('\xb4\x00\x00\x17rxaddrtxaddr\x00\x00\x00\x00', 20)
+
+===
+=== Change field values, except frame control
+===
+>>> rts_fr.updtfldvals({'duration':111, 'ra':'rx1111', 'ta':'tx1111'})
+>>> rts_fr.prt_dc_fldvals()
+frame_ctrl: 46080
+  duration: 111
+        ra: rx1111
+        ta: tx1111
+       fcs: 0
+
+===
+=== unpack into dictionary
+===
+>>> pkrts2 = rts_fr.mkpkt()
+>>> #dc_fldvals = rts_fr.mkdic(pkrts2)
+>>> dc_fldvals = frames.Frame.mkdic(pkrts2)
+>>> dc_fldvals
+{'duration': 111, 'ta': 'tx1111', 'ra': 'rx1111', 'fcs': 0, 'frame_ctrl': 46080}
+
+
+
+===
+=== Frame coding: frame construction and packing
+===
+
+>>> ob_rts = mac_ctrl.RTSframe()
+>>> pk_rts = ob_rts.mkpkt()
+>>> pk_rts
+'\xb4\x00\x00\x00ra-rtsta-rts\x00\x00\x00\x00'
+
+>>> ob_cts = mac_ctrl.CTSframe()
+>>> pk_cts = ob_cts.mkpkt()
+>>> pk_cts
+'\xc4\x00\x00\x00ra-cts\x00\x00\x00\x00'
+
+>>> ob_ack = mac_ctrl.ACKframe()
+>>> pk_ack = ob_ack.mkpkt()
+>>> pk_ack
+'\xd4\x00\x00\x00ra-ack\x00\x00\x00\x00'
+
+== Create files for wireshark reading
+
+>>> ob_rts.mkhexfl('aux/pk_rts')
+0
+>>> ob_cts.mkhexfl('aux/pk_cts')
+0
+>>> ob_ack.mkhexfl('aux/pk_ack')
+0
+>>> os.system('cat aux/pk_???.hex > aux/pk_ctrl.hex')
+0
+>>> os.system('rm aux/pk_???.*')
+0
+
+

@@ -68,7 +68,7 @@ Create a frame packet
 
 Create an event from this frame packet
 >>> evx = events.EventFrame(frmpkt=pk_rts)
->>> evx.fr_type, evx.fr_subtype
+>>> evx.ev_type, evx.ev_subtype
 ('Ctrl', 'RTS')
 
 Show dictionary of field values for frame in event frame

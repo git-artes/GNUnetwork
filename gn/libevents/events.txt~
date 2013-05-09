@@ -72,8 +72,12 @@ Create an event from this frame packet
 ('Ctrl', 'RTS')
 
 Show dictionary of field values for frame in event frame
+
+Field Control fields and values:
 >>> evx.fc_dic
 {'ToDS': 1, 'Retry': 1, 'ProtVer': 0, 'Order': 0, 'SubType': 11, 'Protected': 0, 'PwrMgmt': 0, 'FromDS': 1, 'MoreFrags': 0, 'Type': 1, 'MoreData': 0}
+
+MAC frame fields:
 >>> evx.fr_dic
 {'duration': 0, 'ta': 'rts-ta', 'ra': 'rts-ra', 'fcs': 55, 'frame_ctrl': 46091}
 

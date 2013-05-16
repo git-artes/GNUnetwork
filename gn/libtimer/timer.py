@@ -40,11 +40,14 @@ class Timer(threading.Thread):
         self.subTypeEvent2=subTypeEvent2
         self.add_info = add_info
         self.q_event = q_event
+        self.finished = False
         
     def run(self):
         """ This is the private thread that generates ."""
         for i in range(self.retry):    
             time.sleep(self.interval)
+            if self.finished:
+                return
             self.tout1()
         if self.subTypeEvent2 is not None:
             self.tout2()                
@@ -56,6 +59,11 @@ class Timer(threading.Thread):
             event= events.EventTimer("Timer",self.subTypeEvent2,self.add_info)
             self.q_event.put(event,False)    
                 
+    def stop(self):
+            print "STOP CALLED"
+            self.finished = True
+            print "SET DONE"
+            self._Thread__stop()
 
 def test():
     myQueue=Queue.Queue(10)
@@ -67,6 +75,15 @@ def test():
         aux = event.ev_subtype
         print " LLEGO EVENTO ", event.ev_subtype, " ", int(round(time.time() * 1000)) 
    
+    myTimer = Timer(myQueue,0.5,10,"TOR1",None,"TOR2")
+    myTimer.start()
+    aux= 0
+    while aux  < 3:
+        event= myQueue.get()
+        print " LLEGO EVENTO ", event.ev_subtype, " ", int(round(time.time() * 1000)) 
+        aux += 1
+    myTimer.stop()
+
     
 
 if __name__ == '__main__':

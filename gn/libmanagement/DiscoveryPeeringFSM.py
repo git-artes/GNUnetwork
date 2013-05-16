@@ -6,7 +6,7 @@ Created on Tue May  7 12:42:54 2013
 """
 import sys
 sys.path +=['..']
-import Queue,time
+import Queue,time,threading
 import libfsm.fsm as fsm
 import libevents.events as events
 import libtimer.timer as Timer
@@ -44,8 +44,9 @@ class DiscoveryPeeringFSM() :
         self.fsm.add_transition      ('ACTOPN',                 'IDLE',            self.sndOPNsetR,          'OPN_SNT')
         self.fsm.add_transition      ('OPN_ACPT',               'IDLE',            self.sndCNFsetR,          'OPN_RCVD')
     
-        "------------------ Transitions from OPN_SNT -----------------------------------------------------------"        
-        self.fsm.add_transition      ('TOR1',                   'OPN_SNT',         self.sndOPNsetR,          'OPN_SNT')
+        "------------------ Transitions from OPN_SNT -----------------------------------------------------------"     
+        "--- remark: when arrives TOR1 and the state is OPN_SNT I will not setR as in the standar because is considered in the implementation of the Timer" 
+        self.fsm.add_transition      ('TOR1',                   'OPN_SNT',         self.sndOPN,          'OPN_SNT') 
         self.fsm.add_transition      ('CNF_ACPT',               'OPN_SNT',         self.clRsetC,             'CNF_RCVD')
         self.fsm.add_transition      ('OPN_ACPT',               'OPN_SNT',         self.sndCNF,              'OPN_RCVD')
         self.fsm.add_transition_list      (['CLS_ACPT', 'OPN_RJCT', 'CNF_RJCT', 'TOR2', 'CNCL'],   'OPN_SNT',      self.sndCLSclRsetH,   'HOLDING')
@@ -56,8 +57,10 @@ class DiscoveryPeeringFSM() :
         self.fsm.add_transition      ('TOC',   'CNF_RCVD',    self.sndCLSsetH,   'HOLDING')
     
         "------------------ Transitions from OPN_RCVD -----------------------------------------------------------"      
+        "--- remark: when arrives TOR1 and the state is OPN_RCVD we will not call setR as in the standar because is not necesseray with our  implementation of the Timer class" 
+
         self.fsm.add_transition      ('OPN_ACPT',               'OPN_RCVD',         self.sndCNF,              'OPN_RCVD')
-        self.fsm.add_transition      ('TOR1',                   'OPN_RCVD',         self.sndOPNsetR,          'OPN_RCVD')
+        self.fsm.add_transition      ('TOR1',                   'OPN_RCVD',         self.sndOPN,          'OPN_RCVD')
         self.fsm.add_transition      ('CNF_ACPT',               'OPN_RCVD',         self.clR,                 'ESTAB')
         self.fsm.add_transition_list      (['CLS_ACPT', 'OPN_RJCT', 'CNF_RJCT', 'TOR2', 'CNCL'],   'OPN_RCVD',      self.sndCLSclRsetH,   'HOLDING')    
         
@@ -102,6 +105,8 @@ class DiscoveryPeeringFSM() :
  
     def clR(self,fsm):
        self.timerRetry.stop()
+       print "STOP"
+      
 
     def clC(self,fsm):
        self.timerConfirm.stop()
@@ -147,15 +152,170 @@ def test():
     tx_event_q=Queue.Queue(10)
     event_q=Queue.Queue(10)
     net_conf1 = NetworkConfiguration.NetworkConfiguration(100,'my network',256,1)
+    net_conf1.retry_timeout = 5
     mydpfsm = DiscoveryPeeringFSM(127, net_conf1,tx_event_q,event_q)
-    mydpfsm.fsm.process("ACTOPN")    
-    event=tx_event_q.get()        
-    print " event transmited ", event.ev_subtype, " ", int(round(time.time() * 1000)) 
-    print "Nuevo Estado: ", mydpfsm.fsm.current_state        
-    event= event_q.get()
-    print " event arrives at the fsm controller ", event.ev_subtype, " ",event.add_info, int(round(time.time() * 1000))    
+    read_tx = ReadQueueTxEmulator(tx_event_q)
+    read_tx.start()
+    read_ev_q = ControllerFsmEmulator(event_q,mydpfsm.fsm)
+    read_ev_q.start() 
+    
+    "TEST 1: ON IDLE RECEIVE A REQ_RJCT EVENT, SEND A CLOSE AND STAY ON IDLE" 
+    print ""
+    print " START TEST 1 --------------------------------------------" 
+    print "STATE BEFORE PROCESS REQ_REJCT ", mydpfsm.fsm.current_state
+    mydpfsm.fsm.process("REQ_RJCT")    
+    print "STATE AFTER PROCESS REQ_REJCT ", mydpfsm.fsm.current_state
+    print ""    
+    "---------------------------------------------------------------------------------------"
  
+    "TEST 2: ON IDLE RECEIVE A ACTOPN, SEND CONFIRM, MOVES TO STATE OPN_SNT, START TOR1 (5s)" 
+    "RETRY TOR1 3 TIMES, after each TOR1, send CONFIRM, arrives TOR2,send CLOSE, moves to STATE HOLDING"
+    "ARRIVES TOH and go to IDLE state, wait this thread during 60 seconds to end all this process"     
+    print ""
+    print " START TEST 2 --------------------------------------------" 
+    net_conf1.retry_timeout = 5
+    net_conf1.max_retry = 3
+    print "STATE BEFORE PROCESS ACTOPN ", mydpfsm.fsm.current_state     
+    mydpfsm.fsm.process("ACTOPN")    
+    print "STATE AFTER PROCESS ACTOPN ", mydpfsm.fsm.current_state
+    time.sleep(60)
+    print ""    
+    "-----------------------------------------------------------------------------------------"    
+    
+    "TEST 3: ON IDLE RECEIVE A OPN_ACPT, SEND CONFIRM, MOVES TO STATE OPN_RCVD, START TOR1 (5s)" 
+    "RETRY TOR1 3 TIMES, after each TOR1, send CONFIRM, arrives TOR2,send CLOSE, moves to STATE HOLDING"
+    "ARRIVES TOH and go to IDLE state, wait this thread during 60 seconds to end all this process"     
+    net_conf1.retry_timeout = 5
+    net_conf1.max_retry = 3
+    print ""
+    print " START TEST 3 --------------------------------------------" 
+    print "STATE BEFORE PROCESS OPN_ACPT ", mydpfsm.fsm.current_state     
+    mydpfsm.fsm.process("OPN_ACPT")    
+    print "STATE AFTER PROCESS OPN_ACPT ", mydpfsm.fsm.current_state
+    time.sleep(60)
+    print ""
+    "---------------------------------------------------------------------------------------"
 
+    " TEST4: Initial state IDLE and receives an ACTOPN, SEND CONFIRM, MOVES TO STATE OPN_SNT, START TOR1 (5s)" 
+    " AFTER THAT, RECEIVES A OPN_ACPT, send CONFIRM, moves to OPN_RCVD, RETRY TOR1 3 TIMES, after each TOR1, send CONFIRM, arrives TOR2,send CLOSE, moves to STATE HOLDING"
+    "ARRIVES TOH and go to IDLE state, wait this thread during 60 seconds to end all this process"     
+    print ""
+    print " START TEST 4 --------------------------------------------" 
+    net_conf1.retry_timeout = 5
+    net_conf1.max_retry = 3
+    print "STATE BEFORE PROCESS ACTOPN ", mydpfsm.fsm.current_state     
+    mydpfsm.fsm.process("ACTOPN")    
+    print "STATE AFTER PROCESS ACTOPN ", mydpfsm.fsm.current_state
+    time.sleep(1)
+    mydpfsm.fsm.process("OPN_ACPT")    
+    print "STATE AFTER PROCESS OPN_ACPT ", mydpfsm.fsm.current_state
+    time.sleep(60)
+    print ""
+    
+    " TEST 5: Initial state IDLE and receives an ACTOPN, SEND CONFIRM, MOVES TO STATE OPN_SNT, START TOR1 (5s)" 
+    " AFTER THAT, RECEIVES A CNF_ACPT, Clear Retry timer, Set Confirm timer, Moves to CNF_RCVD, Recieves a TOC, send CLOSE, MOVES TO HOLDING, set Holding Timer"
+    "ARRIVES TOH and go to IDLE state, wait this thread during 100 seconds to end all this process"     
+    print ""
+    print " START TEST 5 --------------------------------------------" 
+    net_conf1.retry_timeout = 5
+    net_conf1.max_retry = 3
+    print "STATE BEFORE PROCESS ACTOPN ", mydpfsm.fsm.current_state     
+    mydpfsm.fsm.process("ACTOPN")    
+    print "STATE AFTER PROCESS ACTOPN ", mydpfsm.fsm.current_state
+    time.sleep(1)
+    mydpfsm.fsm.process("CNF_ACPT")    
+    print "STATE AFTER PROCESS CNF_ACPT ", mydpfsm.fsm.current_state
+    time.sleep(100)
+    print ""
+    
+    " TEST 6: Initial state IDLE receives an ACTOPN, SEND CONFIRM, MOVES TO STATE OPN_SNT, START TOR1 (5s)" 
+    " AFTER THAT, RECEIVES A CNF_ACPT, Clear Retry timer, Set Confirm timer, Moves to CNF_RCVD, Receives OPN_ACPT, send CONFIRM, MOVES TO ESTAB"
+    " ARRIVES CLS_ACPT send Close set Holding Timer moves to HOLDING. TOH srrives and go to IDLE state, wait this thread during 100 seconds to end all this process"     
+    print ""
+    print " START TEST 6 --------------------------------------------" 
+    net_conf1.retry_timeout = 5
+    net_conf1.max_retry = 3
+    print "STATE BEFORE PROCESS ACTOPN ", mydpfsm.fsm.current_state     
+    mydpfsm.fsm.process("ACTOPN")    
+    print "STATE AFTER PROCESS ACTOPN ", mydpfsm.fsm.current_state
+    time.sleep(1)
+    mydpfsm.fsm.process("CNF_ACPT")    
+    print "STATE AFTER PROCESS CNF_ACPT ", mydpfsm.fsm.current_state
+    time.sleep(1)
+    mydpfsm.fsm.process("OPN_ACPT")    
+    print "STATE AFTER PROCESS OPN_ACPT ", mydpfsm.fsm.current_state
+    time.sleep(5)
+    mydpfsm.fsm.process("CLS_ACPT")    
+    print "STATE AFTER PROCESS CLS_ACPT ", mydpfsm.fsm.current_state
+    
+    " TEST 7: Initial state IDLE receives an OPN_ACPT, SEND CONFIRM, MOVES TO STATE OPN_RCVD, START TOR1 (5s)" 
+    " AFTER THAT, RECEIVES A CNF_ACPT, Clear Retry timer, MOVES TO ESTAB"
+    " ARRIVES CLS_ACPT send Close set Holding Timer moves to HOLDING. TOH srrives and go to IDLE state, wait this thread during 100 seconds to end all this process"     
+    print ""
+    print " START TEST 7 --------------------------------------------" 
+    net_conf1.retry_timeout = 5
+    net_conf1.max_retry = 3
+    print "STATE BEFORE PROCESS ACTOPN ", mydpfsm.fsm.current_state     
+    mydpfsm.fsm.process("OPN_ACPT")    
+    print "STATE AFTER PROCESS OPN_ACPT ", mydpfsm.fsm.current_state
+    time.sleep(1)
+    mydpfsm.fsm.process("CNF_ACPT")    
+    print "STATE AFTER PROCESS CNF_ACPT ", mydpfsm.fsm.current_state
+    time.sleep(5)
+    mydpfsm.fsm.process("CLS_ACPT")    
+    print "STATE AFTER PROCESS CLS_ACPT ", mydpfsm.fsm.current_state
+    time.sleep(100)
+    print ""
+            
+    if read_ev_q.isAlive():        
+        read_ev_q.stop()
+    if read_tx.isAlive():
+        read_tx.stop()
+    print "FIN"       
+
+
+
+
+        
+class ReadQueueTxEmulator(threading.Thread) :
+ 
+    def __init__(self,tx_event_q):
+        threading.Thread.__init__(self)
+        self.tx_event_q = tx_event_q
+        self.finished = False
+        
+    def run(self):
+        while not self.finished:
+            event= self.tx_event_q.get()        
+            print " event transmited ", event.ev_subtype, " ", int(round(time.time() * 1000)) 
+            
+    def stop(self):
+        print "STOP Tx Emulator CALLED"
+        self.finished = True
+        print "SET DONE"
+        self._Thread__stop()
+                        
+class ControllerFsmEmulator(threading.Thread) :
+ 
+    def __init__(self,event_q,fsm):
+        threading.Thread.__init__(self)
+        self.event_q = event_q
+        self.fsm = fsm
+        self.finished = False
+    
+    def run(self):
+        while not self.finished:
+            event= self.event_q.get()
+            print " event arrives at the fsm controller ", event.ev_subtype, " ",event.add_info, int(round(time.time() * 1000)) 
+            print "estado antes de procesar este evento ", self.fsm.current_state
+            self.fsm.process(event.ev_subtype) 
+            print "estado luego de procesar este evento ", self.fsm.current_state
+            
+    def stop(self):
+        print "STOP Controller Fsm Emulator CALLED"
+        self.finished = True
+        print "SET DONE"
+        self._Thread__stop()
 if __name__ == '__main__':
     try:
         test()

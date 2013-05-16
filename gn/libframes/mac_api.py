@@ -18,7 +18,7 @@ dc_frametypes = { \
     ('Ctrl','CTS'):'CTS', \
     ('Ctrl','ACK'):'ACK', \
     ('Data','DATA'):'DATA', \
-    ('Mgmt','Beacon'):'Becon' \
+    ('Mgmt','Beacon'):'Beacon' \
     }
 
 def mkdcframetypes():
@@ -58,6 +58,7 @@ def mkdcfrmobjs():
     dc_frmobjs['ACK']  = mac_ctrl.ACKframe()
     dc_frmobjs['DATA'] = mac_data.DATAframe()
     dc_frmobjs['Beacon'] = mac_mgmt.MgmtFrame()
+    dc_frmobjs['Action'] = mac_mgmt.MgmtFrame()
     return dc_frmobjs
 
 dc_frmobjs = mkdcfrmobjs()

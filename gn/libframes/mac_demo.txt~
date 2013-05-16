@@ -12,9 +12,9 @@
 ==
 
 A dictionary with an object for each type of frame:
->>> dc_frmobjs = mac_api.dc_rmobjs
+>>> dc_frmobjs = mac_api.dc_frmobjs
 >>> dc_frmobjs.keys()
-['CTS', 'ACK', 'Beacon', 'FC', 'RTS', 'DATA']
+['CTS', 'ACK', 'Beacon', 'FC', 'RTS', 'Action', 'DATA']
 
 Get objects of given type, subtype
 >>> 
@@ -31,6 +31,7 @@ Show field names for each type of frame.
 Beacon: frame_ctrl duration address_1 address_2 address_3 seq_ctrl frame_body fcs
     FC: ProtVer Type SubType ToDS FromDS MoreFrags Retry PwrMgmt MoreData Protected Order
    RTS: frame_ctrl duration ra ta fcs
+Action: frame_ctrl duration address_1 address_2 address_3 seq_ctrl frame_body fcs
   DATA: frame_ctrl duration address_1 address_2 address_3 seq_ctrl qos ht address_4 frame_body fcs
 
 
@@ -231,5 +232,7 @@ Publicly available pcap files: http://www.netresec.com/?page=PcapFiles
 >>> os.system('cat aux/pk_beacon.bin | od -Ax -tx1 -v > ./aux/pk_beacon.hex')
 0
 >>> os.system('cat aux/pk_rts.hex aux/pk_cts.hex aux/pk_ack.hex aux/pk_data.hex aux/pk_beacon.hex > wshark.hex')
+0
+os.system('rm aux/pk_rts.* aux/pk_cts.* aux/pk_ack.* aux/pk_data.* aux/pk_beacon.*')
 0
 

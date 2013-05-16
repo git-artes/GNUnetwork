@@ -1,0 +1,40 @@
+====
+==== mac_action.txt : Management, Action
+====
+
+>>> import os
+>>> import mac_api
+>>> import mac_mgmt
+
+Traer al espacio de nombres el diccionario de objetos "frame"
+>>> dc_frmobjs = mac_api.dc_frmobjs
+
+Paquete Action Open, Action category = 1
+>>> fb_act1 = mac_mgmt.ActionFrameBody(dc_fldvals={'Action':1})
+>>> fb_act1_pk =fb_act1.mkpkt()
+>>> pk_act1 = mac_api.mkfrpkt('Action', dc_frmobjs, fr_dc_fldvals={'frame_body':fb_act1_pk})
+
+>>> dc_frmobjs['Action'].mkhexfl('aux/pk_act1', data=pk_act1)
+0
+
+Paquete Action Confirm, Action category = 2
+>>> fb_act2 = mac_mgmt.ActionFrameBody(dc_fldvals={'Action':2})
+>>> fb_act2_pk =fb_act2.mkpkt()
+>>> pk_act2 = mac_api.mkfrpkt('Action', dc_frmobjs, fr_dc_fldvals={'frame_body':fb_act2_pk})
+
+>>> dc_frmobjs['Action'].mkhexfl('aux/pk_act2', data=pk_act2)
+0
+
+
+Paquete Action Close, Action category = 3
+>>> fb_act3 = mac_mgmt.ActionFrameBody(dc_fldvals={'Action':3})
+>>> fb_act3_pk =fb_act3.mkpkt()
+>>> pk_act3 = mac_api.mkfrpkt('Action', dc_frmobjs, fr_dc_fldvals={'frame_body':fb_act3_pk})
+
+>>> dc_frmobjs['Action'].mkhexfl('aux/pk_act3', data=pk_act3)
+0
+
+>>> os.system('cat aux/pk_act?.hex > aux/actionpks.hex')
+0
+>>> os.system('rm aux/pk_act?.hex aux/pk_act?.bin')
+0

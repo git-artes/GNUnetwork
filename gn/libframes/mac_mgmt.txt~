@@ -51,7 +51,7 @@ RRRRRRRRRR
 
 >>> bfbpk = bfb.mkpkt()
 >>> len(bfbpk), bfbpk
-'\x00\x00\x00\x00\x00\x00\x00\x02\x00(\x00\x00\x00 The SSID for this packet--------\x01\nRRRRRRRRRR'
+(58, '\x00\x00\x00\x00\x00\x00\x00\x02\x00(\x00\x00\x00 The SSID for this packet--------\x01\nRRRRRRRRRR')
 
 Insert beacon frame body into beacon packet:
 >>> bf2 = mac_api.mkfrpkt('Beacon', dc_frmobjs, fr_dc_fldvals={'frame_body':bfbpk})

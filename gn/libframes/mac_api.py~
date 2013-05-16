@@ -58,11 +58,12 @@ def mkdcfrmobjs():
     dc_frmobjs['ACK']  = mac_ctrl.ACKframe()
     dc_frmobjs['DATA'] = mac_data.DATAframe()
     dc_frmobjs['Beacon'] = mac_mgmt.MgmtFrame()
+    dc_frmobjs['Action'] = mac_mgmt.MgmtFrame()
     return dc_frmobjs
 
 dc_frmobjs = mkdcfrmobjs()
 
-def mkfrpkt(frmtype, dc_frmobjs, fc_dc_fldvals={}, fr_dc_fldvals={}):
+def mkfrpkt(frmtype, dc_frmobjs=dc_frmobjs, fc_dc_fldvals={}, fr_dc_fldvals={}):
     '''Make frame packet of frame of a given type, optionally updating field values.
     
     This function packs a frame of indicated frame type, optionally updating values in frame control fields or frame fields. Returns a packed frame.

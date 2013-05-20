@@ -107,7 +107,8 @@ dc_nicknames = { \
     'TimerTOH'        : ('Timer',  'TOH',     EventTimer ), \
     'TimerTOC'        : ('Timer',  'TOC',     EventTimer ), \
     'TimerTOR1'       : ('Timer',  'TOR1',    EventTimer ), \
-    'TimerTOR2'       : ('Timer',  'TOR2',    EventTimer ) \
+    'TimerTOR2'       : ('Timer',  'TOR2',    EventTimer ), \
+    'TimerTimer'      : ('Timer',  'Timer',   EventTimer ) \
     }
 
     

@@ -37,13 +37,14 @@ class Beacon(threading.Thread) :
     def run(self):
         while 1:
             aux= self.my_queue.get()
-            timer=Timer.Timer(self.my_queue, self.my_actual_net_conf.beacon_period,1,"Timer")
-            timer.start()
-            event = events.EventFrame("Mgmt","Beacon")
-            self.tx_event_q.put(event,False)
+            if aux.ev_nickname == "TimerTimer":
+                timer=Timer.Timer(self.my_queue, self.my_actual_net_conf.beacon_period,1,"TimerTimer")
+                timer.start()
+                event = events.mkevent("MgmtBeacon")
+                self.tx_event_q.put(event,False)
 
     def activateBeacon(self):
-        timer=Timer.Timer(self.my_queue, self.my_actual_net_conf.beacon_period,1,"Timer")
+        timer=Timer.Timer(self.my_queue, self.my_actual_net_conf.beacon_period,1,"TimerTimer")
         timer.start()
         
         

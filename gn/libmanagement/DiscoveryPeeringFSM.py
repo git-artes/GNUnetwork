@@ -77,27 +77,27 @@ class DiscoveryPeeringFSM() :
         self.fsm.memory.append (data) 
         
     def sndCLS(self,fsm):
-        event = events.EventFrame("Mgmt","Close")
+        event = events.mkevent("ActionClose")
         self.tx_event_q.put(event,False)
     
     def sndOPN(self,fsm):
-        event = events.EventFrame("Mgmt","Open")
+        event = events.mkevent("ActionOpen")
         self.tx_event_q.put(event,False)
 
     def sndCNF(self,fsm):
-        event = events.EventFrame("Mgmt","Confirm")
+        event = events.mkevent("ActionConfirm")
         self.tx_event_q.put(event,False)
 
     def setR(self,fsm):
-        self.timerRetry=Timer.Timer(self.event_q,self.net_conf.retry_timeout,self.net_conf.max_retry,"TOR1", self.link_id,"TOR2" )
+        self.timerRetry=Timer.Timer(self.event_q,self.net_conf.retry_timeout,self.net_conf.max_retry,"TimerTOR1", self.link_id,"TimerTOR2" )
         self.timerRetry.start()
         
     def setC(self,fsm):
-        self.timerConfirm=Timer.Timer(self.event_q,self.net_conf.confirm_timeout,1,"TOC", self.link_id )
+        self.timerConfirm=Timer.Timer(self.event_q,self.net_conf.confirm_timeout,1,"TimerTOC", self.link_id )
         self.timerConfirm.start()
         
     def setH(self,fsm):
-        self.timerHolding=Timer.Timer(self.event_q,self.net_conf.holding_timeout,1,"TOH", self.link_id )
+        self.timerHolding=Timer.Timer(self.event_q,self.net_conf.holding_timeout,1,"TimerTOH", self.link_id )
         self.timerHolding.start()
 
     def clH(self,fsm):
@@ -287,7 +287,7 @@ class ReadQueueTxEmulator(threading.Thread) :
     def run(self):
         while not self.finished:
             event= self.tx_event_q.get()        
-            print " event transmited ", event.ev_subtype, " ", int(round(time.time() * 1000)) 
+            print " event transmited ", event, " ", int(round(time.time() * 1000)) 
             
     def stop(self):
         print "STOP Tx Emulator CALLED"
@@ -306,7 +306,7 @@ class ControllerFsmEmulator(threading.Thread) :
     def run(self):
         while not self.finished:
             event= self.event_q.get()
-            print " event arrives at the fsm controller ", event.ev_subtype, " ",event.add_info, int(round(time.time() * 1000)) 
+            print " event arrives at the fsm controller ", event, " ",event.add_info, int(round(time.time() * 1000)) 
             print "estado antes de procesar este evento ", self.fsm.current_state
             self.fsm.process(event.ev_subtype) 
             print "estado luego de procesar este evento ", self.fsm.current_state

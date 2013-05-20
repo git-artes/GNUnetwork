@@ -60,7 +60,14 @@ class EventFrame(Event):
         frmpkt = pfrmpkt
         return
 
-
+class EventFrameMgnt(EventFrame):
+    '''An event associated with a management frame.
+    
+    @ivar peer_linkId: the link Id defined by the peer
+    '''
+    def __init__(self, pnickname, ptype, psubtype, pfrmpkt='',peerlinkId=0):
+        EventFrame.__init__(pnickname, ptype, psubtype, pfrmpkt='')
+        self.peerlinkId = peerlinkId
 
 class EventTimer(Event):
     '''An event associated with a timer.

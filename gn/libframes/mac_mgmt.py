@@ -99,4 +99,35 @@ class BeaconFrameBody(Frame):
         return
 
 
+class ActionFrameBody(Frame):
+    '''Frame body for Action MAC frame.
+
+    Defines frame body for a Action MAC frame.
+    IEEE 802.11-2012 sec 8.3.3.13 pag 436.
+    '''
+
+    def __init__(self, dc_fldvals={}):
+        '''Builds an ActionFrameBody object, updating field values for action frame body.
+        @param dc_fldvals: a dictionary of {field: value} to update field values.
+        '''
+        self.bitbyte = 'bytes'
+        self.frame_len = 2  # variable if vendor specific parameters are present
+        self.mask_len = 0    # bytes, no bitmask
+
+        self.ls_fields = ['Action', 'MME']
+        dc_fields = {\
+            'Action' : ( 0,  1, False, '!B'  ), \
+            'MME'    : (1,   2, False, '!B'  )  \
+            }
+        self.mkdcfields(dc_fields)
+        self.dc_fldvals = { \
+            'Action' :  0, \
+            'MME'    :  0  \
+            }
+        #self.fillfldvals()
+        self.dc_fldvals.update( FCframe.dc_frmtype['Action'] )
+        self.dc_fldvals.update(dc_fldvals)
+         
+        return
+
 

@@ -1,4 +1,10 @@
 gn/draft
 gn/viejos
 gn/otros
+*.pyc
+*.bin
+*.hex
+*.py~
+*.txt~
+
 

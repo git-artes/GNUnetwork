@@ -16,7 +16,7 @@ import struct
 import frames
 from frames import Frame
 
-
+"""
 # Frame Types, dictionary initialization
 ls_types = [ (0, 'Mgmt'), (1, 'Ctrl'), (2, 'Data'), (3, 'Reserved') ]
 dc_type2str, dc_type2num = {}, {}
@@ -29,7 +29,18 @@ dc_stype2str, dc_stype2num = {}, {}
 for (nn, ss) in ls_subtypes:
     dc_stype2str[nn] = ss
     dc_stype2num[ss] = nn
+"""
 
+dc_typesbycode = { \
+    ( 0, 8) : ('Mgmt', 'Beacon'), \
+    ( 1,11) : ('Ctrl', 'RTS'), \
+    ( 1,12) : ('Ctrl', 'CTS'), \
+    ( 1,13) : ('Ctrl', 'ACK'), \
+    ( 2, 0) : ('Data', 'Data') \
+    }
+dc_typesbyname = {}
+for key in dc_typesbycode.keys():
+    dc_typesbyname[dc_typesbycode[key]] = key
 
 
 
@@ -46,6 +57,7 @@ class FCframe(Frame):
         'ACK'   : {'ProtVer':0, 'Type':1, 'SubType':13}, \
         'DATA'  : {'ProtVer':0, 'Type':2, 'SubType':0}, \
         'Beacon': {'ProtVer':0, 'Type':0, 'SubType':8}, \
+        'Action': {'ProtVer':0, 'Type':0, 'SubType':13} \
         }
         
     def __init__(self, dc_fldvals={}):

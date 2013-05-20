@@ -12,7 +12,7 @@
 A dictionary with an object for each type of frame:
 >>> dc_frmobjs = mac_api.mkdcfrmobjs()
 >>> print dc_frmobjs.keys()
-['CTS', 'ACK', 'Beacon', 'FC', 'RTS', 'DATA']
+['CTS', 'ACK', 'Beacon', 'FC', 'RTS', 'Action', 'DATA']
 
 Makes beacon frame body
 >>> import mac_mgmt

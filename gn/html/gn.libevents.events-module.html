@@ -107,7 +107,44 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="gn.libevents.events.EventNicknameException-class.html" class="summary-name">EventNicknameException</a>
+        <a href="gn.libevents.events.EventNameException-class.html" class="summary-name">EventNameException</a><br />
+      An exception to rise on non valid parameters for event 
+        construction.
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="gn.libevents.events-module.html#mkevent" class="summary-sig-name">mkevent</a>(<span class="summary-sig-arg">pnickname</span>)</span><br />
+      Returns an event of the given event nickname.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="gn.libevents.events-pysrc.html#mkevent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
     </td>
   </tr>
 </table>
@@ -132,14 +169,15 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="ls_timertypes"></a><span class="summary-name">ls_timertypes</span> = <code title="['Timer']"><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">Timer</code><code class="variable-quote">'</code><code class="variable-group">]</code></code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="ls_timersubtypes"></a><span class="summary-name">ls_timersubtypes</span> = <code title="['TOH', 'TOC', 'TOR1', 'TOR2']"><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">TOH</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">TOC</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">TOR1</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">TOR2</code><code class="variable-quote">'</code><code class="variable-group">]</code></code>
+        <a href="gn.libevents.events-module.html#dc_nicknames" class="summary-name">dc_nicknames</a> = <code title="{'ActionClose': ('Mgmt',
+                 'Action',
+                 &lt;class gn.libevents.events.EventFrame at 0x96cde3c&gt;),
+ 'ActionConfirm': ('Mgmt',
+                   'Action',
+                   &lt;class gn.libevents.events.EventFrame at 0x96cde3c&gt;\
+),
+ 'ActionOpen': ('Mgmt', 'Action', &lt;class gn.libevents.events.EventFram\
+..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ActionClose</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">, </code>&lt;class gn.li<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -150,6 +188,103 @@
     </td>
   </tr>
 </table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="mkevent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">mkevent</span>(<span class="sig-arg">pnickname</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="gn.libevents.events-pysrc.html#mkevent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns an event of the given event nickname.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>ev_ob_tmr = mkevent(<span class="py-string">'TimerTOH'</span>)
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> ev_ob_tmr
+<span class="py-output">Event class name: EventTimer</span>
+<span class="py-output">  Nickname: 'TimerTOH'; Type: 'Timer'; SubType: 'TOH'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>ev_ob_frm = mkevent(<span class="py-string">'CtrlCTS'</span>)
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> ev_ob_frm
+<span class="py-output">Event class name: EventFrame</span>
+<span class="py-output">  Nickname: 'CtrlCTS'; Type: 'Ctrl'; SubType: 'CTS'</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pnickname</code></strong> - a valid event nickname, i.e. one that is a key in dictionary of 
+          valid nicknames.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="dc_nicknames"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">dc_nicknames</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ActionClose</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+                 <code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+                 &lt;class gn.libevents.events.EventFrame at 0x96cde3c&gt;<code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">ActionConfirm</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+                   <code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+                   &lt;class gn.libevents.events.EventFrame at 0x96cde3c&gt;<code class="variable-group"></code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">ActionOpen</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">, </code>&lt;class gn.libevents.events.EventFram<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
@@ -181,7 +316,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat May 18 10:53:13 2013
+    Generated by Epydoc 3.0.1 on Mon May 20 11:27:27 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

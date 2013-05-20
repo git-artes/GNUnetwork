@@ -6,15 +6,16 @@ EXCLUDES=${EXCLUDES}"|libadaptationlayer|libfsm|libmanagement|libtimer"
 
 if [ ! "$1" ]
 then
-  echo "Usage: mkdoc.sh <project name>"
+  PRJNM=GNUnetwork
+  ##echo "Usage: mkdoc.sh <project name>"
 else
   PRJNM="$1"
-  if [ -d "html" ]
-  then
-    rm -r html/*
-  else 
-    mkdir html
-  fi
-  echo "  excluded:" $EXCLUDES
-  epydoc -v -n $PRJNM --exclude=$EXCLUDES .
 fi
+if [ -d "html" ]
+then
+  rm -r html/*
+else 
+  mkdir html
+fi
+echo "  excluded:" $EXCLUDES
+epydoc -v -n $PRJNM --exclude=$EXCLUDES .

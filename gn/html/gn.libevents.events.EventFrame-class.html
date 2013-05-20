@@ -97,9 +97,9 @@
         <tr>
           <td><span class="summary-sig"><a href="gn.libevents.events.EventFrame-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">pnickname</span>,
-        <span class="summary-sig-arg">ptype</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
-        <span class="summary-sig-arg">psubtype</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
-        <span class="summary-sig-arg">frmpkt</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+        <span class="summary-sig-arg">ptype</span>,
+        <span class="summary-sig-arg">psubtype</span>,
+        <span class="summary-sig-arg">pfrmpkt</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
       Constructor.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="gn.libevents.events-pysrc.html#EventFrame.__init__">source&nbsp;code</a></span>
@@ -139,8 +139,24 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
+        <a name="dst_addr"></a><span class="summary-name">dst_addr</span><br />
+      destination address.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ev_nickname"></a><span class="summary-name">ev_nickname</span><br />
+      a descriptive name for this event.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
         <a name="ev_subtype"></a><span class="summary-name">ev_subtype</span><br />
-      event subtype.
+      frame event subtype.
     </td>
   </tr>
 <tr>
@@ -148,14 +164,23 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a name="ev_type"></a><span class="summary-name">ev_type</span><br />
-      event type.
+      frame event type.
     </td>
   </tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="gn.libevents.events.Event-class.html">Event</a></code></b>:
-      <code><a href="gn.libevents.events.Event-class.html#ev_nickname">ev_nickname</a></code>
-      </p>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="frmpkt"></a><span class="summary-name">frmpkt</span><br />
+      a packed frame in bin format, as for transmission.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="src_addr"></a><span class="summary-name">src_addr</span><br />
+      source address.
     </td>
   </tr>
 </table>
@@ -186,9 +211,9 @@
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">pnickname</span>,
-        <span class="sig-arg">ptype</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
-        <span class="sig-arg">psubtype</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
-        <span class="sig-arg">frmpkt</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+        <span class="sig-arg">ptype</span>,
+        <span class="sig-arg">psubtype</span>,
+        <span class="sig-arg">pfrmpkt</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
@@ -203,8 +228,8 @@
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>pnickname</code></strong> - a descriptive name for this event.</li>
         <li><strong class="pname"><code>ptype</code></strong> - frame event type.</li>
-        <li><strong class="pname"><code>psubtype</code></strong> - frame event subtype</li>
-        <li><strong class="pname"><code>frmpkt</code></strong> - a packed frame in bin format, as for transmission.</li>
+        <li><strong class="pname"><code>psubtype</code></strong> - frame event subtype.</li>
+        <li><strong class="pname"><code>pfrmpkt</code></strong> - a packed frame in bin format, as for transmission.</li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -241,7 +266,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sat May 18 10:53:13 2013
+    Generated by Epydoc 3.0.1 on Mon May 20 11:27:27 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

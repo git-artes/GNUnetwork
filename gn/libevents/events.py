@@ -31,6 +31,7 @@ class Event:
             ( self.ev_nickname, self.ev_type, self.ev_subtype)
         return ss
 
+
 class EventFrame(Event):
     '''An event associated with a frame.
     
@@ -70,19 +71,18 @@ class EventTimer(Event):
     @ivar add_info: additional info.
     '''
     
-    def __init__(self, pnickname, ptype, psubtype, add_info=None):
+    def __init__(self, pnickname, ptype, psubtype, padd_info=None):
         '''Constructor.
 
         @param pnickname: a descriptive name for this event.
         @param ptype: timer event type.
         @param psubtype: timer event subtype.
-        @param add_info: additional info.
+        @param padd_info: additional info.
         '''
         self.ev_nickname = pnickname
         self.ev_type = ptype
         self.ev_subtype = psubtype
-        if add_info:
-            self.add_info = add_info
+        self.add_info = padd_info
         return
 
 

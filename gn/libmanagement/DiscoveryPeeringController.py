@@ -10,13 +10,11 @@ sys.path +=['..']
 
 import threading
 import PeersTable
-import libtimer.timer as Timer 
 
 
 class DiscoveryPeeringController(threading.Thread) :
-    """   The discovery and peering controller, it is a Thread.
-    
-          This class control the entries of the peers table and the state machine asociated with each entry.       
+    """   The discovery and peering controller, it is a Thread.   
+          This class control the entries of the peers table and the set of the state machines. Each peer link has associated one state machine,       
     """
 
     def __init__(self,network_conf,net_profile,q_event,tx_event_q):
@@ -34,53 +32,71 @@ class DiscoveryPeeringController(threading.Thread) :
         self.broadcast_addr =network_conf.getBroadcastAddr()
         self.my_profile = net_profile
         self.my_peers = PeersTable.PeersTable()
-        self.local_linkId=0   
-        self.my_actual_net_conf = network_conf 
-
+        " Each peer link has an identifier local_linkId. It is assigned when the peer link is created. It is inicialized when the class is created."
+        self.local_linkId=0          
+        self.net_conf = network_conf 
         self.my_queue = q_event
         self.tx_event_q =tx_event_q
+        self.finished = False
       
     def delete(self,event):
         addr= event.getPeerAddr()
         self.my_peers.delete(addr)
-        self.my_actual_net_conf.number_of_peering = self.my_actual_net_conf.number_of_peering - 1                
+        self.net_conf.number_of_peering = self.net_conf.number_of_peering - 1                
 
     def run(self):
-        while 1 :
-            event= self.my_queue.get()                    
-            if (event.getDstAddr() == self.my_addr or event.getDstAddr() == self.broadcast_addr) and event.getPeerAddr() != self.my_addr :
-                if self.my_peers.isMember(event.getPeerAddr()):
-                    print "Evento 1: ", event.sub_type,'  my mac: ',self.my_addr, '\n'
-                    self.my_peers.printPeersTable()                
-                    sm= self.my_peers.getSM(event.getPeerAddr())
-                    self.my_peers.updatePeerLinkId(event.getPeerAddr(), event.getPeerLinkId())
-                    sm.receiveEvent(event)
-                    self.my_peers.printPeersTable()
-                else:
-                    print "Evento 2: ", event.sub_type,'  my mac: ',self.my_addr,'\n'
-                    self.my_peers.printPeersTable()
-                    self.local_linkId = self.local_linkId +1
-                    self.my_peers.add(self,self.tx_event_q,event.getPeerAddr(),self.local_linkId,self.my_profile,event.getPeerLinkId())
-                    self.my_actual_net_conf.number_of_peering = self.my_actual_net_conf.number_of_peering+1                
-                    sm= self.my_peers.getSM(event.getPeerAddr())
-                    sm.receiveEvent(event)
-                    print "Evento 3: ", event.sub_type,'  my mac: ',self.my_addr,'\n'
-                    self.my_peers.printPeersTable()
+        while not self.finished :
+            event= self.my_queue.get()
+            if event.ev_type == "Timer":
+                sm= self.my_peers.getSM(localLinkId = event.add_info )
+                sm.fsm.process(event.ev_subtype) 
             else:
-                print "Bad address"                
+                if event.ev_type == "Mgmt":        
+                    if (event.getDstAddr() == self.my_addr or event.getDstAddr() == self.broadcast_addr) and event.getPeerAddr() != self.my_addr :
+                        "In this case the destination mac is my mac or is a broadcast packet and I am not the source" 
+                        if self.my_peers.isMember(peerMACaddr = event.getPeerAddr()):
+                            "In this case the peer link exists in the peers table"
+                            print "Evento 1: ", event.ev_subtype,'  my mac: ',self.my_addr, '\n'
+                            self.my_peers.printPeersTable()                
+                            sm= self.my_peers.getSM(peerMACadr= event.getPeerAddr())
+                            self.my_peers.updatePeerLinkId(event.getPeerAddr(), event.getPeerLinkId())
+                            self.moveFSM(event,sm)
+                            self.my_peers.printPeersTable()
+                        else:
+                            " In this case the peer link does not exist in the peer table "
+                            print "Evento 2: ", event.sub_type,'  my mac: ',self.my_addr,'\n'
+                            self.my_peers.printPeersTable()
+                            self.local_linkId = self.local_linkId +1
+                            self.my_peers.add(self,event.getPeerAddr, self.my_queue, self.tx_event_q,self.net_conf,self.local_linkId,event.getPeerLinkId())
+                            self.net_conf.number_of_peering = self.net_conf.number_of_peering+1                
+                            sm= self.my_peers.getSM(peerMACaddr = event.getPeerAddr())
+                            self.moveFSM(event,sm)
+                            print "Evento 3: ", event.sub_type,'  my mac: ',self.my_addr,'\n'
+                            self.my_peers.printPeersTable()
+                    else:
+                        print "Error: wrong MAC address, destination address:",  event.getDstAddr(), " source address : ", event.getPeerAddr()               
     
-    def raiseHoldingTimer(self,sm):
-        timer=Timer.Timer( self.my_queue, self.my_actual_net_conf.holding_timeout,1,self.my_addr,sm.my_peer_addr ,"TOH")
-        timer.start()
-    
-    def raiseConfirmTimer(self,sm):
-            timer=Timer.Timer( self.my_queue,self.my_actual_net_conf.confirm_timeout,1,self.my_addr,sm.my_peer_addr ,"TOC")
-            timer.start()
-            
-    def raiseRetryTimer(self,sm):
-            timer=Timer.Timer(self.my_queue,self.my_actual_net_conf.retry_timeout,self.my_actual_net_conf.max_retry,self.my_addr,sm.my_peer_addr, "TOR1","TOR2" )
-            timer.start()
-            
+                else: 
+                    print "Error: wrong event type"
+                    
+    def moveFSM(self,event,sm):
+        if event.ev_subtype == "Beacon" and self.net_conf.accepting_additional_peerings :
+            sm.fsm.process("ACTOPN")
+        if event.ev_subtype == "Confirm":                            
+            sm.fsm.process("CONF_ACPT")
+        if event.ev_subtype == "Close":
+            sm.fsm.process("CLS_ACPT")
+        if event.ev_subtype == "Open" :
+            if self.net_conf.accepting_additional_peerings:
+                sm.fsm.process("OPN_ACPT")
+            else:
+                sm.fsm.process("OPN_RJCT")                                    
+
+    def stop(self):
+            self.finished = True
+            self._Thread__stop()
+
+
 
 
 def test():

@@ -60,9 +60,7 @@ class Timer(threading.Thread):
             self.q_event.put(event,False)    
                 
     def stop(self):
-            print "STOP CALLED"
             self.finished = True
-            print "SET DONE"
             self._Thread__stop()
 
 def test():

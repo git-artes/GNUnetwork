@@ -4,7 +4,11 @@ Created on Tue Dec 11 14:40:05 2012
 
 @author: belza
 """
-import SMDiscoveryPeering
+import sys
+sys.path +=['..']
+import Queue
+import NetworkConfiguration
+import DiscoveryPeeringFSM
 from operator import itemgetter
 
 class PeersTable :
@@ -20,31 +24,31 @@ class PeersTable :
         self.my_list=[]
   
         
-    def add(self,my_controller,tx_frame_q,peerMACaddr,localLinkId,my_profile,peerLinkId=0):
+    def add(self,peerMACaddr, event_q,tx_frame_q,net_conf,localLinkId,peerLinkId=0):
         """
             Create the a state machine (SMDiscoveryPeering) and a new item to the peers list.
-              
-            @param my_controller: an object of the class DiscoveryPeeringController, it is necessary as areference for the state machine.        
         
             @param tx_frame_q:  the events transmition queue, it is necessary as a reference for the state machine.
 
-            @param peerMACAddr:  The MAC address of the peer.
+            @param peerMACaddr:  The MAC address of the peer.
 
             @param localLinkId:  My link Id.
-
-            @param my_profile:  The network Profile, it is necessary as a reference for the state machine.
             
             @param peerLinkId=0:  The link Id of my peer.
 
         
         """
-        sm = SMDiscoveryPeering.SMDiscoveryPeering(my_profile,my_controller,tx_frame_q,peerMACaddr) 
+        sm = DiscoveryPeeringFSM.DiscoveryPeeringFSM(localLinkId, net_conf,tx_frame_q,event_q) 
         self.my_list.append({'peerMac':peerMACaddr,'localLinkId': localLinkId, 'peerLinkId': peerLinkId,'state_machine':sm})
 
-    def getIndex(self,peerMACaddr):
+    def getIndex(self,peerMACaddr=None,localLinkId=None):
         """ Given the peer MAC Address return the index in the list of peers.
         """
-        return map(itemgetter('peerMac'), self.my_list).index(peerMACaddr)
+        if peerMACaddr:
+            return map(itemgetter('peerMac'), self.my_list).index(peerMACaddr)
+        if localLinkId:
+            return map(itemgetter('localLinkId'), self.my_list).index(localLinkId)
+            
         
     def delete(self,peerMACaddr):
         """ Delete the register of the peers list of the given MAC address.
@@ -52,41 +56,73 @@ class PeersTable :
         if self.isMember(peerMACaddr):
             self.my_list.__delitem__(self.getIndex(peerMACaddr))
 
-    def updatePeerLinkId(self,peerMACaddr, peerLinkId):
+    def updatePeerLinkId(self,peerMACaddr,peerLinkId):
         """ if there exsits a register in the peers list for the given MAC address update the peer link Id element.
         
         """
-        if self.isMember(peerMACaddr):
+        if self.isMember(peerMACaddr = peerMACaddr):
             self.my_list[self.getIndex(peerMACaddr)]['peerLinkId']=peerLinkId
 
-    def isMember(self,peerMACaddr):
-        return map(itemgetter('peerMac'), self.my_list).__contains__(peerMACaddr)
-
-    def getSM(self,peerMACaddr):
+    def isMember(self,peerMACaddr=None,localLinkId=None):
+        if peerMACaddr:
+            return map(itemgetter('peerMac'), self.my_list).__contains__(peerMACaddr)
+        if localLinkId:
+            return map(itemgetter('localLinkId'), self.my_list).__contains__(localLinkId)
+            
+    def getSM(self,peerMACaddr=None, localLinkId=None):
         """ if there exsits a register in the peers list for the given MAC address gives the corresponding state machine object.
         
         """
-        if self.isMember(peerMACaddr):        
-            return  self.my_list[self.getIndex(peerMACaddr)]['state_machine']
+        if peerMACaddr:
+            if self.isMember(peerMACaddr = peerMACaddr):        
+                return  self.my_list[self.getIndex(peerMACaddr = peerMACaddr)]['state_machine']
+        if localLinkId:
+            if self.isMember(localLinkId = localLinkId):        
+                return  self.my_list[self.getIndex(localLinkId = localLinkId)]['state_machine']
 
     def getLocalLinkId(self,peerMACaddr):
-        if self.isMember(peerMACaddr):        
-            return  self.my_list[self.getIndex(peerMACaddr)]['localLinkId']
+        if self.isMember(peerMACaddr =peerMACaddr):        
+            return  self.my_list[self.getIndex(peerMACaddr = peerMACaddr)]['localLinkId']
 
+    def getPeerLinkId(self,peerMACaddr):
+        if self.isMember(peerMACaddr = peerMACaddr):        
+            return  self.my_list[self.getIndex(peerMACaddr = peerMACaddr)]['peerLinkId']
+    
+    
     def printPeersTable(self):
         """ Print the peers table. """
         print " PEERS TABLE: \n peerMAC,local link Id, Peer link Id, state \n"
         for i in range(0,len(self.my_list)):
             print "Register number :", i, '\n'
-            print self.my_list[i]['peerMac'],  self.my_list[i]['localLinkId'], self.my_list[i]['peerLinkId'],self.my_list[i]['state_machine'].state, '\n'      
+            print self.my_list[i]['peerMac'],  self.my_list[i]['localLinkId'], self.my_list[i]['peerLinkId'],self.my_list[i]['state_machine'].fsm.current_state, '\n'      
 
 
 def test():
+    event_q = Queue.Queue(10)
+    tx_frame_q = Queue.Queue(10)
+    net_conf1 = NetworkConfiguration.NetworkConfiguration(100,'my network',256,1)    
+    localLinkId =10
+    peerLinkId=0    
+    
     p=PeersTable()
-    p.add(255, 1)
+    p.add(255, event_q,tx_frame_q,net_conf1,localLinkId,peerLinkId)
+    p.add(257, event_q,tx_frame_q,net_conf1,localLinkId+1,peerLinkId)
     p.printPeersTable()
+    print "Index : ", p.getIndex(255)
+    p.updatePeerLinkId(255, 13)
+    print "Nuevo Peer link Id : ", p.getPeerLinkId(255)
+    p.updatePeerLinkId(258, 14)
+    print "Nuevo Peer link Id : ", p.getPeerLinkId(255)
+    print "Id of the state machine : ", p.getSM(localLinkId=11).link_id
+    p.delete(257)
+    p.printPeersTable()
+    p.delete(255)
+    p.printPeersTable()
+    p.delete(257)
     
     
+
+
 if __name__ == '__main__':
     try:
         test()

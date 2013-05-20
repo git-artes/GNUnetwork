@@ -58,7 +58,7 @@ class FCframe(Frame):
         'ACK'   : {'ProtVer':0, 'Type':1, 'SubType':13}, \
         'DATA'  : {'ProtVer':0, 'Type':2, 'SubType':0}, \
         'Beacon': {'ProtVer':0, 'Type':0, 'SubType':8}, \
-        'Action': {'ProtVer':0, 'Type':0, 'SubType':13}, \        
+        'Action': {'ProtVer':0, 'Type':0, 'SubType':13} \
         }
         
     def __init__(self, dc_fldvals={}):

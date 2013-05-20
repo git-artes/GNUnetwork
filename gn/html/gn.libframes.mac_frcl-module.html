@@ -111,16 +111,22 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="gn.libframes.mac_frcl-module.html#ls_types" class="summary-name">ls_types</a> = <code title="[(0, 'Mgmt'), (1, 'Ctrl'), (2, 'Data'), (3, 'Reserved')]"><code class="variable-group">[</code><code class="variable-group">(</code>0<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code>1<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Ctrl</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code>2<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Data</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code>3<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Reserv</code><code class="variable-ellipsis">...</code></code><br />
-      list of tuples (number code, name) for frame types.
+        <a href="gn.libframes.mac_frcl-module.html#dc_typesbycode" class="summary-name">dc_typesbycode</a> = <code title="{(0, 8): ('Mgmt', 'Beacon'),
+ (1, 11): ('Ctrl', 'RTS'),
+ (1, 12): ('Ctrl', 'CTS'),
+ (1, 13): ('Ctrl', 'ACK'),
+ (2, 0): ('Data', 'Data')}"><code class="variable-group">{</code><code class="variable-group">(</code>0<code class="variable-op">, </code>8<code class="variable-group">)</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Beacon</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code>1<code class="variable-op">, </code>11<code class="variable-group">)</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Ctrl</code><code class="variable-quote">'</code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="gn.libframes.mac_frcl-module.html#ls_subtypes" class="summary-name">ls_subtypes</a> = <code title="[(8, 'Beacon'), (11, 'RTS'), (12, 'CTS'), (13, 'ACK'), (0, 'Data')]"><code class="variable-group">[</code><code class="variable-group">(</code>8<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Beacon</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code>11<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">RTS</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code>12<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">CTS</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code>13<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-ellipsis">...</code></code><br />
-      list of tuples (number_code, name) for frame subtypes.
+        <a href="gn.libframes.mac_frcl-module.html#dc_typesbyname" class="summary-name">dc_typesbyname</a> = <code title="{('Ctrl', 'ACK'): (1, 13),
+ ('Ctrl', 'CTS'): (1, 12),
+ ('Ctrl', 'RTS'): (1, 11),
+ ('Data', 'Data'): (2, 0),
+ ('Mgmt', 'Beacon'): (0, 8)}"><code class="variable-group">{</code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Ctrl</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ACK</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">: </code><code class="variable-group">(</code>1<code class="variable-op">, </code>13<code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Ctrl</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">CTS</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -134,7 +140,7 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="gn.libframes.mac_frcl-module.html#dc_stype2num" class="summary-name">dc_stype2num</a> = <code title="{'ACK': 13, 'Beacon': 8, 'CTS': 12, 'Data': 0, 'RTS': 11}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ACK</code><code class="variable-quote">'</code><code class="variable-op">: </code>13<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Beacon</code><code class="variable-quote">'</code><code class="variable-op">: </code>8<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">CTS</code><code class="variable-quote">'</code><code class="variable-op">: </code>12<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Data</code><code class="variable-quote">'</code><code class="variable-op">: </code>0<code class="variable-op">, </code><code class="variable-ellipsis">...</code></code><br />
+        <a name="dc_stype2num"></a><span class="summary-name">dc_stype2num</span><br />
       dictionary of {name, number_code} for frame subtypes.
     </td>
   </tr>
@@ -142,7 +148,7 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="gn.libframes.mac_frcl-module.html#dc_stype2str" class="summary-name">dc_stype2str</a> = <code title="{0: 'Data', 8: 'Beacon', 11: 'RTS', 12: 'CTS', 13: 'ACK'}"><code class="variable-group">{</code>0<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Data</code><code class="variable-quote">'</code><code class="variable-op">, </code>8<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Beacon</code><code class="variable-quote">'</code><code class="variable-op">, </code>11<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">RTS</code><code class="variable-quote">'</code><code class="variable-op">, </code>12<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">CTS</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-ellipsis">...</code></code><br />
+        <a name="dc_stype2str"></a><span class="summary-name">dc_stype2str</span><br />
       dictionary of {number_code, name} for frame subtypes.
     </td>
   </tr>
@@ -150,7 +156,7 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="dc_type2num"></a><span class="summary-name">dc_type2num</span> = <code title="{'Ctrl': 1, 'Data': 2, 'Mgmt': 0, 'Reserved': 3}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">Ctrl</code><code class="variable-quote">'</code><code class="variable-op">: </code>1<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Data</code><code class="variable-quote">'</code><code class="variable-op">: </code>2<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">: </code>0<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Reserved</code><code class="variable-quote">'</code><code class="variable-op">: </code>3<code class="variable-group">}</code></code><br />
+        <a name="dc_type2num"></a><span class="summary-name">dc_type2num</span><br />
       dictionary of {name, number_code} for frame types.
     </td>
   </tr>
@@ -158,7 +164,7 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="dc_type2str"></a><span class="summary-name">dc_type2str</span> = <code title="{0: 'Mgmt', 1: 'Ctrl', 2: 'Data', 3: 'Reserved'}"><code class="variable-group">{</code>0<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">, </code>1<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Ctrl</code><code class="variable-quote">'</code><code class="variable-op">, </code>2<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Data</code><code class="variable-quote">'</code><code class="variable-op">, </code>3<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Reserved</code><code class="variable-quote">'</code><code class="variable-group">}</code></code><br />
+        <a name="dc_type2str"></a><span class="summary-name">dc_type2str</span><br />
       dictionary of {number_code, name} for frame types.
     </td>
   </tr>
@@ -166,14 +172,23 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="nn"></a><span class="summary-name">nn</span> = <code title="0">0</code>
+        <a name="key"></a><span class="summary-name">key</span> = <code title="(2, 0)"><code class="variable-group">(</code>2<code class="variable-op">, </code>0<code class="variable-group">)</code></code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="ss"></a><span class="summary-name">ss</span> = <code title="'Data'"><code class="variable-quote">'</code><code class="variable-string">Data</code><code class="variable-quote">'</code></code>
+        <a name="ls_subtypes"></a><span class="summary-name">ls_subtypes</span><br />
+      list of tuples (number_code, name) for frame subtypes.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ls_types"></a><span class="summary-name">ls_types</span><br />
+      list of tuples (number code, name) for frame types.
     </td>
   </tr>
 </table>
@@ -195,73 +210,45 @@
   </td>
 </tr>
 </table>
-<a name="ls_types"></a>
+<a name="dc_typesbycode"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">ls_types</h3>
-  list of tuples (number code, name) for frame types.
+  <h3 class="epydoc">dc_typesbycode</h3>
+  
   <dl class="fields">
   </dl>
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">[</code><code class="variable-group">(</code>0<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code>1<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Ctrl</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code>2<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Data</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code>3<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Reserved</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-group">]</code>
+<code class="variable-group">{</code><code class="variable-group">(</code>0<code class="variable-op">, </code>8<code class="variable-group">)</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Beacon</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-group">(</code>1<code class="variable-op">, </code>11<code class="variable-group">)</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Ctrl</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">RTS</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-group">(</code>1<code class="variable-op">, </code>12<code class="variable-group">)</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Ctrl</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">CTS</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-group">(</code>1<code class="variable-op">, </code>13<code class="variable-group">)</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Ctrl</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ACK</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-group">(</code>2<code class="variable-op">, </code>0<code class="variable-group">)</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Data</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Data</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-group">}</code>
 </pre></td></tr></table>
 </dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="ls_subtypes"></a>
+<a name="dc_typesbyname"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">ls_subtypes</h3>
-  list of tuples (number_code, name) for frame subtypes.
+  <h3 class="epydoc">dc_typesbyname</h3>
+  
   <dl class="fields">
   </dl>
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">[</code><code class="variable-group">(</code>8<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Beacon</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code>11<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">RTS</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code>12<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">CTS</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code>13<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ACK</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-group">(</code>0<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Data</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-group">]</code>
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="dc_stype2num"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">dc_stype2num</h3>
-  dictionary of {name, number_code} for frame subtypes.
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ACK</code><code class="variable-quote">'</code><code class="variable-op">: </code>13<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Beacon</code><code class="variable-quote">'</code><code class="variable-op">: </code>8<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">CTS</code><code class="variable-quote">'</code><code class="variable-op">: </code>12<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Data</code><code class="variable-quote">'</code><code class="variable-op">: </code>0<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">RTS</code><code class="variable-quote">'</code><code class="variable-op">: </code>11<code class="variable-group">}</code>
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="dc_stype2str"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">dc_stype2str</h3>
-  dictionary of {number_code, name} for frame subtypes.
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-<code class="variable-group">{</code>0<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Data</code><code class="variable-quote">'</code><code class="variable-op">, </code>8<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">Beacon</code><code class="variable-quote">'</code><code class="variable-op">, </code>11<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">RTS</code><code class="variable-quote">'</code><code class="variable-op">, </code>12<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">CTS</code><code class="variable-quote">'</code><code class="variable-op">, </code>13<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">ACK</code><code class="variable-quote">'</code><code class="variable-group">}</code>
+<code class="variable-group">{</code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Ctrl</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ACK</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">: </code><code class="variable-group">(</code>1<code class="variable-op">, </code>13<code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Ctrl</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">CTS</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">: </code><code class="variable-group">(</code>1<code class="variable-op">, </code>12<code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Ctrl</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">RTS</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">: </code><code class="variable-group">(</code>1<code class="variable-op">, </code>11<code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Data</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Data</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">: </code><code class="variable-group">(</code>2<code class="variable-op">, </code>0<code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Beacon</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">: </code><code class="variable-group">(</code>0<code class="variable-op">, </code>8<code class="variable-group">)</code><code class="variable-group">}</code>
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -299,7 +286,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu May  9 12:23:37 2013
+    Generated by Epydoc 3.0.1 on Sat May 18 10:53:13 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

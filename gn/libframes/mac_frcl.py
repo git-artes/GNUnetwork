@@ -16,9 +16,8 @@ import struct
 import frames
 from frames import Frame
 
-
-# Frame Types, dictionary initialization
 """
+# Frame Types, dictionary initialization
 ls_types = [ (0, 'Mgmt'), (1, 'Ctrl'), (2, 'Data'), (3, 'Reserved') ]
 dc_type2str, dc_type2num = {}, {}
 for (nn, ss) in ls_types:

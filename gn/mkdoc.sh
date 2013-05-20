@@ -1,6 +1,9 @@
 #!/bin/bash
 # mkdoc.sh: makes epydoc
 
+EXCLUDES="viejos|otros|old|others|draft"
+EXCLUDES=${EXCLUDES}"|libadaptationlayer|libfsm|libmanagement|libtimer"
+
 if [ ! "$1" ]
 then
   echo "Usage: mkdoc.sh <project name>"
@@ -12,5 +15,6 @@ else
   else 
     mkdir html
   fi
-  epydoc -v -n $PRJNM --exclude="viejos|otros|old|others|draft" .
+  echo "  excluded:" $EXCLUDES
+  epydoc -v -n $PRJNM --exclude=$EXCLUDES .
 fi

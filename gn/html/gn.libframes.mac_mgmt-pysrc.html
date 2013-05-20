@@ -161,7 +161,39 @@
 <a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">dc_fldvals</tt><tt class="py-op">.</tt><tt class="py-name">update</tt><tt class="py-op">(</tt><tt class="py-name">dc_fldvals</tt><tt class="py-op">)</tt> </tt>
 <a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">          </tt>
 <a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> </tt>
-</div></div><a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+</div></div><a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line"> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"> </tt>
+<a name="ActionFrameBody"></a><div id="ActionFrameBody-def"><a name="L102"></a><tt class="py-lineno">102</tt> <a class="py-toggle" href="#" id="ActionFrameBody-toggle" onclick="return toggle('ActionFrameBody');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="gn.libframes.mac_mgmt.ActionFrameBody-class.html">ActionFrameBody</a><tt class="py-op">(</tt><tt class="py-base-class">Frame</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ActionFrameBody-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="ActionFrameBody-expanded"><a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">    <tt class="py-docstring">'''Frame body for Action MAC frame.</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line"><tt class="py-docstring">    Defines frame body for a Action MAC frame.</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line"><tt class="py-docstring">    IEEE 802.11-2012 sec 8.3.3.13 pag 436.</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"><tt class="py-docstring">    '''</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"> </tt>
+<a name="ActionFrameBody.__init__"></a><div id="ActionFrameBody.__init__-def"><a name="L109"></a><tt class="py-lineno">109</tt> <a class="py-toggle" href="#" id="ActionFrameBody.__init__-toggle" onclick="return toggle('ActionFrameBody.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="gn.libframes.mac_mgmt.ActionFrameBody-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">dc_fldvals</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-op">}</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ActionFrameBody.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ActionFrameBody.__init__-expanded"><a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">        <tt class="py-docstring">'''Builds an ActionFrameBody object, updating field values for action frame body.</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-docstring">        @param dc_fldvals: a dictionary of {field: value} to update field values.</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"><tt class="py-docstring">        '''</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">bitbyte</tt> <tt class="py-op">=</tt> <tt class="py-string">'bytes'</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">frame_len</tt> <tt class="py-op">=</tt> <tt class="py-number">2</tt>  <tt class="py-comment"># variable if vendor specific parameters are present</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">mask_len</tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt>    <tt class="py-comment"># bytes, no bitmask</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line"> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">ls_fields</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'Action'</tt><tt class="py-op">,</tt> <tt class="py-string">'MME'</tt><tt class="py-op">]</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">        <tt class="py-name">dc_fields</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt>\ </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line">            <tt class="py-string">'Action'</tt> <tt class="py-op">:</tt> <tt class="py-op">(</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt>  <tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-name">False</tt><tt class="py-op">,</tt> <tt class="py-string">'!B'</tt>  <tt class="py-op">)</tt><tt class="py-op">,</tt> \ </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">            <tt class="py-string">'MME'</tt>    <tt class="py-op">:</tt> <tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt>   <tt class="py-number">2</tt><tt class="py-op">,</tt> <tt class="py-name">False</tt><tt class="py-op">,</tt> <tt class="py-string">'!B'</tt>  <tt class="py-op">)</tt>  \ </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line">            <tt class="py-op">}</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-14" class="py-name"><a title="gn.libframes.frames.Frame.mkdcfields" class="py-name" href="#" onclick="return doclink('link-14', 'mkdcfields', 'link-7');">mkdcfields</a></tt><tt class="py-op">(</tt><tt class="py-name">dc_fields</tt><tt class="py-op">)</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">dc_fldvals</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt> \ </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">            <tt class="py-string">'Action'</tt> <tt class="py-op">:</tt>  <tt class="py-number">0</tt><tt class="py-op">,</tt> \ </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">            <tt class="py-string">'MME'</tt>    <tt class="py-op">:</tt>  <tt class="py-number">0</tt>  \ </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line">            <tt class="py-op">}</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line">        <tt class="py-comment">#self.fillfldvals()</tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">dc_fldvals</tt><tt class="py-op">.</tt><tt class="py-name">update</tt><tt class="py-op">(</tt> <tt id="link-15" class="py-name"><a title="gn.libframes.mac_frcl.FCframe" class="py-name" href="#" onclick="return doclink('link-15', 'FCframe', 'link-4');">FCframe</a></tt><tt class="py-op">.</tt><tt id="link-16" class="py-name"><a title="gn.libframes.mac_frcl.FCframe.dc_frmtype" class="py-name" href="#" onclick="return doclink('link-16', 'dc_frmtype', 'link-10');">dc_frmtype</a></tt><tt class="py-op">[</tt><tt class="py-string">'Action'</tt><tt class="py-op">]</tt> <tt class="py-op">)</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">dc_fldvals</tt><tt class="py-op">.</tt><tt class="py-name">update</tt><tt class="py-op">(</tt><tt class="py-name">dc_fldvals</tt><tt class="py-op">)</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">          </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> </tt>
+</div></div><a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -199,7 +231,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu May  9 12:23:38 2013
+    Generated by Epydoc 3.0.1 on Sat May 18 10:53:13 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

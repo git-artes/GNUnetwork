@@ -60,7 +60,7 @@ class EventFrame(Event):
         frmpkt = pfrmpkt
         return
 
-class EventFrameMgnt(EventFrame):
+class EventFrameMgmt(EventFrame):
     '''An event associated with a management frame.
     
     @ivar peer_linkId: the link Id defined by the peer

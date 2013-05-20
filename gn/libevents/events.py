@@ -1,8 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# classes for events
+'''A module to handle events.
 
+Events type and subtype are reserved for standard compliant denominations, such as Type and Subtype in frames. Field ev_nickname is a descriptive nomination to handle events in Finite State Machines or other; ev_nickname is a convention of this project.
+Nickname: 1. A descriptive name added to or replacing the actual name of a person, place, or thing (American Heritage Dictionary).
+
+To create an event object use function C{mkevent()}.
+
+@var dc_nicknames: a dictionary {nickname: (type, subtype, eventclass) } of valid nicknames, their corresponding type and subtype, and the class object used for construction.
+'''
 
 import sys
 import types
@@ -12,17 +19,6 @@ sys.path = sys.path + ['..']
 from libframes import mac_api
 #from libframes.mac_frcl import dc_type2str, dc_stype2str
 #from libframes.mac_frcl import dc_type2num, dc_type2str, dc_stype2num, dc_stype2str
-
-'''A module to handle events.
-
-Events type and subtype are reserved for standard compliant denominations, such as Type and Subtype in frames. Field ev_nickname is a descriptive nomination to handle events in Finite State Machines or other; ev_nickname is a convention of this project.
-Nickname: 1. A descriptive name added to or replacing the actual name of a person, place, or thing (American Heritage Dictionary).
-
-To create an event use function mkevent().
-
-@var dc_nicknames: a dictionary {nickname: (type, subtype, eventclass) } of valid nicknames, their corresponding type and subtype, and the class object used for construction.
-'''
-
 
 
 class Event:
@@ -117,7 +113,7 @@ dc_nicknames = { \
     
 def mkevent(pnickname):
     '''Returns an event of the given event nickname.
-
+    
     >>> ev_ob_tmr = mkevent('TimerTOH')
     >>> print ev_ob_tmr
     Event class name: EventTimer

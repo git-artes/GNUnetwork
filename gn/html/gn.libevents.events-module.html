@@ -62,6 +62,15 @@
 </table>
 <!-- ==================== MODULE DESCRIPTION ==================== -->
 <h1 class="epydoc">Module events</h1><p class="nomargin-top"><span class="codelink"><a href="gn.libevents.events-pysrc.html">source&nbsp;code</a></span></p>
+<p>A module to handle events.</p>
+  <p>Events type and subtype are reserved for standard compliant 
+  denominations, such as Type and Subtype in frames. Field ev_nickname is a
+  descriptive nomination to handle events in Finite State Machines or 
+  other; ev_nickname is a convention of this project. Nickname: 1. A 
+  descriptive name added to or replacing the actual name of a person, 
+  place, or thing (American Heritage Dictionary).</p>
+  <p>To create an event object use function <code>mkevent()</code>.</p>
+
 <!-- ==================== CLASSES ==================== -->
 <a name="section-Classes"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -171,13 +180,16 @@
     </td><td class="summary">
         <a href="gn.libevents.events-module.html#dc_nicknames" class="summary-name">dc_nicknames</a> = <code title="{'ActionClose': ('Mgmt',
                  'Action',
-                 &lt;class gn.libevents.events.EventFrame at 0x96cde3c&gt;),
+                 &lt;class gn.libevents.events.EventFrame at 0xa12fe3c&gt;),
  'ActionConfirm': ('Mgmt',
                    'Action',
-                   &lt;class gn.libevents.events.EventFrame at 0x96cde3c&gt;\
+                   &lt;class gn.libevents.events.EventFrame at 0xa12fe3c&gt;\
 ),
  'ActionOpen': ('Mgmt', 'Action', &lt;class gn.libevents.events.EventFram\
-..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ActionClose</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">, </code>&lt;class gn.li<code class="variable-ellipsis">...</code></code>
+..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ActionClose</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">, </code>&lt;class gn.li<code class="variable-ellipsis">...</code></code><br />
+      a dictionary {nickname: (type, subtype, eventclass) } of valid 
+      nicknames, their corresponding type and subtype, and the class object
+      used for construction.
     </td>
   </tr>
 <tr>
@@ -264,7 +276,9 @@
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <h3 class="epydoc">dc_nicknames</h3>
-  
+  a dictionary {nickname: (type, subtype, eventclass) } of valid nicknames,
+  their corresponding type and subtype, and the class object used for 
+  construction.
   <dl class="fields">
   </dl>
   <dl class="fields">
@@ -272,10 +286,10 @@
       <dd><table><tr><td><pre class="variable">
 <code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ActionClose</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">,</code>
                  <code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-                 &lt;class gn.libevents.events.EventFrame at 0x96cde3c&gt;<code class="variable-group">)</code><code class="variable-op">,</code>
+                 &lt;class gn.libevents.events.EventFrame at 0xa12fe3c&gt;<code class="variable-group">)</code><code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">ActionConfirm</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">,</code>
                    <code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-                   &lt;class gn.libevents.events.EventFrame at 0x96cde3c&gt;<code class="variable-group"></code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+                   &lt;class gn.libevents.events.EventFrame at 0xa12fe3c&gt;<code class="variable-group"></code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
 <code class="variable-group">)</code><code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">ActionOpen</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">, </code>&lt;class gn.libevents.events.EventFram<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
 <code class="variable-ellipsis">...</code>
@@ -316,7 +330,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon May 20 11:27:27 2013
+    Generated by Epydoc 3.0.1 on Mon May 20 11:51:15 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

@@ -60,14 +60,17 @@ class EventFrame(Event):
         frmpkt = pfrmpkt
         return
 
+
 class EventFrameMgmt(EventFrame):
     '''An event associated with a management frame.
     
-    @ivar peer_linkId: the link Id defined by the peer
+    @param peer_linkId: the link Id defined by the peer.
     '''
-    def __init__(self, pnickname, ptype, psubtype, pfrmpkt='',peerlinkId=0):
+    def __init__(self, pnickname, ptype, psubtype, pfrmpkt='', peerlinkId=0):
         EventFrame.__init__(pnickname, ptype, psubtype, pfrmpkt='')
         self.peerlinkId = peerlinkId
+        return
+
 
 class EventTimer(Event):
     '''An event associated with a timer.
@@ -103,19 +106,19 @@ class EventNameException(Exception):
 # a dictionary of nicknames, types and subtypes
 #   nickname          :  (type,     subtype )
 dc_nicknames = { \
-    'CtrlRTS'         : ('Ctrl',   'RTS',     EventFrame ), \
-    'CtrlCTS'         : ('Ctrl',   'CTS',     EventFrame ), \
-    'CtrlACK'         : ('Ctrl',   'ACK',     EventFrame ), \
-    'DataData'        : ('Data',   'Data',    EventFrame ), \
-    'ActionOpen'      : ('Mgmt',   'Action',  EventFrame ), \
-    'ActionClose'     : ('Mgmt',   'Action',  EventFrame ), \
-    'ActionConfirm'   : ('Mgmt',   'Action',  EventFrame ), \
-    'MgmtBeacon'      : ('Mgmt',   'Beacon',  EventFrame ), \
-    'TimerTOH'        : ('Timer',  'TOH',     EventTimer ), \
-    'TimerTOC'        : ('Timer',  'TOC',     EventTimer ), \
-    'TimerTOR1'       : ('Timer',  'TOR1',    EventTimer ), \
-    'TimerTOR2'       : ('Timer',  'TOR2',    EventTimer ), \
-    'TimerTimer'      : ('Timer',  'Timer',   EventTimer ) \
+    'CtrlRTS'         : ('Ctrl',   'RTS',     EventFrame     ), \
+    'CtrlCTS'         : ('Ctrl',   'CTS',     EventFrame     ), \
+    'CtrlACK'         : ('Ctrl',   'ACK',     EventFrame     ), \
+    'DataData'        : ('Data',   'Data',    EventFrame     ), \
+    'ActionOpen'      : ('Mgmt',   'Action',  EventFrameMgmt ), \
+    'ActionClose'     : ('Mgmt',   'Action',  EventFrameMgmt ), \
+    'ActionConfirm'   : ('Mgmt',   'Action',  EventFrameMgmt ), \
+    'MgmtBeacon'      : ('Mgmt',   'Beacon',  EventFrameMgmt ), \
+    'TimerTOH'        : ('Timer',  'TOH',     EventTimer     ), \
+    'TimerTOC'        : ('Timer',  'TOC',     EventTimer     ), \
+    'TimerTOR1'       : ('Timer',  'TOR1',    EventTimer     ), \
+    'TimerTOR2'       : ('Timer',  'TOR2',    EventTimer     ), \
+    'TimerTimer'      : ('Timer',  'Timer',   EventTimer     ) \
     }
 
     

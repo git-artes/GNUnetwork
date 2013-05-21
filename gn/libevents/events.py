@@ -64,13 +64,31 @@ class EventFrame(Event):
 class EventFrameMgmt(EventFrame):
     '''An event associated with a management frame.
     
+    >>> ev_mg = mkevent('ActionOpen')
+    >>> print ev_mg
+    Event class name: EventFrameMgmt
+      Nickname: 'ActionOpen'; Type: 'Mgmt'; SubType: 'Action'
+      Peer link Id: 0
+      
     @param peer_linkId: the link Id defined by the peer.
     '''
     def __init__(self, pnickname, ptype, psubtype, pfrmpkt='', peerlinkId=0):
-        EventFrame.__init__(pnickname, ptype, psubtype, pfrmpkt='')
+        '''Constructor.
+        
+        @param pnickname: a descriptive name for this event.
+        @param ptype: frame event type.
+        @param psubtype: frame event subtype.
+        @param pfrmpkt: a packed frame in bin format, as for transmission.
+        @param peer_linkId: the link Id defined by the peer.
+        '''
+        EventFrame.__init__(self, pnickname, ptype, psubtype, pfrmpkt='')
         self.peerlinkId = peerlinkId
         return
 
+    def __str__(self):
+        ss = EventFrame.__str__(self)
+        ss += '\n  Peer link Id: ' + str(self.peerlinkId)
+        return ss
 
 class EventTimer(Event):
     '''An event associated with a timer.

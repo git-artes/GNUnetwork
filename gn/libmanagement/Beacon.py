@@ -41,6 +41,8 @@ class Beacon(threading.Thread) :
                 timer=Timer.Timer(self.my_queue, self.my_actual_net_conf.beacon_period,1,"TimerTimer")
                 timer.start()
                 event = events.mkevent("MgmtBeacon")
+                event.src_addr=self.my_addr
+                event.dst_addr= self.broadcast_addr
                 self.tx_event_q.put(event,False)
 
     def activateBeacon(self):
@@ -58,7 +60,7 @@ def test():
     while 1:
         event= myQueue.get()
         aux = event.ev_subtype
-        print " LLEGO EVENTO ", event.ev_subtype, " ", int(round(time.time() * 1000)) 
+        print " LLEGO EVENTO ", event, " ", int(round(time.time() * 1000)) 
    
     
 

@@ -18,7 +18,7 @@ class DiscoveryPeeringFSM() :
           This class implements the  state machine for Discovery and Peering (IEEE  Std 802.11-2012  pg 1365).       
     """
 
-    def __init__(self,link_id,network_conf,tx_event_q,event_q):
+    def __init__(self,link_id,network_conf,tx_event_q,event_q,peer_addr):
         '''  
         Constructor
         @param link_id: each state machine is associated with a network link. This is the identification of the link or the state machine.
@@ -31,6 +31,7 @@ class DiscoveryPeeringFSM() :
         self.event_q = event_q
         self.net_conf = network_conf
         self.link_id = link_id
+        self.peer_addr = peer_addr
         self.timerRetry = None
         self.timerHolding =None
         self.timerConfirm =None
@@ -78,14 +79,23 @@ class DiscoveryPeeringFSM() :
         
     def sndCLS(self,fsm):
         event = events.mkevent("ActionClose")
+        event.src_addr=self.net_conf.station_id
+        event.dst_addr= self.peer_addr
+        event.peerlinkId = self.link_id
         self.tx_event_q.put(event,False)
     
     def sndOPN(self,fsm):
         event = events.mkevent("ActionOpen")
+        event.src_addr=self.net_conf.station_id
+        event.dst_addr= self.peer_addr
+        event.peerlinkId = self.link_id
         self.tx_event_q.put(event,False)
 
     def sndCNF(self,fsm):
         event = events.mkevent("ActionConfirm")
+        event.src_addr=self.net_conf.station_id
+        event.dst_addr= self.peer_addr
+        event.peerlinkId = self.link_id
         self.tx_event_q.put(event,False)
 
     def setR(self,fsm):
@@ -102,14 +112,16 @@ class DiscoveryPeeringFSM() :
 
     def clH(self,fsm):
        self.timerHolding.stop()
+       print "STOP HOLDING TIMER"
  
     def clR(self,fsm):
        self.timerRetry.stop()
-       print "STOP"
+       print "STOP RETRY TIMER"
       
 
     def clC(self,fsm):
        self.timerConfirm.stop()
+       print "STOP CONFIRM TIMER"
 
     def sndOPNsetR(self,fsm):
         self.sndOPN(fsm)
@@ -153,7 +165,7 @@ def test():
     event_q=Queue.Queue(10)
     net_conf1 = NetworkConfiguration.NetworkConfiguration(100,'my network',256,1)
     net_conf1.retry_timeout = 5
-    mydpfsm = DiscoveryPeeringFSM(127, net_conf1,tx_event_q,event_q)
+    mydpfsm = DiscoveryPeeringFSM(127, net_conf1,tx_event_q,event_q,101)
     read_tx = ReadQueueTxEmulator(tx_event_q)
     read_tx.start()
     read_ev_q = ControllerFsmEmulator(event_q,mydpfsm.fsm)

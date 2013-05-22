@@ -38,7 +38,7 @@ class PeersTable :
 
         
         """
-        sm = DiscoveryPeeringFSM.DiscoveryPeeringFSM(localLinkId, net_conf,tx_frame_q,event_q) 
+        sm = DiscoveryPeeringFSM.DiscoveryPeeringFSM(localLinkId, net_conf,tx_frame_q,event_q,peerMACaddr) 
         self.my_list.append({'peerMac':peerMACaddr,'localLinkId': localLinkId, 'peerLinkId': peerLinkId,'state_machine':sm})
 
     def getIndex(self,peerMACaddr=None,localLinkId=None):

@@ -59,6 +59,11 @@ class EventFrame(Event):
         self.dst_addr = None
         frmpkt = pfrmpkt
         return
+    def __str__(self):
+        ss = Event.__str__(self)
+        ss += '\n  Src MAC addr: ' + str(self.src_addr)
+        ss += '\n  Dest MAC addr: ' + str(self.dst_addr)
+        return ss
 
 
 class EventFrameMgmt(EventFrame):

@@ -37,8 +37,16 @@ class DiscoveryPeeringFSM() :
         self.timerConfirm =None
 
         self.fsm = fsm.FSM ('IDLE', []) # "memory" will be used as a stack.
-        self.fsm.set_default_transition (self.Error, 'IDLE')
+        #self.fsm.set_default_transition (self.Error, 'IDLE')
         self.fsm.add_transition_any  ('IDLE', None, 'IDLE')
+        self.fsm.add_transition_any  ('OPN_SNT', None, 'OPN_SNT')        
+        self.fsm.add_transition_any  ('CNF_RCVD', None, 'CNF_RCVD')
+        self.fsm.add_transition_any  ('OPN_RCVD', None, 'OPN_RCVD')        
+        self.fsm.add_transition_any  ('ESTAB', None, 'ESTAB')
+        self.fsm.add_transition_any  ('HOLDING', None, 'HOLDING')        
+        
+
+        
         
         "------------------ Transitions from IDLE -----------------------------------------------------------"
         self.fsm.add_transition      ('REQ_RJCT',               'IDLE',            self.sndCLS,              'IDLE')

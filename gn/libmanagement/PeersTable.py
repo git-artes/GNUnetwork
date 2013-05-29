@@ -38,6 +38,7 @@ class PeersTable :
 
         
         """
+        self.my_addr = net_conf. getStationId()
         sm = DiscoveryPeeringFSM.DiscoveryPeeringFSM(localLinkId, net_conf,tx_frame_q,event_q,peerMACaddr) 
         self.my_list.append({'peerMac':peerMACaddr,'localLinkId': localLinkId, 'peerLinkId': peerLinkId,'state_machine':sm})
 
@@ -91,9 +92,9 @@ class PeersTable :
     
     def printPeersTable(self):
         """ Print the peers table. """
-        print " PEERS TABLE: \n peerMAC,local link Id, Peer link Id, state \n"
+        print self.my_addr, " PEERS TABLE: peerMAC,local link Id, Peer link Id, state \n"
         for i in range(0,len(self.my_list)):
-            print "Register number :", i, '\n'
+            #print "Register number :", i, '\n'
             print self.my_list[i]['peerMac'],  self.my_list[i]['localLinkId'], self.my_list[i]['peerLinkId'],self.my_list[i]['state_machine'].fsm.current_state, '\n'      
 
 

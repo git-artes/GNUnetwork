@@ -45,7 +45,7 @@ class DiscoveryPeeringController(threading.Thread) :
         while not self.finished :
             event= self.my_queue.get()
             if event.ev_type == "Timer":
-                print "Evento Timer: ", event, '\n'
+                #print "Evento Timer: ", event, '\n'
                 sm= self.my_peers.getSM(localLinkId = event.add_info )
                 sm.fsm.process(event.ev_subtype) 
                 self.my_peers.printPeersTable()
@@ -55,22 +55,22 @@ class DiscoveryPeeringController(threading.Thread) :
                         "In this case the destination mac is my mac or is a broadcast packet and I am not the source" 
                         if self.my_peers.isMember(peerMACaddr = event.src_addr):
                             "In this case the peer link exists in the peers table"
-                            print "Evento 1: ", event,'  my mac: ',self.my_addr, '\n'
-                            self.my_peers.printPeersTable()                
+                            #print "Evento 1: ", event,'  my mac: ',self.my_addr, '\n'
+                            #self.my_peers.printPeersTable()                
                             sm= self.my_peers.getSM(peerMACaddr= event.src_addr)
                             self.my_peers.updatePeerLinkId(event.src_addr, event.peerlinkId)
                             self.moveFSM(event,sm)
                             self.my_peers.printPeersTable()
                         else:
                             " In this case the peer link does not exist in the peer table "
-                            print "Evento 2: ", event,'  my mac: ',self.my_addr,'\n'
-                            self.my_peers.printPeersTable()
+                            #print "Evento 2: ", event,'  my mac: ',self.my_addr,'\n'
+                            #self.my_peers.printPeersTable()
                             self.local_linkId = self.local_linkId +1
                             self.my_peers.add(event.src_addr, self.my_queue, self.tx_event_q,self.net_conf,self.local_linkId,event.peerlinkId)
                             self.net_conf.number_of_peering = self.net_conf.number_of_peering+1                
                             sm= self.my_peers.getSM(peerMACaddr = event.src_addr)
                             self.moveFSM(event,sm)
-                            print "Evento 3: ", event,'  my mac: ',self.my_addr,'\n'
+                            #print "Evento 3: ", event,'  my mac: ',self.my_addr,'\n'
                             self.my_peers.printPeersTable()
                     else:
                         print "Error: wrong MAC address, destination address:",  event.dst_addr, " source address : ", event.src_addr               

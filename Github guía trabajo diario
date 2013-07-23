@@ -1,0 +1,24 @@
+Guía Github diaria
+
+
+Trabajo diario
+Lo que hacemos todos los días al trabajar en el proyecto.
+
+1. Actualizar local.
+Trasladarse al directorio local del proyecto.
+Bajar al directorio local las modificaciones recientes:
+  git pull gn master   # indicates 'master' branch
+  git remote show gn   # muestra el estado
+
+2. Trabajo local.
+Modificar, crear archivos, etc.
+
+3. Preparar envío de modificaciones locales (commit).
+  git commit -a -m ‘mensaje’
+Sugerencia para formato de mensaje: ‘nombre_módulo: modificaciones’
+Recordar:
+archivos nuevos requieren 'git add'; puede hacerse para modificados también;
+haciendo 'commit -a' hace el commit de los modificados automáticamente, pero no de los nuevos, que requieren 'add' específico.
+
+3. Subir las modificaciones:
+  git push gn master

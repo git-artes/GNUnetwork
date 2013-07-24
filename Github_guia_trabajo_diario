@@ -12,6 +12,8 @@ Bajar al directorio local las modificaciones recientes:
 Modificar, crear archivos, etc.
 
 3. Preparar envío de modificaciones locales (commit).
+  git add <nombre_archivo>
+agrega <nombre_archivo> al grupo de archivos a enviar; requerido para archivos nuevos.
   git commit -a -m ‘mensaje’
 Sugerencia para formato de mensaje: ‘nombre_módulo: modificaciones’
 Recordar:

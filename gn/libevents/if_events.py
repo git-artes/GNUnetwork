@@ -11,8 +11,8 @@ import events as events
 def mkevent(pnickname=None, pframe=None):
     '''Creates an event froma nickname or from a frame.
     
-    @param nickname: the event nickname.
-    @param frame: a frame in bin dta format (confirm!)
+    @param pnickname: the event nickname.
+    @param pframe: a frame in bin dta format (confirm!)
     @return: an Event object.
     '''
     if not pnickname and not pframe:
@@ -59,3 +59,5 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         pass
         
+
+

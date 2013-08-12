@@ -16,7 +16,6 @@ import types
 
 sys.path = sys.path + ['..']
 
-from libframes import mac_api
 #from libframes.mac_frcl import dc_type2str, dc_stype2str
 #from libframes.mac_frcl import dc_type2num, dc_type2str, dc_stype2num, dc_stype2str
 
@@ -74,9 +73,8 @@ class EventFrameMgmt(EventFrame):
     Event class name: EventFrameMgmt
       Nickname: 'ActionOpen'; Type: 'Mgmt'; SubType: 'Action'
       Peer link Id: 0
-      
-    @param peer_linkId: the link Id defined by the peer.
     '''
+
     def __init__(self, pnickname, ptype, psubtype, pfrmpkt='', peerlinkId=0):
         '''Constructor.
         
@@ -84,7 +82,7 @@ class EventFrameMgmt(EventFrame):
         @param ptype: frame event type.
         @param psubtype: frame event subtype.
         @param pfrmpkt: a packed frame in bin format, as for transmission.
-        @param peer_linkId: the link Id defined by the peer.
+        @param peerlinkId: the link Id defined by the peer.
         '''
         EventFrame.__init__(self, pnickname, ptype, psubtype, pfrmpkt='')
         self.peerlinkId = peerlinkId

@@ -9,14 +9,14 @@ see the example function to understand how the FSM is used in practice.
 
 You define an FSM by building tables of transitions. For a given input symbol
 the process() method uses these tables to decide what action to call and what
-the next state will be. The FSM has a table of transitions that associate:
+the next state will be. The FSM has a table of transitions that associate::
 
         (input_symbol, current_state) --> (action, next_state)
 
 Where "action" is a function you define. The symbols and states can be any
 objects. You use the add_transition() and add_transition_list() methods to add
 to the transition table. The FSM also has a table of transitions that
-associate:
+associate::
 
         (current_state) --> (action, next_state)
 
@@ -33,7 +33,7 @@ For parsing you would typically pass a list to be used as a stack.
 
 The processing sequence is as follows. The process() method is given an
 input_symbol to process. The FSM will search the table of transitions that
-associate:
+associate::
 
         (input_symbol, current_state) --> (action, next_state)
 
@@ -41,7 +41,7 @@ If the pair (input_symbol, current_state) is found then process() will call the
 associated action function and then set the current state to the next_state.
 
 If the FSM cannot find a match for (input_symbol, current_state) it will then
-search the table of transitions that associate:
+search the table of transitions that associate::
 
         (current_state) --> (action, next_state)
 
@@ -112,7 +112,7 @@ class FSM:
 
     def add_transition (self, input_symbol, state, action=None, next_state=None):
 
-        """This adds a transition that associates:
+        """This adds a transition that associates::
 
                 (input_symbol, current_state) --> (action, next_state)
 
@@ -145,7 +145,7 @@ class FSM:
 
     def add_transition_any (self, state, action=None, next_state=None):
 
-        """This adds a transition that associates:
+        """This adds a transition that associates::
 
                 (current_state) --> (action, next_state)
 
@@ -184,17 +184,17 @@ class FSM:
         The sequence of steps to check for a defined transition goes from the
         most specific to the least specific.
 
-        1. Check state_transitions[] that match exactly the tuple,
+            1. Check state_transitions[] that match exactly the tuple,
             (input_symbol, state)
 
-        2. Check state_transitions_any[] that match (state)
+            2. Check state_transitions_any[] that match (state)
             In other words, match a specific state and ANY input_symbol.
 
-        3. Check if the default_transition is defined.
+            3. Check if the default_transition is defined.
             This catches any input_symbol and any state.
             This is a handler for errors, undefined states, or defaults.
 
-        4. No transition was defined. If we get here then raise an exception.
+            4. No transition was defined. If we get here then raise an exception.
         """
 
         if self.state_transitions.has_key((input_symbol, state)):

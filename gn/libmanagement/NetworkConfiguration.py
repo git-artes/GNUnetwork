@@ -7,44 +7,25 @@ Created on Fri Dec  7 14:23:26 2012
 
 class NetworkConfiguration :
     """ This class represents the actual network configuration"""
-    def __init__(self,station_id,net_id,broadcast_addr,beacon_period=20,number_of_peering=0,accepting_additional_peerings=True,max_retry=6,retry_timeout=20,confirm_timeout=20,holding_timeout=40, active_path_selection_protocol=1,active_path_selection_metric=1,forwarding=True,TTL=31,active_congestion_control_mode=0,active_syn_method=1):
+    def __init__(self, station_id, net_id, broadcast_addr, beacon_period=20, number_of_peering=0, accepting_additional_peerings=True, max_retry=6, retry_timeout=20, confirm_timeout=20, holding_timeout=40, active_path_selection_protocol=1, active_path_selection_metric=1, forwarding=True, TTL=31, active_congestion_control_mode=0, active_syn_method=1):
         '''  
-        Constructor
+        Constructor.
         
         @param station_id: MAC ADDRESS        
-        
         @param net_id:  OCTET STRING, max 32
-
         @param broadcast_addr: MAC BROADCAST ADDRESS        
-        
         @param beacon_period: INTEGER, number of time units (1024 microseconds) between beacons, DEFAULT = 40.       
-        
-        @param number_of_peering:  Unsigned32, indicates the number of mesh peering currently maintained
-by the STA,DEFAULT = 0.
-
-        @param accepting_additional_peerings: TruthValue,indicates whether the station is willing to accept additional
-peerings, DEFAULT = True.
-
-        @param max_retries: Unsigned32, specifies the maximum number of Peering Open retries
-that can be sent to establish a new  peering instance, DEFAULT =2.
-
-        @param retry_timeout: Unsigned32, specifies the initial retry timeout, in millisecond units,
-used by the Peering Open message, DEFAULT = 40.
-
-        @param confirm_timeout: Unsigned32, specifies the initial confirm timeout, in millisecond units,
-used waiting for a Peering Confirm message, DEFAULT = 40.
-
-        @param active_path_selection_protocol: INTEGER { hwmp (1), vendorSpecific (255) }, indicates the active path selection protocol, DEFAULT =1.
-        
+        @param number_of_peering:  Unsigned32, indicates the number of mesh peering currently maintained by the STA,DEFAULT = 0.
+        @param accepting_additional_peerings: TruthValue,indicates whether the station is willing to accept additional peerings, DEFAULT = True.
+        @param max_retry: Unsigned32, specifies the maximum number of Peering Open retries that can be sent to establish a new  peering instance, DEFAULT = 2.
+        @param retry_timeout: Unsigned32, specifies the initial retry timeout, in millisecond units, used by the Peering Open message, DEFAULT = 40.
+        @param confirm_timeout: Unsigned32, specifies the initial confirm timeout, in millisecond units, used waiting for a Peering Confirm message, DEFAULT = 40.
+        @param active_path_selection_protocol: INTEGER { hwmp (1), vendorSpecific (255) }, indicates the active path selection protocol, DEFAULT = 1.
         @param active_path_selection_metric: INTEGER { airtimeLinkMetric (1), vendorSpecific (255) }, indicates the active path selection metric, DEFAULT = 1.
-       
         @param forwarding: TruthValue, specifies the ability of a mesh STA to forward MSDUs, DEFAULT = TRUE.
-        
         @param TTL: Unsigned32, specifies the value of TTL subfield set at a source STA.DEFAULT = 31.
-        
-        @param active_congestion_control_mode: INTEGER {null (0),congestionControlSignaling (1), vendorSpecific (255) }, DEFAULT =0.
-        
-        @param active_syn_method: INTEGER { neighborOffsetSynchronization (1), vendorSpecific (255) }, DEFAULT =1.
+        @param active_congestion_control_mode: INTEGER {null(0), congestionControlSignaling (1), vendorSpecific (255) }, DEFAULT = 0.
+        @param active_syn_method: INTEGER { neighborOffsetSynchronization (1), vendorSpecific (255) }, DEFAULT = 1.
         '''
         self.station_id = station_id
         self.broadcast_addr = broadcast_addr
@@ -103,3 +84,5 @@ if __name__ == '__main__':
         test()
     except KeyboardInterrupt:
         pass
+
+

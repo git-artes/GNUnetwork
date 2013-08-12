@@ -63,27 +63,46 @@
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
 <h1 class="epydoc">Class Frame</h1><p class="nomargin-top"><span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">Frame</strong>
+</pre>
+
 <dl><dt>Known Subclasses:</dt>
 <dd>
       <ul class="subclass-list">
-<li><a href="gn.libframes.mac_data.DATAframe-class.html">mac_data.DATAframe</a></li><li>, <a href="gn.libframes.mac_frcl.FCframe-class.html">mac_frcl.FCframe</a></li><li>, <a href="gn.libframes.mac_mgmt.ActionFrameBody-class.html">mac_mgmt.ActionFrameBody</a></li><li>, <a href="gn.libframes.mac_mgmt.BeaconFrameBody-class.html">mac_mgmt.BeaconFrameBody</a></li><li>, <a href="gn.libframes.mac_ctrl.ACKframe-class.html">mac_ctrl.ACKframe</a></li><li>, <a href="gn.libframes.mac_ctrl.CTSframe-class.html">mac_ctrl.CTSframe</a></li><li>, <a href="gn.libframes.mac_ctrl.RTSframe-class.html">mac_ctrl.RTSframe</a></li>  </ul>
+<li><a href="gn.libframes.mac_frmbld.AFrame-class.html">mac_frmbld.AFrame</a></li><li>, <a href="gn.libframes.mac_frmbld.AFrameBody-class.html">mac_frmbld.AFrameBody</a></li><li>, <a href="gn.libframes.mac_frmbld.AFrameControl-class.html">mac_frmbld.AFrameControl</a></li>  </ul>
 </dd></dl>
 
 <hr />
 <p>A class to represent a general data communication frame or packet.</p>
   <p>An instantiation of this class with adequate values in member 
   variables will represent a particular type of frame, such as a MAC frame,
-  of the Frame Control field of a MAC frame, or any other type of frame. 
+  or the Frame Control field of a MAC frame, or any other type of frame. 
   This class assumes a frame is a sequence of bytes which can be decomposed
   in a series of fields where different type of data are contained. Some 
   variable members in this class describe these fields, and some others 
   record the actual values for each field. This class allows the packing of
   data into a frame, and the unpacking of data from a frame. Field 
   frontiers may be byte or bit defined; a variable member defines this.</p>
-  <p>TODO: for bit fields, there may be a limit size; verify this, state 
-  limit.</p>
 
-<!-- ==================== INSTANCE METHODS ==================== -->
+<hr />
+<div class="fields">      <strong>To Do:</strong>
+      <ul class="nomargin-top">
+        <li>
+        for bit fields, there may be a limit size; verify this, state limit.
+        </li>
+        <li>
+        check these lengths for redundancy! Some may be calculated.
+        </li>
+      </ul>
+      <p><strong>Warning:</strong>
+        not totally independent of frame structure. For instance, assumes 
+        FCS field of 4 bytes at end of frame; this is used to adjust length
+        in frame body for data of variable length loaded in frame body.
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
@@ -106,15 +125,8 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__init__"></a><span class="summary-sig-name">__init__</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">bitbyte</span>,
-        <span class="summary-sig-arg">frame_len</span>,
-        <span class="summary-sig-arg">mask_len</span>,
-        <span class="summary-sig-arg">ls_fields</span>,
-        <span class="summary-sig-arg">dc_fields</span>,
-        <span class="summary-sig-arg">max_frame_len</span>=<span class="summary-sig-default">40</span>,
-        <span class="summary-sig-arg">dc_fldvals</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Constructor.</td>
+          <td><span class="summary-sig"><a href="gn.libframes.frames.Frame-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      x.__init__(...) initializes x; see help(type(x)) for signature</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.__init__">source&nbsp;code</a></span>
             
@@ -130,10 +142,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="gn.libframes.frames.Frame-class.html#consistchk" class="summary-sig-name">consistchk</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Run a consistency check on var members.</td>
+          <td><span class="summary-sig"><a href="gn.libframes.frames.Frame-class.html#mkdcfields" class="summary-sig-name">mkdcfields</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">dc_fields</span>)</span><br />
+      Makes dictionary of field structure using named tuples as values.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.consistchk">source&nbsp;code</a></span>
+            <span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.mkdcfields">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -165,11 +178,64 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="gn.libframes.frames.Frame-class.html#mkdcfields" class="summary-sig-name">mkdcfields</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">dc_fields</span>)</span><br />
-      Makes a dictionary of field structure using named tuples as values.</td>
+          <td><span class="summary-sig"><a href="gn.libframes.frames.Frame-class.html#consistchk" class="summary-sig-name">consistchk</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Run a consistency check on var members.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.mkdcfields">source&nbsp;code</a></span>
+            <span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.consistchk">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="gn.libframes.frames.Frame-class.html#setfrmbdy" class="summary-sig-name">setfrmbdy</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">new_frmbdy</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Set new frame body, adjust frame body template.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.setfrmbdy">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="gn.libframes.frames.Frame-class.html#updtfldvals" class="summary-sig-name">updtfldvals</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">dc_fldvals</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Update frame with new values.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.updtfldvals">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="gn.libframes.frames.Frame-class.html#mkpkt" class="summary-sig-name">mkpkt</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">dbg</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Convert this frame into binary data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.mkpkt">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -220,10 +286,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="gn.libframes.frames.Frame-class.html#mkpkt" class="summary-sig-name">mkpkt</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Convert this frame into binary data.</td>
+          <td><span class="summary-sig"><a href="gn.libframes.frames.Frame-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Show all object attributes.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.mkpkt">source&nbsp;code</a></span>
+            <span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.__str__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -231,57 +297,21 @@
       
     </td>
   </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="prt_dc_fields"></a><span class="summary-sig-name">prt_dc_fields</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Print dictionary of {field: template}.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.prt_dc_fields">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="gn.libframes.frames.Frame-class.html#prt_dc_fldvals" class="summary-sig-name">prt_dc_fldvals</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">dc_fldvals</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Print dictionary of {field: value}.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.prt_dc_fldvals">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="gn.libframes.frames.Frame-class.html#updtfldvals" class="summary-sig-name">updtfldvals</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">dc_fldvals</span>)</span><br />
-      Update frame with new values.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.updtfldvals">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__subclasshook__</code>
+      </p>
     </td>
   </tr>
 </table>
@@ -307,8 +337,7 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a name="bitbyte"></a><span class="summary-name">bitbyte</span><br />
-      if 'bytes', fields are extracted as bytes; if 'bits' fields are 
-      extracted as bits.
+      'bits' or 'bytes', indicates how this frame will be parsed.
     </td>
   </tr>
 <tr>
@@ -324,15 +353,14 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a href="gn.libframes.frames.Frame-class.html#dc_fields" class="summary-name">dc_fields</a><br />
-      dc_fields: a dictionary {field: tuple}, tuple defines field 
-      structure.
+      a dictionary {field: tuple}, tuple defines field structure.
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="gn.libframes.frames.Frame-class.html#dc_fldvals" class="summary-name">dc_fldvals</a><br />
+        <a name="dc_fldvals"></a><span class="summary-name">dc_fldvals</span><br />
       a dictionary {field: value}; the key is the field name, value is the 
       content in bytes of this field.
     </td>
@@ -350,7 +378,8 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a name="ls_fields"></a><span class="summary-name">ls_fields</span><br />
-      a list of field names used to display them in a usual order.
+      a list of field names used to display or process them in the usual 
+      order.
     </td>
   </tr>
 <tr>
@@ -358,7 +387,7 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a name="mask_len"></a><span class="summary-name">mask_len</span><br />
-      length of mask ( [fixed length] frame in bytes).
+      length of mask, for bit fields.
     </td>
   </tr>
 <tr>
@@ -367,6 +396,31 @@
     </td><td class="summary">
         <a name="max_frame_len"></a><span class="summary-name">max_frame_len</span><br />
       maximum admitted frame length.
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
     </td>
   </tr>
 </table>
@@ -388,24 +442,53 @@
   </td>
 </tr>
 </table>
-<a name="consistchk"></a>
+<a name="__init__"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">consistchk</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.consistchk">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Run a consistency check on var members.</p>
+  <p>x.__init__(...) initializes x; see help(type(x)) for signature</p>
   <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>True if success, False if errors.</dd>
+    <dt>Overrides:
+        object.__init__
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="mkdcfields"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">mkdcfields</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">dc_fields</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.mkdcfields">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Makes dictionary of field structure using named tuples as values.</p>
+  <p>Stores dictionary as instance attribute in object 
+  (self._dc_fields).</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>dc_fields</code></strong> - a dictionary {field: tuple}, tuple defines field structure.</li>
+    </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -430,32 +513,118 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>fillchr</code></strong> - the fill character, defaults to '0'.</li>
+        <li><strong class="pname"><code>fillchr</code></strong> - the fill character, defaults to '0' for bytes, 0 for bits.</li>
     </ul></dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="mkdcfields"></a>
+<a name="consistchk"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">mkdcfields</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">dc_fields</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">consistchk</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.mkdcfields">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.consistchk">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Makes a dictionary of field structure using named tuples as 
-  values.</p>
+  <p>Run a consistency check on var members.</p>
+  <p>Verifies:</p>
+  <ul>
+    <li>
+      if keys in dc_fldvals have descriptions in dc_fields.
+    </li>
+    <li>
+      lengths in frame and fields.
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="gn.libframes.frames.FrameException-class.html">FrameException</a></strong></code> - on consistency errors.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setfrmbdy"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setfrmbdy</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">new_frmbdy</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.setfrmbdy">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Set new frame body, adjust frame body template.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>dc_fields</code></strong> - a dictionary {field: tuple}, tuple defines field structure.</li>
+        <li><strong class="pname"><code>new_frmbdy</code></strong> - new frame body, even if it is the null string. If None, returns 
+          with no action.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="updtfldvals"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">updtfldvals</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">dc_fldvals</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.updtfldvals">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Update frame with new values.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>dc_fldvals</code></strong> - a dictionary {field: value}.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="mkpkt"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">mkpkt</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">dbg</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.mkpkt">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Convert this frame into binary data.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>dbg</code></strong> - debug, if True prints info on each field packing.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>a string of binary data (a packet).</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="gn.libframes.frames.FrameException-class.html">FrameException</a></strong></code> - on errors in field template, lengths.</li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -476,8 +645,7 @@
   </tr></table>
   
   <p>Make dictionary {field: value}.</p>
-  <p>This function returns a dictionary {field: value}, does not update var
-  member dictionary.</p>
+  <p>This function returns a dictionary {field: value}.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -486,7 +654,10 @@
     <dt>Returns:</dt>
         <dd>a dictionary of {field: value}.</dd>
   </dl>
-</td></tr></table>
+<div class="fields">      <p><strong>Warning:</strong>
+        does not automatically update var member dictionary.
+      </p>
+</div></td></tr></table>
 </div>
 <a name="mkhexfl"></a>
 <div>
@@ -509,7 +680,8 @@
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>fname</code></strong> - a file name.</li>
+        <li><strong class="pname"><code>fname</code></strong> - a file name with no extensions, 'bin' and 'hex' added by 
+          function.</li>
         <li><strong class="pname"><code>data</code></strong> - a string as produced by mkpkt().</li>
     </ul></dd>
     <dt>Returns:</dt>
@@ -517,73 +689,26 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="mkpkt"></a>
+<a name="__str__"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">mkpkt</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__str__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Informal representation operator)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.mkpkt">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.__str__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Convert this frame into binary data.</p>
+  <p>Show all object attributes.</p>
   <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>a string of binary data (a packet).</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="prt_dc_fldvals"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">prt_dc_fldvals</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">dc_fldvals</span>=<span class="sig-default">None</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.prt_dc_fldvals">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Print dictionary of {field: value}.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>dc_fldvals</code></strong> - optional dictionary {field: value} to print; if None var member 
-          (self) dictionary is printed.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="updtfldvals"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">updtfldvals</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">dc_fldvals</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="gn.libframes.frames-pysrc.html#Frame.updtfldvals">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Update frame with new values.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>dc_fldvals</code></strong> - a dictionary {field: value}.</li>
-    </ul></dd>
+    <dt>Overrides:
+        object.__str__
+    </dt>
   </dl>
 </td></tr></table>
 </div>
@@ -612,26 +737,15 @@
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <h3 class="epydoc">dc_fields</h3>
-  dc_fields: a dictionary {field: tuple}, tuple defines field structure. 
-  The dictionary of fields in frame describes the position, structure, and 
-  type of data kept in each field. Key is field name, value is a named 
-  tuple (begin, end, inv, type of data, bitmask); bitmask is used to 
-  extract bit fields; begin, end indicate positions of field in packed 
-  frame; inv is True if bits or bytes in field must be inverted for packing
-  and unpacking; type indicates on which type each field is to be unpacked.
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="dc_fldvals"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">dc_fldvals</h3>
-  a dictionary {field: value}; the key is the field name, value is the 
-  content in bytes of this field. [Check these lengths for redundancy! Some
-  may be calculated.]
+  a dictionary {field: tuple}, tuple defines field structure. The 
+  dictionary of fields in frame describes the position, structure, and type
+  of data kept in each field. Key is field name, value is a named tuple <a 
+  href="gn.libframes.frames.FieldTemplate-class.html" 
+  class="link">FieldTemplate</a> including (begin, end, inv, type of data, 
+  bitmask); bitmask is used to extract bit fields; begin, end indicate 
+  positions of field in packed frame; inv is True if bits or bytes in field
+  must be inverted for packing and unpacking; type indicates on which type 
+  each field is to be unpacked.
   <dl class="fields">
   </dl>
 </td></tr></table>
@@ -668,7 +782,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon May 20 11:51:15 2013
+    Generated by Epydoc 3.0.1 on Mon Aug 12 12:30:46 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

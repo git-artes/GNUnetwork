@@ -1,68 +1,61 @@
 ====
-==== mac_mgmt.txt : a doctest file for MAC management formats.
+==== mac_mgmt.txt : a doctest file for MAC Management frames.
 ====
 
 >>> import os
+>>> import mac_frmbld, mac_frmspecs
 
-== Test for a beacon frame
+=== Beacon frames
 
->>> import mac_mgmt
->>> import mac_api
+>>> be_ob1 = mac_frmbld.AMgmtFrame('Beacon')
+>>> print be_ob1
+Frame type  : Beacon
+Bit or bytes: bytes
+Frame length: 86
+frame_ctrl: bytes, no bitmask   0    2  False     !H :  32768
+  duration: bytes, no bitmask   2    4  False     !H :  0
+ address_1: bytes, no bitmask   4   10  False    !6s :  'dt-ad1-'
+ address_2: bytes, no bitmask  10   16  False    !6s :  'dt-ad2-'
+ address_3: bytes, no bitmask  16   22  False    !6s :  'dt-ad3-'
+  seq_ctrl: bytes, no bitmask  22   24  False     !H :  0
+frame_body: bytes, no bitmask  24   82  False   !58s :  '\x00\x00\x00\x00\x00\x00\x00\x01\x00\x01\x00\x01\x00 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS------------'
+       fcs: bytes, no bitmask  -4   86  False     !I :  0
+<BLANKLINE>
 
-A dictionary with an object for each type of frame:
->>> dc_frmobjs = mac_api.mkdcfrmobjs()
->>> print dc_frmobjs.keys()
-['CTS', 'ACK', 'Beacon', 'FC', 'RTS', 'Action', 'DATA']
+Set field values for fields packed in frame body
+>>> dc_frbd_fldvals = {'Timestamp':11, 'BeaconInterval':12, 'CapabilitiesInfo':13, 'SSID':'el Ssid Campeador!'.ljust(34, '-'), 'SupportedRates':'supp rates'.ljust(12,'-') }
 
-Makes beacon frame body
->>> import mac_mgmt
->>> bfb = mac_mgmt.BeaconFrameBody()
->>> bfbpk = bfb.mkpkt()
->>> bfbpk
-'\x00\x00\x00\x00\x00\x00\x00\x01\x00\x14\x00\x00\x00 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS\x01\nRRRRRRRRRR'
+>>> be_ob2 = mac_frmbld.AMgmtFrame('Beacon', dc_frbd_fldvals=dc_frbd_fldvals)
 
-Makes beacon frame, inserts beacon frame body into frame_body field.
->>> bf = mac_api.mkfrpkt('Beacon', dc_frmobjs, fr_dc_fldvals={'frame_body':bfbpk})
->>> bf
-'\x80\x00\x00\x00dt-ad1dt-ad2dt-ad3\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x14\x00\x00\x00 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS\x01\nRRRRRRRRRR\x00\x00\x00\x00'
+>>> print be_ob2._fb_obj
+Frame type  : FrameBody
+Bit or bytes: bytes
+Frame length: 58
+ Timestamp: bytes, no bitmask   0    8  False     !Q :  11
+BeaconInterval: bytes, no bitmask   8   10  False     !H :  12
+CapabilitiesInfo: bytes, no bitmask  10   12  False     !H :  13
+      SSID: bytes, no bitmask  12   46  False   !34s :  'el Ssid Campeador!----------------'
+SupportedRates: bytes, no bitmask  46   58  False   !12s :  'supp rates--'
+<BLANKLINE>
 
-Use same beacon frame, setting field values.
->>> bf1 = mac_api.mkfrpkt('Beacon', dc_frmobjs, fr_dc_fldvals={'frame_body':bfbpk}, fc_dc_fldvals={'Retry':45})
->>> bf1
-'\x81h\x00\x00dt-ad1dt-ad2dt-ad3\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x14\x00\x00\x00 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS\x01\nRRRRRRRRRR\x00\x00\x00\x00'
->>> bf1 = mac_api.mkfrpkt('Beacon', dc_frmobjs, fr_dc_fldvals={'frame_body':bfbpk}, fc_dc_fldvals={'Retry':0})
->>> bf1 == bf
-True
+>>> ret = be_ob1.mkhexfl('aux/pk_mgmt_be1')
+>>> ret = be_ob2.mkhexfl('aux/pk_mgmt_be2')
+>>> ret = os.system('cat aux/pk_mgmt_???.hex > aux/pk_mgmt.hex')
+>>> ret = os.system('rm aux/pk_mgmt_???.*')
 
->>> f= open('aux/pk_beacon1.bin', 'w'); f.write(bf1); f.close()
->>> os.system('cat ./aux/pk_beacon1.bin | od -Ax -tx1 -v > ./aux/pk_beacon1.hex')
-0
-
-
-Change values in beacon frame body;
->>> bfb.updtfldvals({'Timestamp':2, 'BeaconInterval':40, 'SSID':chr(0) + chr(32) + 'The SSID for this packet--------'})
->>> bfb.prt_dc_fldvals()
- Timestamp: 2
-BeaconInterval: 40
-CapabilitiesInfo: 0
-      SSID:  The SSID for this packet--------
-SupportedRates: 
-RRRRRRRRRR
-
->>> bfbpk = bfb.mkpkt()
->>> len(bfbpk), bfbpk
-(58, '\x00\x00\x00\x00\x00\x00\x00\x02\x00(\x00\x00\x00 The SSID for this packet--------\x01\nRRRRRRRRRR')
-
-Insert beacon frame body into beacon packet:
->>> bf2 = mac_api.mkfrpkt('Beacon', dc_frmobjs, fr_dc_fldvals={'frame_body':bfbpk})
->>> len(bf2), bf2
-(86, '\x80\x00\x00\x00dt-ad1dt-ad2dt-ad3\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00(\x00\x00\x00 The SSID for this packet--------\x01\nRRRRRRRRRR\x00\x00\x00\x00')
-
->>> f = open('aux/pk_beacon2.bin', 'w'); f.write(bf2); f.close()
->>> os.system('cat ./aux/pk_beacon2.bin | od -Ax -tx1 -v > ./aux/pk_beacon2.hex')
-0
-
->>> os.system('cat ./aux/pk_beacon[12].hex > aux/pk_beacons.hex')
-0
-
+>>> ob1 = mac_frmbld.mkfrmobj(be_ob1.mkpkt())
+>>> print ob1
+Frame type  : Beacon
+Bit or bytes: bytes
+Frame length: 86
+frame_ctrl: bytes, no bitmask   0    2  False     !H :  32768
+  duration: bytes, no bitmask   2    4  False     !H :  0
+ address_1: bytes, no bitmask   4   10  False    !6s :  'dt-ad1'
+ address_2: bytes, no bitmask  10   16  False    !6s :  'dt-ad2'
+ address_3: bytes, no bitmask  16   22  False    !6s :  'dt-ad3'
+  seq_ctrl: bytes, no bitmask  22   24  False     !H :  0
+frame_body: bytes, no bitmask  24   82  False   !58s :  '\x00\x00\x00\x00\x00\x00\x00\x01\x00\x01\x00\x01\x00 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS------------'
+       fcs: bytes, no bitmask  -4   86  False     !I :  0
+<BLANKLINE>
+    
 

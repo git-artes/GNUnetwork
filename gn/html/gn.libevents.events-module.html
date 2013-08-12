@@ -108,6 +108,14 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
+        <a href="gn.libevents.events.EventFrameMgmt-class.html" class="summary-name">EventFrameMgmt</a><br />
+      An event associated with a management frame.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
         <a href="gn.libevents.events.EventTimer-class.html" class="summary-name">EventTimer</a><br />
       An event associated with a timer.
     </td>
@@ -178,25 +186,18 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="gn.libevents.events-module.html#dc_nicknames" class="summary-name">dc_nicknames</a> = <code title="{'ActionClose': ('Mgmt',
-                 'Action',
-                 &lt;class gn.libevents.events.EventFrame at 0xa12fe3c&gt;),
- 'ActionConfirm': ('Mgmt',
-                   'Action',
-                   &lt;class gn.libevents.events.EventFrame at 0xa12fe3c&gt;\
-),
- 'ActionOpen': ('Mgmt', 'Action', &lt;class gn.libevents.events.EventFram\
-..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ActionClose</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">, </code>&lt;class gn.li<code class="variable-ellipsis">...</code></code><br />
+        <a href="gn.libevents.events-module.html#dc_nicknames" class="summary-name">dc_nicknames</a> = <code title="{'CtrlRTS':('Ctrl', 'RTS', EventFrame), 'CtrlCTS':('Ctrl', 'CTS', Even\
+tFrame), 'CtrlACK':('Ctrl', 'ACK', EventFrame), 'DataData':('Data', 'D\
+ata', EventFrame), 'ActionOpen':('Mgmt', 'Action', EventFrameMgmt), 'A\
+ctionClose':('Mgmt', 'Action', EventFrameMgmt), 'ActionConfirm':('Mgmt\
+', 'Action', EventFrameMgmt), 'MgmtBeacon':('Mgmt', 'Beacon', EventFra\
+meMgmt), 'TimerTOH':('Timer', 'TOH', EventTimer), 'TimerTOC':('Timer',\
+ 'TOC', EventTimer), 'TimerTOR1':('Timer', 'TOR1', EventTimer), 'Timer\
+TOR2':('Timer', 'TOR2', EventTimer), 'TimerTimer':('Timer', 'Timer', E\
+...">{'CtrlRTS':('Ctrl', 'RTS', EventFrame), 'CtrlCT<code class="variable-ellipsis">...</code></code><br />
       a dictionary {nickname: (type, subtype, eventclass) } of valid 
       nicknames, their corresponding type and subtype, and the class object
       used for construction.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'gn.libevents'"><code class="variable-quote">'</code><code class="variable-string">gn.libevents</code><code class="variable-quote">'</code></code>
     </td>
   </tr>
 </table>
@@ -284,14 +285,14 @@
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ActionClose</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-                 <code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-                 &lt;class gn.libevents.events.EventFrame at 0xa12fe3c&gt;<code class="variable-group">)</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">ActionConfirm</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-                   <code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-                   &lt;class gn.libevents.events.EventFrame at 0xa12fe3c&gt;<code class="variable-group"></code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-<code class="variable-group">)</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">ActionOpen</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">, </code>&lt;class gn.libevents.events.EventFram<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+{'CtrlRTS':('Ctrl', 'RTS', EventFrame), 'CtrlCTS':('Ctrl', 'CTS', Even<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+tFrame), 'CtrlACK':('Ctrl', 'ACK', EventFrame), 'DataData':('Data', 'D<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ata', EventFrame), 'ActionOpen':('Mgmt', 'Action', EventFrameMgmt), 'A<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ctionClose':('Mgmt', 'Action', EventFrameMgmt), 'ActionConfirm':('Mgmt<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+', 'Action', EventFrameMgmt), 'MgmtBeacon':('Mgmt', 'Beacon', EventFra<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+meMgmt), 'TimerTOH':('Timer', 'TOH', EventTimer), 'TimerTOC':('Timer',<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ 'TOC', EventTimer), 'TimerTOR1':('Timer', 'TOR1', EventTimer), 'Timer<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+TOR2':('Timer', 'TOR2', EventTimer), 'TimerTimer':('Timer', 'Timer', E<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
 <code class="variable-ellipsis">...</code>
 </pre></td></tr></table>
 </dd>
@@ -330,7 +331,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon May 20 11:51:15 2013
+    Generated by Epydoc 3.0.1 on Mon Aug 12 12:30:46 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

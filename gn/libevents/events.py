@@ -30,6 +30,9 @@ class Event:
             ( self.ev_nickname, self.ev_type, self.ev_subtype)
         return ss
 
+    def getname(self):
+        return self.ev_nickname
+
 
 class EventFrame(Event):
     '''An event associated with a frame.
@@ -58,6 +61,7 @@ class EventFrame(Event):
         self.dst_addr = None
         frmpkt = pfrmpkt
         return
+
     def __str__(self):
         ss = Event.__str__(self)
         ss += '\n  Src MAC addr: ' + str(self.src_addr)

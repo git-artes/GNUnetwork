@@ -8,14 +8,6 @@
 
 import threading  #, Queue
 
-#import sys
-#sys.path += ['..']
-#import libevents.events as Events
-
-
-
-
-
 
 class Scheduler(threading.Thread):
     '''Extracts elements from an input queue, adds elements to output queues.
@@ -47,14 +39,12 @@ class Scheduler(threading.Thread):
                         out_item = fn_in_item(in_item)   # exec fn, make out_item
                         out_queue.put(out_item, False)   # add to queue, don't block 
                         break
+                else:
+                    print 'Scheduler, item type not recognized:', in_item.getname()
                 self.in_queue.task_done()
+
             else:
-                pass
-            #else:
-            #    print 'Scheduler, item type not recognized:', \
-            #        item_type, in_item.getname()
-            #else:
-            #    print 'input queue empty!'
+                print 'input queue empty!'   # shows sometimes...
         else:
             print 'Scheduler, stopped'
             self.stop()
@@ -65,6 +55,7 @@ class Scheduler(threading.Thread):
     def stop(self):
         '''Stops the scheduler.
         '''
+        print 'Scheduler, in stop function'
         self.finished = True
         self._Thread__stop()
 

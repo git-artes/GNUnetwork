@@ -36,10 +36,8 @@ def test():
         'DataData':   (fn_item, data_q)  \
         }
 
-
     # create input queue
     frame_q = Queue.Queue(10)
-
 
     # put events in input queue
     for name in ['MgmtBeacon', 'CtrlRTS', 'CtrlCTS', 'DataData']:
@@ -57,7 +55,6 @@ def test():
     sch.stop()
     sch.join()
 
-
     print '\n=== Read the output queues ==='
     for nm in dc_outqueues.keys():
         (fn, qu) = dc_outqueues[nm]
@@ -72,12 +69,7 @@ def test():
 
 if __name__ == '__main__':
     try:
-        #frame_q, dc_outqueues = test()
         test()
-        #for nm in dc_outqueues.keys():
-        #    (fn, qu) = dc_outqueues[nm]
-        #    print nm, 'empty:', qu.empty()
-
     except KeyboardInterrupt:
         sys.exit()
 

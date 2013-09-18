@@ -81,25 +81,32 @@ class ieee80211mac() :
 					SRC = 0
 					return
 			backoff()
-		sendtoL1( self, event )
+		sendtoL1( event )
 		start_timer()
 		
  	def sndRTS ( self, fsm ):
 		event = events.mkevent("CtrlRTS")
 		event.src_addr=self.net_conf.station_id
 		#event.dst_addr= self.peer_addr
+		event.duration=0;
+		snd_frame( event )
+
+ 	def sndCTS ( self, fsm ):
+		event = events.mkevent("CtrlCTS")
+		event.src_addr=self.net_conf.station_id
+		#event.dst_addr= self.peer_addr
 		snd_frame( event )
 
  	def rcvRTS ( self, fsm ):
-		updNAV()
+		self.updNAV( fsm )
 		if ( toMe() ):
-			snd_frame( CTS )
+			sndCTS( fsm );
 			start_timer()
 
  	def updNAV ( self, fsm ):
 		print 'Update NAV'
 		if ( pkt.type == RTS ):
-			waitT = 2*aSIFSTIme + CTSTime + 2*aSlotTime
+			waitT = 2*aSIFSTime + CTSTime + 2*aSlotTime
 			time.sleep( waitT )
 			NAV = currentTime()
 		else:
@@ -134,7 +141,7 @@ class ieee80211mac() :
 
  	def rcvL2 ( self, fsm ):
 		print 'Send ACK'
-		updNAV()
+		self.updNAV( fsm )
 		time.sleep( SIFS )
 		snd_frame( ACK )
 
@@ -160,6 +167,15 @@ def test():
     print "MAC START TEST 1 --------------------------------------------" 
     print "MAC STATE BEFORE PROCESS ..... ", mymac.mac_fsm.current_state
     mymac.mac_fsm.process('FRUIT')    
+    print "MAC STATE AFTER PROCESS ...... ", mymac.mac_fsm.current_state
+    print ""    
+    "---------------------------------------------------------------------------------------"
+
+    "TEST 1: ON IDLE RECEIVE .... AND .... "
+    print ""
+    print "MAC START TEST 1 --------------------------------------------" 
+    print "MAC STATE BEFORE PROCESS ..... ", mymac.mac_fsm.current_state
+    mymac.mac_fsm.process('RTS')    
     print "MAC STATE AFTER PROCESS ...... ", mymac.mac_fsm.current_state
     print ""    
     "---------------------------------------------------------------------------------------"

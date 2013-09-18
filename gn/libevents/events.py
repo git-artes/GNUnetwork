@@ -59,6 +59,7 @@ class EventFrame(Event):
         self.ev_subtype = psubtype
         self.src_addr = None
         self.dst_addr = None
+        self.duration = None
         frmpkt = pfrmpkt
         return
 

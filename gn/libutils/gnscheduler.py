@@ -10,45 +10,42 @@ import threading  #, Queue
 
 
 class Scheduler(threading.Thread):
-    '''Extracts elements from an input queue, adds elements to output queues.
+    '''Gets elements from input queues, processes, puts elements in output queues.
     
-    This scheduler extracts elements from an input queue, and according to the element type applies a procedure, eventually creates other elements of potentially different types, and places them in one or more output queues.
+    This scheduler gets one element from one of several input queues, and puts elements in one or several output queues. Behaviour is regulated by a scheduling function which is expected to be overwritten when subclassing this class. Selection of input queue to get element from, processing, creation of one or more elements of same or different type, and putting elements in output queues are all regulated by this scheduling function.
     '''
-    def __init__(self, in_queue, dc_outqueues):
+ 
+    def __init__(self, in_queues, dc_outqueues):
         '''Constructor.
         
-        @param in_queue: the input queue from which items are extracted. Items in the input queue must contain a function getname() to classify.
-        @param dc_outqueues: a dictionary of {item_type: (function, output_queue)}. The item_type is a string; the function returns an element to put in the output queue.
+        @param in_queues: an input queue of a list of input queues from which items are extracted.
+        @param dc_outqueues: a dictionary of key nm_queue, the name of an output; value may be a queue, a tuple (function, queue) or other structure to be processed by the scheduling function fn_sched, which must be overwritten in a subclass.
         '''
         threading.Thread.__init__(self)
         self.daemon = True
         self.finished = False
-        self.in_queue = in_queue
-        self.dc_outqueues = dc_outqueues
+        if type(in_queues) is list:        # accept a list of queues, or a single queue
+            self.in_queues = in_queues
+        else:
+            self.in_queues = [in_queues]
+        self.dc_outqueues = dc_outqueues    # output queues in a dictionary
+        return
+
+    def fn_sched(self):
+        pass
+        return
+
 
     def run(self):
         '''Runs the scheduler until stopped.
         '''
         while not self.finished:
-            if not self.in_queue.empty():
-                in_item = self.in_queue.get()
-                for item_type in self.dc_outqueues.keys():
-                    if in_item.getname() == item_type:
-                        # function to execute, output queue
-                        fn_in_item, out_queue = self.dc_outqueues[item_type]
-                        out_item = fn_in_item(in_item)   # exec fn, make out_item
-                        out_queue.put(out_item, False)   # add to queue, don't block 
-                        break
-                else:
-                    print 'Scheduler, item type not recognized:', in_item.getname()
-                self.in_queue.task_done()
-
-            else:
-                print 'input queue empty!'   # shows sometimes...
+            self.fn_sched()
         else:
             print 'Scheduler, stopped'
             self.stop()
-        self.in_queue.join()
+        for in_qu in self.in_queues:
+            in_qu.join()
         return
 
 

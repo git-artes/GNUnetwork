@@ -4,6 +4,19 @@
 # scheduler: a generic scheduler
 
 '''Classes and Functions to implement a generic scheduler.
+
+How to use:
+  1. Create a subclass of Scheduler.
+  2. Overwrite fn_sched() in the subclass.
+  3. Write a test function to verify behavior.
+
+In class C{Scheduler}, C{in_queues} and C{out_queues} may be any structure understood by C{fn_sched()}. This function C{fn_sched()} must get items from input queues, optionally do some work, and put items in output queues.
+
+Examples of queue structures:
+  - C{{name: queue}}, a dictionary of queues identified by name.
+  - C{{priority:queue}}, a dictionary of queues by priority, 1<= priority <=10.
+  - C{[queue]}, a list of queues, e.g. to put on the shortest, or to get from the longest.
+  - C{{name: (function, queue)}}, a dictionary of tuples; name identifies queue, function is a task to perform specific to one queue. The function may even produce a different item to put in queue.
 '''
 
 import threading

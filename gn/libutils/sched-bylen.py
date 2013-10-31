@@ -5,11 +5,11 @@
 #
 
 
-'''An example scheduler based on item types.
+'''An example scheduler to output on shortest queue.
 '''
 
 import sys
-sys.path += ['..']
+#sys.path += ['..']
 import Queue
 import time
 
@@ -46,7 +46,7 @@ class SchedShort(Scheduler):
                 out_item = in_item                     # or do something
                 out_qu_short.put(out_item, False)      # add to queue, don't block 
                 in_qu.task_done()
-                time.sleep(1)
+                #time.sleep(1)
 
             else:
                 print 'Input queue empty'
@@ -60,19 +60,20 @@ def test():
     '''
 
     inqu_a, inqu_b = Queue.Queue(), Queue.Queue()
-    for it in ['a'+str(i) for i in range(1, 16)]:
+    for it in ['a'+str(i) for i in range(1, 12)]:
         inqu_a.put(it)
-    for it in ['b'+str(i) for i in range(1, 12)]:
+    for it in ['b'+str(i) for i in range(1, 10)]:
         inqu_b.put(it)
     in_queues = [inqu_a, inqu_b]
         
     outqu_1, outqu_2, outqu_3 = Queue.Queue(), Queue.Queue(), Queue.Queue()
-    for it in ['o'+str(i) for i in range(1, 5)]:
+    for it in ['o'+str(i) for i in range(1, 7)]:
         outqu_2.put(it)
-    for it in ['p'+str(i) for i in range(1, 2)]:
+    for it in ['p'+str(i) for i in range(1, 4)]:
         outqu_3.put(it)
     out_queues = [outqu_1, outqu_2, outqu_3]
 
+    print '=== Initial state ==='
     print '\nInput queues, sizes:',
     for qu in in_queues:
         print qu.qsize(),

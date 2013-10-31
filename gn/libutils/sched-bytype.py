@@ -9,7 +9,7 @@
 '''
 
 import sys
-sys.path += ['..']
+#sys.path += ['..']
 import Queue
 
 from gnscheduler import Scheduler

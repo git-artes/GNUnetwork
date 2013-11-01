@@ -38,7 +38,7 @@ def simulates():
     "---------------------FIN NODO 100 -----------------------------------------------"
 #    
     
-    "-------------------NODO 101-------------------------------------------------------"    
+    "-------------------NODO 102-------------------------------------------------------"    
     frame_rx_q2 = Queue.Queue(10)
     " En el simulador todos escriben los paquetes a la misma cola del canal virtual"
     frame_tx_q2 = frame_tx_q1 

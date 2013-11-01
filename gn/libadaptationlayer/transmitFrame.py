@@ -6,20 +6,21 @@ Created on Thu May  2 12:49:21 2013
 """
 import threading,Queue
 import sys
+
 sys.path +=['..']
 import libevents.if_events as events
 " The next import is defined only for test"
 import libevents.events as Events
 
 class TransmitFrame(threading.Thread):
-    """ This class gets L1 frames from a queue. It generates and puts events in the L2 queues (control, data, managenet).
+    """ This class puts L1 frames into a queue.It gets events from the L2 queues AND generates frames.
     """
     
     def __init__(self,frame_queue,event_queue):
         '''  
         Constructor
         
-          @param frame_queue : The queue to put the frames for L1.
+          @param frame_queue : The queue to put the L1 frames.
 
           @param event_queue : The queue to get L2 events .
         

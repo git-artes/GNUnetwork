@@ -7,21 +7,17 @@ Created on Fri Dec  7 12:19:22 2012
 
 class Profile :
     """ This class represents the profile of the network, in order to join the network the profile must be supported by all nodes."""
-    def __init__(self,net_id,path_selection_protocol=1,path_selection_metric=1,congestion_control_mode=0,syn_method=1,authentication_protocol=0 ):
+
+    def __init__(self,net_id,path_selection_protocol=1, path_selection_metric=1, congestion_control_mode=0, syn_method=1, authentication_protocol=0 ):
         '''  
-        Constructor
+        Constructor.
         
         @param net_id: A Mesh ID, String, length max 32.
-        
-        @param path_selection_protocol : A path selection protocol identifier,  INTEGER{ hwmp (1), vendorSpecific (255)},DEFAULT = 1.  
-       
-        @param path_selection_metric : A path selection metric identifier,INTEGER{ airtimeLinkMetric (1), vendorSpecific (255)},DEFAULT = 1.
-       
-        @param congestion_control_mode : A congestion control mode identifier, INTEGER {null (0),congestionControlSignaling (1), vendorSpecific (255) },DEFAULT =0.
-      
-        @param syn_method : A synchronization method identifier, INTEGER {neighborOffsetSynchronization (1),vendorSpecific (255) }, DEFAULT =1.
-     
-        @param authentication_protocol :  An authentication protocol identifier, INTEGER {null (0), sae (1), ieee8021x (2),vendorSpecific (255) }, DEFAULT = 0.
+        @param path_selection_protocol: A path selection protocol identifier,  INTEGER \{ hwmp (1), vendorSpecific (255)\},DEFAULT = 1.  
+        @param path_selection_metric: A path selection metric identifier,INTEGER\{ airtimeLinkMetric (1), vendorSpecific (255) \},DEFAULT = 1.
+        @param congestion_control_mode: A congestion control mode identifier, INTEGER \{null (0),congestionControlSignaling (1), vendorSpecific (255) \},DEFAULT =0.
+        @param syn_method: A synchronization method identifier, INTEGER \{neighborOffsetSynchronization (1),vendorSpecific (255) \}, DEFAULT =1.
+        @param authentication_protocol:  An authentication protocol identifier, INTEGER \{null (0), sae (1), ieee8021x (2),vendorSpecific (255) \}, DEFAULT = 0.
         '''        
         self.net_id = net_id
         self.path_selection_protocol = path_selection_protocol

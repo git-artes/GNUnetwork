@@ -1,23 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''A library for frame packing.
+# libframes : frames library, version 2
 
-Module contents:
-  - mac_api  : an API to use the library.
-  - frames   : generic data communication packets or frames.
-  - mac_frcl : MAC Frame Control field
-  - mac_mgmt : MAC Management formats.
-  - mac_ctrl : MAC Control formats.
-  - mac_data : MAC Data formats
-  - utils_other : other utilities, not used at the time.
+'''MAC Frames library, version 2.
 
+@version: 2
 
-Developed at::
-    Departamento de Telecomunicaciones
-    Instituto de Ingeniería Eléctrica
-    Facultad de Ingeniería
-    Universidad de la República
-    Montevideo, Uruguay.
+@author: Victor Gonzalez-Barbone
+@organization: Departamento de Telecomunicaciones, Instituto de Ingeniería Eléctrica, Facultad de Ingeniería, Universidad de la República, Uruguay.
+@copyright: Universidad de la República, Uruguay.
+@license: to be determined.
+@contact: vagonbar at fing. edu.uy
 '''
 

@@ -18,4 +18,4 @@ else
   mkdir html
 fi
 echo "  excluded:" $EXCLUDES
-epydoc -v -n $PRJNM --exclude=$EXCLUDES .
+epydoc -v --name $PRJNM --exclude $EXCLUDES .

@@ -24,19 +24,14 @@ class PeersTable :
         self.my_list=[]
   
         
-    def add(self,peerMACaddr, event_q,tx_frame_q,net_conf,localLinkId,peerLinkId=0):
+    def add(self,peerMACaddr, event_q,tx_frame_q,net_conf, localLinkId, peerLinkId=0):
         """
-            Create the a state machine (SMDiscoveryPeering) and a new item to the peers list.
+        Create the a state machine (SMDiscoveryPeering) and a new item to the peers list.
         
-            @param tx_frame_q:  the events transmition queue, it is necessary as a reference for the state machine.
-
-            @param peerMACaddr:  The MAC address of the peer.
-
-            @param localLinkId:  My link Id.
-            
-            @param peerLinkId=0:  The link Id of my peer.
-
-        
+        @param tx_frame_q: the events transmition queue, it is necessary as a reference for the state machine.
+        @param peerMACaddr: The MAC address of the peer.
+        @param localLinkId: My link Id.
+        @param peerLinkId: The link Id of my peer. DEFAULT = 0.
         """
         self.my_addr = net_conf. getStationId()
         sm = DiscoveryPeeringFSM.DiscoveryPeeringFSM(localLinkId, net_conf,tx_frame_q,event_q,peerMACaddr) 

@@ -37,12 +37,8 @@ class SchedFrToEv(Scheduler.Scheduler):
                 out_queue.put(event, False)   # add to queue, don't block 
                 break
         else:
-<<<<<<< HEAD
             print 'Scheduler, event type not recognized:', event.ev_type
         in_qu.task_done()
-=======
-            print 'Input queue empty!'   # shows sometimes...
->>>>>>> a67c846f0743c7d6d05295d72ffcc7a0eee1131f
         return
 
 

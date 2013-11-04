@@ -5,27 +5,27 @@
 #
 
 
-'''An scheduler that get a frame from Layer 1 input queue, generates the corresponding event, and put it into the Management, Control or Data queues based on the event type .
+'''A scheduler that gets a frame from Layer 1 input queue, generates the corresponding event, and puts it into the Management, Control or Data queues based on the event type .
 '''
 import Queue
 import sys
 sys.path +=['..']
 import libevents.if_events as events
-" The next import is defined only for test"
+# The next import is defined only for test
 import libevents.events as Events
 
 import libutils.gnscheduler as Scheduler
 
 
 class SchedFrToEv(Scheduler.Scheduler):
-    '''Subclass of Scheduler for adapting layer 1 and 2.
+    '''Subclass of Scheduler for adapting layers 1 and 2.
     '''
 
     def fn_sched(self):
-        '''Scheduling function to process  frames queue, generates events and put the events in the output queue according to it type.
+        '''Scheduling function, reads frames, outputs events by type.
         
-        Reads one element from the input frame queue, generates an event, and put the event in one of the output queue according to it type.
-        out_queues: a dictionary of {nm_queue: (out_queue)}. 
+        Reads one element from the input frame queue, generates an event, and puts the event in one of the output queues according to its type.
+        out_queues: a dictionary of {nm_queue: (out_queue)}; nm_queue is a name for the queue, out_queue is the output queue.
         '''
         in_qu = self.in_queues[0]
         frame = in_qu.get(True)
@@ -37,8 +37,12 @@ class SchedFrToEv(Scheduler.Scheduler):
                 out_queue.put(event, False)   # add to queue, don't block 
                 break
         else:
+<<<<<<< HEAD
             print 'Scheduler, event type not recognized:', event.ev_type
         in_qu.task_done()
+=======
+            print 'Input queue empty!'   # shows sometimes...
+>>>>>>> a67c846f0743c7d6d05295d72ffcc7a0eee1131f
         return
 
 
@@ -48,6 +52,8 @@ def test():
 
     Events are put in output queues according to their type.
     '''
+
+    # create input queue
     frame_q = Queue.Queue(10)
     ctrl_q, mgmt_q, data_q = Queue.Queue(10), Queue.Queue(10), Queue.Queue(10)
     ls_out_queues = [ctrl_q, mgmt_q, data_q]
@@ -56,14 +62,8 @@ def test():
         'Mgmt': (mgmt_q), \
         'Data': (data_q)  \
         }
-
-
-
     sch = SchedFrToEv(frame_q, out_queues)
-    
 
-    # create input queue
- 
     # put events in input queue
     for name in ['MgmtBeacon', 'CtrlRTS', 'CtrlCTS', 'DataData']:
         ev = Events.mkevent(name)

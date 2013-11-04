@@ -28,20 +28,17 @@ class SchedFrToEv(Scheduler.Scheduler):
         out_queues: a dictionary of {nm_queue: (out_queue)}. 
         '''
         in_qu = self.in_queues[0]
-        if not in_qu.empty():
-            frame = in_qu.get()
-            event= events.mkevent(pframe=frame)
-            for item_type in self.out_queues.keys():
-                if  event.ev_type == item_type:
-                    # function to execute, output queue
-                    out_queue = self.out_queues[item_type]
-                    out_queue.put(event, False)   # add to queue, don't block 
-                    break
-            else:
-                print 'Scheduler, event type not recognized:', event.ev_type
-            in_qu.task_done()
+        frame = in_qu.get(True)
+        event= events.mkevent(pframe=frame)
+        for item_type in self.out_queues.keys():
+            if  event.ev_type == item_type:
+                # function to execute, output queue
+                out_queue = self.out_queues[item_type]
+                out_queue.put(event, False)   # add to queue, don't block 
+                break
         else:
-            print 'input queue empty!'   # shows sometimes...
+            print 'Scheduler, event type not recognized:', event.ev_type
+        in_qu.task_done()
         return
 
 

@@ -90,12 +90,14 @@ def test():
 
     # create and start scheduler
     sch = SchedItemType(frame_q, out_queues)
-    
-    print '\n=== Process ==='
     sch.start()
     frame_q.join()
     sch.stop()
-    sch.join()
+    sch.join()        
+
+    
+    print '\n=== Process ==='
+   
 
     print '\n=== Read the output queues ==='
     for qu in ls_out_queues:
@@ -103,7 +105,6 @@ def test():
         while not qu.empty():
             item = qu.get()
             print item
-
     return
     
 

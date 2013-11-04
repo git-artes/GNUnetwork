@@ -220,12 +220,14 @@ class ControllerMACFsmEmulator(threading.Thread) :
 			event = self.rx_q_l1.get_nowait()
 			print "MAC: L2 event arrives at the fsm controller ", event, " ",event.add_info, int(round(time.time() * 1000)) 
 			print "MAC: state before processing event ", self.mac_fsm.current_state 
+			self.mac_fsm.memory = event
 			self.mac_fsm.process( event.ev_subtype )
 			print "MAC: state after processing event ", self.mac_fsm.current_state
 			# read from L3
 			event = self.rx_q_l3.get_nowait()
 			print "MAC: L3 event arrives at the fsm controller ", event, " ",event.add_info, int(round(time.time() * 1000)) 
 			print "MAC: state before processing event ", self.mac_fsm.current_state 
+			self.mac_fsm.memory = event
 			self.mac_fsm.process( event.ev_subtype )
 			print "MAC: state after processing event ", self.mac_fsm.current_state
 			

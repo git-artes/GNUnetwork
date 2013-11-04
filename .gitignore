@@ -6,5 +6,7 @@ gn/otros
 *.hex
 *.py~
 *.txt~
+*.sh~
+*~
 
 

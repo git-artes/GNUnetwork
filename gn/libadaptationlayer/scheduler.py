@@ -72,7 +72,7 @@ def test():
     
     event = mgmt_q.get()
 
-    print "Event = ", event     
+    print "Event = ", event
     
 
 if __name__ == '__main__':

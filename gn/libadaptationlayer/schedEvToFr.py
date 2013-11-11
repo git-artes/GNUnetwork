@@ -1,47 +1,52 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# sched-bytype.py
+# schedEvToFr.py
 #
 
 
-'''An scheduler that get an event  from Layer 2 input queue, generates the corresponding frame, and put it into the Layer 1 transmit queue .
+'''An event to frame scheduler, from Layer 2 into Layer 1.
+
+A scheduler that gets an event from a Layer 2 input queue, generates the corresponding frame, and puts it into the Layer 1 transmit queue.
 '''
 import Queue
 import sys
+
 sys.path +=['..']
-import libevents.if_events as events
-" The next import is defined only for test"
-import libevents.events as Events
 
 import libutils.gnscheduler as Scheduler
 
+# The next import is defined only for testing
+import libevents.if_events as if_events
+import libevents.events as Events
+
+
 
 class SchedEvToFr(Scheduler.Scheduler):
-    '''Subclass of Scheduler for adapting layer 1 and 2.
+    '''Subclass of Scheduler for adapting Layers 1 and 2.
     '''
 
     def fn_sched(self):
-        '''Scheduling function to process  events queue, generates frames and put the frames in the output queue.
+        '''Scheduling function to process an events queue.
         
-        Reads one element from the input event queue, generates a frame, and put the frame in  the output queue.
+        Scheduling function to process an events queue: reads one element from the input event queue, generates a frame, and puts this frame in  the output queue.
         out_queues: a dictionary. 
         '''
         in_qu = self.in_queues[0]
         event = in_qu.get(True)
         #print 'event', event
-        frame= events.mkframe(event)
+        frame= if_events.mkframe(event)
         out_queue = self.out_queues['frames']
         out_queue.put(frame, False)   # add to queue, don't block 
         #print " out queue size ", out_queue.qsize()
         in_qu.task_done()        
- 
+
 
 
 def test():
-    '''Tests on frames.
+    '''Tests SchedEvToFr class.
 
-    Frames are put in output queue.
+    Put some events in input queue to read, create frames and put in output queue.
     '''
     frame_q = Queue.Queue(10)
     ev_q = Queue.Queue(10)
@@ -52,7 +57,7 @@ def test():
     sch = SchedEvToFr(ev_q, out_queues)
     
  
-    # put events in input queue
+    # create events and put in input queue
     for name in ['MgmtBeacon', 'CtrlRTS', 'CtrlCTS', 'DataData']:
         ev = Events.mkevent(name)
         ev.src_addr = "100"
@@ -77,8 +82,7 @@ def test():
    
   
     return
-    
-    
+
 
 
 if __name__ == '__main__':

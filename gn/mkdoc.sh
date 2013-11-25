@@ -2,7 +2,7 @@
 # mkdoc.sh: makes epydoc
 
 EXCLUDES="viejos|otros|old|others|draft"
-EXCLUDES=${EXCLUDES}"|libadaptationlayer|libfsm|libmanagement|libtimer"
+EXCLUDES=${EXCLUDES}"|libfsm|libmanagement|libtimer"
 
 if [ ! "$1" ]
 then

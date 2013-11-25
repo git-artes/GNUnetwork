@@ -5,7 +5,9 @@
 #
 
 
-'''A scheduler that gets a frame from Layer 1 input queue, generates the corresponding event, and puts it into the Management, Control or Data queues based on the event type .
+'''A frame to event scheduler, from Layer 1 into Layer 2.
+
+A scheduler that gets a frame from a Layer 1 input queue, generates the corresponding event, and puts it into Management, Control or Data queues based on the event type.
 '''
 import Queue
 import sys
@@ -44,9 +46,9 @@ class SchedFrToEv(Scheduler.Scheduler):
 
 
 def test():
-    '''Tests on frames.
+    '''Tests SchedFrToEv class.
 
-    Events are put in output queues according to their type.
+    Put some frames in input queue to read, creates events and puts in different output queues according to the event type.
     '''
 
     # create input queue

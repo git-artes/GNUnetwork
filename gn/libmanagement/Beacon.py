@@ -26,16 +26,17 @@ class Beacon(threading.Thread) :
         
         '''
         threading.Thread.__init__(self)
+        self.finished = False        
         self.my_addr = network_conf. getStationId()
         self.broadcast_addr =network_conf.getBroadcastAddr()
         self.my_queue = Queue.Queue(10)
         self.my_actual_net_conf = network_conf 
         self.tx_event_q =tx_event_q
         self.activateBeacon()
-      
+       
         
     def run(self):
-        while 1:
+        while not self.finished :
             aux= self.my_queue.get()
             if aux.ev_nickname == "TimerTimer":
                 timer=Timer.Timer(self.my_queue, self.my_actual_net_conf.beacon_period,1,"TimerTimer")
@@ -48,6 +49,11 @@ class Beacon(threading.Thread) :
     def activateBeacon(self):
         timer=Timer.Timer(self.my_queue, self.my_actual_net_conf.beacon_period,1,"TimerTimer")
         timer.start()
+    
+    def stop(self):
+        self.finished = True
+        self._Thread__stop()
+
         
         
         

@@ -8,19 +8,30 @@ import Queue,time,threading
 import libfsm.fsm as fsm
 import libevents.events as events
 import libtimer.timer as Timer
+import libmanagement.NetworkConfiguration as NetworkConfiguration
+
+aSIFSTime = 1
+CTSTime = 4
+aSlotTime = 2
+aRTSThreshold = 20
+dot11LongRetryLimit = 100
 
 class ieee80211mac() :
 	"""   The 802.11 mac finite state machine.
     
 	"""
 	
-	def __init__( self, tx_q ) :
+	def __init__( self, net_conf, tx_q ):
 		'''  
 			Constructor
 			@param tx_q: The transmition event queue ( Events to layer 1 )
         
 		'''
 		self.tx_q = tx_q
+		self.net_conf = net_conf
+		
+		self.LRC = 0 # Long Retry Counter
+		self.SRC = 0 # Short Retry Counter
 	
 		print 'MAC: init'
 		self.mac_fsm = fsm.FSM ('IDLE', []) 
@@ -47,80 +58,85 @@ class ieee80211mac() :
 		print str( fsm.input_symbol )
 
 	def rcvL3( self, fsm ):
-		if ( frame_length > aRTSThreshold ):
-			snd_frame( RTS )
-			start_timer()
-			mac_fsm.process( RTSSent )
+		event = self.mac_fsm.memory
+		if ( event.frame_length > aRTSThreshold ):
+			self.snd_frame( RTS )
+			self.start_timer()
+			self.mac_fsm.process( RTSSent )
 		else:
-			snd_frame( DATA )
-			start_timer()
+			self.snd_frame( DATA )
+			self.start_timer()
 
 	def sndData ( self, fsm ):
-		snd_frame( DATA )
+		self.snd_frame( DATA )
 
 	def snd_frame( self, event ):
 		print 'Retry Data'
-		if ( SRC == 0 and LRC == 0 ):
-			if ( not freeChannel() ):
-				waitfree()
-				backoff()
+		if ( self.SRC == 0 and self.LRC == 0 ):
+			if ( not self.freeChannel() ):
+				self.waitfree()
+				self.backoff()
 		else:
 			CW = min( CW*2+1, aCWmax ) 			## en el tutorial dice max() pero no puede ser
-			if frame_length > aRTSThreshold:
-				LRC += 1
-				if ( LRC >= dot11LongRetryLimit ):
-					discard()
+			if event.frame_length > aRTSThreshold:
+				self.LRC += 1
+				if ( self.LRC >= dot11LongRetryLimit ):
+					self.discard()
 					CW = aCWmin
-					LRC = 0
+					self.LRC = 0
 					return
 			else:
-				SRC += 1
-				if ( SRC >= dot11ShortRetryLimit ):
-					discard()
+				self.SRC += 1
+				if ( self.SRC >= dot11ShortRetryLimit ):
+					self.discard()
 					CW = aCWmin
-					SRC = 0
+					self.SRC = 0
 					return
-			backoff()
-		sendtoL1( event )
-		start_timer()
+			self.backoff()
+		self.sendtoL1( event )
+		self.start_timer()
 		
  	def sndRTS ( self, fsm ):
 		event = events.mkevent("CtrlRTS")
 		event.src_addr=self.net_conf.station_id
 		#event.dst_addr= self.peer_addr
 		event.duration=0;
-		snd_frame( event )
+		self.snd_frame( event )
 
  	def sndCTS ( self, fsm ):
 		event = events.mkevent("CtrlCTS")
 		event.src_addr=self.net_conf.station_id
 		#event.dst_addr= self.peer_addr
-		snd_frame( event )
+		self.snd_frame( event )
 
  	def rcvRTS ( self, fsm ):
+		print 'Receive RTS'
 		self.updNAV( fsm )
-		if ( toMe() ):
-			sndCTS( fsm );
-			start_timer()
+		event = self.mac_fsm.memory
+		if ( event.dst_addr == self.net_conf.station_id ):
+			self.sndCTS( fsm )
+			self.start_timer()
 
  	def updNAV ( self, fsm ):
 		print 'Update NAV'
-		if ( pkt.type == RTS ):
+		event = self.mac_fsm.memory
+		if ( fsm.input_symbol == "RTS" ):
 			waitT = 2*aSIFSTime + CTSTime + 2*aSlotTime
 			time.sleep( waitT )
-			NAV = currentTime()
+			NAV = self.currentTime()
 		else:
-			testNAV = currentTime() + pkt.duration 
+			testNAV = self.currentTime() + event.duration 
 			if ( testNAV > NAV ):
 				NAV = testNAV
 
  	def rcvACK ( self, fsm ):
 		print 'Receive ACK'
+		event = self.mac_fsm.memory
 		CW = aCWmin
-		if frame_length > aRTSThreshold:
-			LRC = 0
+		if event.frame_length > aRTSThreshold:
+			self.LRC = 0
 		else:
-			SRC = 0
+			self.SRC = 0
 		## TODO fragmentation 
 
 	def sendtoL1( self, event ):
@@ -132,29 +148,47 @@ class ieee80211mac() :
 			BC = random.randint( 0, CW )
 		while ( BC != 0 ):
 			time.sleep( TimeSlot )
-			if ( max( NAV, PAV ) < ( currentTime() - TimeSlot ) ):
+			if ( max( NAV, PAV ) < ( self.currentTime() - TimeSlot ) ):
 				BC -= 1
 			else:
-				while ( not freeChannel() ):
-					waitfree()
+				while ( not self.freeChannel() ):
+					self.waitfree()
 				time.sleep( DIFS )
 
  	def rcvL2 ( self, fsm ):
 		print 'Send ACK'
 		self.updNAV( fsm )
 		time.sleep( SIFS )
-		snd_frame( ACK )
+		self.snd_frame( ACK )
 
-	def currentTime():
+	def currentTime( self ):
 		print "get Current Time"	
+		return time.time()
 
+	def freeChannel( self ):
+		print "freeChannel?"
+		return True
+
+	def waitfree( self ):
+		print "waitfree"
+		time.sleep( 1 )
+		return True
+
+	def discard( self ):
+		print "discard"
+		return True
+
+	def start_timer( self ):
+		print "start timer"
+		return True
 
 def test():
     rx_q_l1 = Queue.Queue( 10 )
     rx_q_l3 = Queue.Queue( 10 )
     tx_q = Queue.Queue( 10 )
+    net_conf = NetworkConfiguration.NetworkConfiguration(100,'my network',256,1)
 
-    mymac = ieee80211mac( tx_q )
+    mymac = ieee80211mac( net_conf, tx_q )
 
     read_tx = ReadQueueMACTxEmulator( tx_q )
     read_tx.start()
@@ -175,6 +209,10 @@ def test():
     print ""
     print "MAC START TEST 1 --------------------------------------------" 
     print "MAC STATE BEFORE PROCESS ..... ", mymac.mac_fsm.current_state
+    ev = events.mkevent("CtrlRTS")
+    ev.src_addr=100
+    ev.dst_addr=100
+    mymac.mac_fsm.memory = ev
     mymac.mac_fsm.process('RTS')    
     print "MAC STATE AFTER PROCESS ...... ", mymac.mac_fsm.current_state
     print ""    

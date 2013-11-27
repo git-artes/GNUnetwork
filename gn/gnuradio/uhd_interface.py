@@ -111,7 +111,7 @@ class uhd_interface:
         if(freq is None):
             sys.stderr.write("You must specify -f FREQ or --freq FREQ\n")
             sys.exit(1)
-        
+        print " Setting frequency..."
         r = self.u.set_center_freq(freq, 0)
         if r:
             return freq

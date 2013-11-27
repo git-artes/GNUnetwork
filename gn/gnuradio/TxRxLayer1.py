@@ -33,7 +33,7 @@ from uhd_interface import uhd_transmitter
 from receive_path import receive_path
 from uhd_interface import uhd_receiver
 
-import sys, threading
+import sys, threading, math
 
 #import os 
 #print os.getpid()
@@ -71,7 +71,14 @@ class my_top_block_rx(gr.top_block):
     def rx_callback(self,ok, payload):
         self.q_rx.put(payload)
   
-
+    def set_freq(self,value):
+        self.source.set_freq(value)
+        
+    def sense_carrier(self):
+        print "Energy : ",
+        print 10*math.log10(self.rxpath.carrier_sensed())
+        
+        
 class my_top_block_tx(gr.top_block):
     def __init__(self, modulator, options,q_tx):
         gr.top_block.__init__(self)
@@ -101,7 +108,9 @@ class my_top_block_tx(gr.top_block):
         self.txpath = transmit_path(modulator, options)
         self.connect(self.txpath, self.sink)
 
-     
+    def set_freq(self,value):
+        self.sink.set_freq(value)
+  
         
         
 class TxL1(threading.Thread) :

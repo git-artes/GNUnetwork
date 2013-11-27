@@ -22,11 +22,15 @@ def mkevent(pnickname=None, pframe=None):
         pass
         return  # ...an Event object
     if pframe:
-        nickname,src_addr,dst_addr = pframe.split(',')
-        ev= events.mkevent(nickname)
-        ev.src_addr=src_addr
-        ev.dst_addr = dst_addr
-        return  ev
+        try:
+            nickname,src_addr,dst_addr = pframe.split(',')
+            ev= events.mkevent(nickname)
+            ev.src_addr=src_addr
+            ev.dst_addr = dst_addr
+            return  ev
+        except:
+            return None
+            
 
 
 def mkframe(ev_obj):

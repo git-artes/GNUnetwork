@@ -9,7 +9,7 @@ import events as events
 
 
 def mkevent(pnickname=None, pframe=None):
-    '''Creates an event froma nickname or from a frame.
+    '''Creates an event from a nickname or from a frame.
     
     @param pnickname: the event nickname.
     @param pframe: a frame in bin dta format (confirm!)
@@ -22,15 +22,11 @@ def mkevent(pnickname=None, pframe=None):
         pass
         return  # ...an Event object
     if pframe:
-        try:
-            nickname,src_addr,dst_addr = pframe.split(',')
-            ev= events.mkevent(nickname)
-            ev.src_addr=src_addr
-            ev.dst_addr = dst_addr
-            return  ev
-        except:
-            return None
-            
+        nickname,src_addr,dst_addr = pframe.split(',')
+        ev= events.mkevent(nickname)
+        ev.src_addr=src_addr
+        ev.dst_addr = dst_addr
+        return  ev
 
 
 def mkframe(ev_obj):

@@ -20,7 +20,7 @@
 # Boston, MA 02110-1301, USA.
 # 
 
-from gnuradio import gr, gru
+from gnuradio import gr
 from gnuradio import eng_notation
 from gnuradio import digital
 
@@ -107,7 +107,7 @@ class receive_path(gr.hier_block2):
         Return True if we think carrier is present.
         """
         #return self.probe.level() > X
-        return self.probe.unmuted()
+        return self.probe.level()
 
     def carrier_threshold(self):
         """

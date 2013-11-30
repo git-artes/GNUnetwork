@@ -25,9 +25,14 @@ $ git branch
 * events2
   master
 < creado este archivo de log, para pruebas >
-
+$ git add Github_trabajo_con_branches     # agregar este archivo
+$ git commit -a -m 'events2, a new branch to develop events'
+$ git push gn events2                     # subir la nueva rama
 
 ADVERTENCIA y/o DUDA: el directorio local pasa a ser un reflejo de la rama en que se está trabajando, se supone; si hay cambios ulteriores en master no se reflejarán en el directorio local, a no ser que se haga
 $ checkout master
 $ git pull gn master
 para traer todos los cambios que pudieran haber habido en master, y deshacer los que ocurrieron en branch para el directorio local.
+
+Continuará...
+

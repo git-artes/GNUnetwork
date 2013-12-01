@@ -7,7 +7,7 @@ Created on Thu Dec 13 14:31:45 2012
 import threading, time,Queue
 import sys
 sys.path +=sys.path + ['..']
-import libevents.events as events
+import libevents.if_events as if_events
 
 class Timer(threading.Thread):
     """ This class is a timer (is a Thread) that waits for a given interval. After that generates an event of Type TIMER and SUPTYPE the name given in subTypeEvent1.
@@ -53,11 +53,11 @@ class Timer(threading.Thread):
             self.tout2()                
         
     def tout1(self):      
-            event= events.mkevent(self.nickname1)
+            event= if_events.mkevent(self.nickname1)
             event.add_info = self.add_info
             self.q_event.put(event,False)
     def tout2(self):
-            event= events.mkevent(self.nickname2)
+            event= if_events.mkevent(self.nickname2)
             event.add_info = self.add_info
             self.q_event.put(event,False)    
                 
@@ -72,7 +72,7 @@ def test():
     aux=""
     while aux  is not "TimerTOR2":
         event= myQueue.get()
-        aux = event.ev_nickname
+        aux = event.nickname
         print " LLEGO EVENTO ", event, " ", int(round(time.time() * 1000)) 
    
     print "Segunda parte"

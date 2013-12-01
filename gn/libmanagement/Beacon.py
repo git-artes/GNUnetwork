@@ -8,9 +8,11 @@ Created on Tue May  7 11:05:17 2013
 import sys
 sys.path +=['..']
 import libtimer.timer as Timer
-import libevents.events as events
+import libevents.if_events as if_events
 import threading,Queue,time
 import NetworkConfiguration
+
+
 class Beacon(threading.Thread) :
     """   The Beacon  is a Thread.
     
@@ -38,10 +40,10 @@ class Beacon(threading.Thread) :
     def run(self):
         while not self.finished :
             aux= self.my_queue.get()
-            if aux.ev_nickname == "TimerTimer":
+            if aux.nickname == "TimerTimer":
                 timer=Timer.Timer(self.my_queue, self.my_actual_net_conf.beacon_period,1,"TimerTimer")
                 timer.start()
-                event = events.mkevent("MgmtBeacon")
+                event = if_events.mkevent("MgmtBeacon")
                 event.src_addr=self.my_addr
                 event.dst_addr= self.broadcast_addr
                 self.tx_event_q.put(event,False)
@@ -75,3 +77,5 @@ if __name__ == '__main__':
         test()
     except KeyboardInterrupt:
         pass
+
+

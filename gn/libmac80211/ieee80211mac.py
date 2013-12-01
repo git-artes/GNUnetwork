@@ -6,7 +6,7 @@ import sys
 sys.path +=['..']
 import Queue,time,threading
 import libfsm.fsm as fsm
-import libevents.events as events
+import libevents.if_events as if_events
 import libtimer.timer as Timer
 
 class ieee80211mac() :
@@ -85,14 +85,14 @@ class ieee80211mac() :
 		start_timer()
 		
  	def sndRTS ( self, fsm ):
-		event = events.mkevent("CtrlRTS")
+		event = if_events.mkevent("CtrlRTS")
 		event.src_addr=self.net_conf.station_id
 		#event.dst_addr= self.peer_addr
 		event.duration=0;
 		snd_frame( event )
 
  	def sndCTS ( self, fsm ):
-		event = events.mkevent("CtrlCTS")
+		event = if_events.mkevent("CtrlCTS")
 		event.src_addr=self.net_conf.station_id
 		#event.dst_addr= self.peer_addr
 		snd_frame( event )

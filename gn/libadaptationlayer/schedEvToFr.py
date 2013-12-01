@@ -17,9 +17,9 @@ sys.path +=['..']
 import libutils.gnscheduler as Scheduler
 
 # The next import is defined only for testing
+import libevents.evstrframes as evstrframes
+#import libevents.events as Events
 import libevents.if_events as if_events
-import libevents.events as Events
-
 
 
 class SchedEvToFr(Scheduler.Scheduler):
@@ -35,11 +35,11 @@ class SchedEvToFr(Scheduler.Scheduler):
         in_qu = self.in_queues[0]
         event = in_qu.get(True)
         #print 'event', event
-        frame= if_events.mkframe(event)
+        frame = evstrframes.mkframe(event)
         out_queue = self.out_queues['frames']
         out_queue.put(frame, False)   # add to queue, don't block 
         #print " out queue size ", out_queue.qsize()
-        in_qu.task_done()        
+        in_qu.task_done()
 
 
 
@@ -59,10 +59,8 @@ def test():
  
     # create events and put in input queue
     for name in ['MgmtBeacon', 'CtrlRTS', 'CtrlCTS', 'DataData']:
-        ev = Events.mkevent(name)
-        ev.src_addr = "100"
-        ev.dst_addr=  "150"
-        print " Event = ", ev
+        ev = if_events.mkevent(name, ev_dc={'src_addr':'100','dst_addr':'150'})
+        print ev
         ev_q.put(ev,False)
     print 'Input queue size', ev_q.qsize()
 

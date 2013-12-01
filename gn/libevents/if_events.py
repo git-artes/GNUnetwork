@@ -3,66 +3,74 @@
 
 '''Interface for libevents library with string based test frames.
 
-This interface module defines two functions, mkevent() to make an Event object from a nickname and frame, and mkframe() to make a string frame from an Event object.
+This module is an interface to the events module.
 
-Proposed name for this module: if_events_strfrm.
+To create an event object use function C{mkevent()}. This function creates events of different types, according to the event modules imported by this module. 
+
+To add different types of events:
+
+    - import library of specific event type.
+    - add to function mkevent as necessary.
 '''
 
 import events as events
+# event modules, for different types of events
+import evtimer
+import evframes80211
 
 
-def mkevent(pnickname=None, pframe=None):
-    '''Creates an event from a nickname or from a frame.
+def mkevent(nickname, **kwargs):
+    '''Returns an event of the given event nickname.
+
+    @param nickname: a valid event nickname, i.e. one that is a key in dictionary of valid nicknames.
     
-    @param pnickname: the event nickname.
-    @param pframe: a frame in bin dta format (confirm!)
-    @return: an Event object.
+    >>> ev_ob_frm = mkevent('CtrlCTS')
+    >>> print ev_ob_frm
+    Event class name: EventFrame
+      Nickname: 'CtrlCTS'; Type: 'Ctrl'; SubType: 'CTS'
+      duration: None
+      src_addr: None
+      dst_addr: None
+      Frame packet: 
+    >>> ev_mg = mkevent('ActionOpen', ev_dc={'src_addr':'aaaa', 'dst_addr':'bbbb', 'peerLinkId':'the peer link ID'})
+    >>> print ev_mg
+    Event class name: EventFrameMgmt
+      Nickname: 'ActionOpen'; Type: 'Mgmt'; SubType: 'Action'
+      src_addr: aaaa
+      duration: None
+      peerLinkId: the peer link ID
+      dst_addr: bbbb
+      Frame packet: 
+    >>> ev_ob_tmr = mkevent('TimerTOH')
+    >>> print ev_ob_tmr
+    Event class name: EventTimer
+      Nickname: 'TimerTOH'; Type: 'Timer'; SubType: 'TOH'
+      add_info: None
+    >>> ev_ob_tmr = mkevent('TimerTOH', ev_dc={'add_info':'additional info, testing'})
+    >>> print ev_ob_tmr
+    Event class name: EventTimer
+      Nickname: 'TimerTOH'; Type: 'Timer'; SubType: 'TOH'
+      add_info: additional info, testing
     '''
-    if not pnickname and not pframe:
-        raise events.EventNameException('No nickname or frame received.')
-        return None
-    if pnickname:
-        pass
-        return  # ...an Event object
-    if pframe:
-        ev_dc = {}
-        nickname, ev_dc['src_addr'], ev_dc['dst_addr'] = pframe.split(',')
-        ev = events.mkevent(nickname, frmpkt=pframe, ev_dc=ev_dc)
-        #ev.src_addr=src_addr
-        #ev.dst_addr = dst_addr
-        return  ev
-
-
-def mkframe(ev_obj):
-    '''Returns a frame with the event information.
-    
-    @param ev_obj: an Event object.
-    @return: a frame in bin data format (confirm!).
-    '''
-    if not isinstance(ev_obj, events.Event):
-        raise EventNameException('Parameter is not an Event object.')
-        return None
-    frame = "" + ev_obj.nickname + "," + \
-        ev_obj.ev_dc['src_addr'] + "," + ev_obj.ev_dc['dst_addr']
-    return frame
-
-
-def test():
-    ev = events.mkevent("MgmtBeacon", ev_dc={})
-    ev.ev_dc['src_addr'] = "100"
-    ev.ev_dc['dst_addr'] =  "150"
-    print "=== Event to frame:"; print ev
-    frame=mkframe(ev)
-    print "=== Frame:", frame
-    evfromframe = mkevent(pframe=frame) 
-    print "=== Event from frame:"; print evfromframe
+    frmpkt, ev_dc = '', {}
+    if kwargs.has_key('ev_dc'):
+        ev_dc = kwargs['ev_dc']
+    if kwargs.has_key('frmpkt'):
+        frmpkt = kwargs['frmpkt']
+        
+    if evtimer.dc_nicknames.has_key(nickname):
+        ptype, psubtype, eventclass = evtimer.dc_nicknames[nickname]
+        return eventclass(nickname, ptype, psubtype, ev_dc)    
+    elif evframes80211.dc_nicknames.has_key(nickname):
+        ev_type, ev_subtype, eventclass = evframes80211.dc_nicknames[nickname]
+        return eventclass(nickname, ev_type, ev_subtype, frmpkt, ev_dc)
+    else:
+        raise EventNameException(nickname + ' is not a valid nickname.')
     return
 
-if __name__ == '__main__':
-    try:
-        test()
-    except KeyboardInterrupt:
-        pass
-        
 
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
 

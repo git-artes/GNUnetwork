@@ -8,7 +8,7 @@ import sys
 sys.path +=['..']
 import Queue,time,threading
 import libfsm.fsm as fsm
-import libevents.events as events
+import libevents.if_events as if_events
 import libtimer.timer as Timer
 import NetworkConfiguration
 
@@ -86,24 +86,24 @@ class DiscoveryPeeringFSM() :
         self.fsm.memory.append (data) 
         
     def sndCLS(self,fsm):
-        event = events.mkevent("ActionClose")
-        event.src_addr=self.net_conf.station_id
-        event.dst_addr= self.peer_addr
-        event.peerlinkId = self.link_id
+        event = if_events.mkevent("ActionClose")
+        event.ev_dc['src_addr'] = self.net_conf.station_id
+        event.ev_dc['dst_addr']= self.peer_addr
+        event.ev_dc['peerlinkId'] = self.link_id
         self.tx_event_q.put(event,False)
     
     def sndOPN(self,fsm):
-        event = events.mkevent("ActionOpen")
-        event.src_addr=self.net_conf.station_id
-        event.dst_addr= self.peer_addr
-        event.peerlinkId = self.link_id
+        event = if_events.mkevent("ActionOpen")
+        event.ev_dc['src_addr'] = self.net_conf.station_id
+        event.ev_dc['dst_addr'] = self.peer_addr
+        event.ev_dc['peerlinkId'] = self.link_id
         self.tx_event_q.put(event,False)
 
     def sndCNF(self,fsm):
-        event = events.mkevent("ActionConfirm")
-        event.src_addr=self.net_conf.station_id
-        event.dst_addr= self.peer_addr
-        event.peerlinkId = self.link_id
+        event = if_events.mkevent("ActionConfirm")
+        event.ev_dc['src_addr'] =self.net_conf.station_id
+        event.ev_dc['dst_addr'] = self.peer_addr
+        event.ev_dc['peerlinkId'] = self.link_id
         self.tx_event_q.put(event,False)
 
     def setR(self,fsm):
@@ -326,7 +326,7 @@ class ControllerFsmEmulator(threading.Thread) :
     def run(self):
         while not self.finished:
             event= self.event_q.get()
-            print " event arrives at the fsm controller ", event, " ",event.add_info, int(round(time.time() * 1000)) 
+            print " event arrives at the fsm controller ", event, " ",event.ev_dc['add_info'], int(round(time.time() * 1000)) 
             print "estado antes de procesar este evento ", self.fsm.current_state
             self.fsm.process(event.ev_subtype) 
             print "estado luego de procesar este evento ", self.fsm.current_state
@@ -341,3 +341,6 @@ if __name__ == '__main__':
         test()
     except KeyboardInterrupt:
         pass
+
+
+

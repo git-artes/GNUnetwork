@@ -12,9 +12,9 @@ A scheduler that gets a frame from a Layer 1 input queue, generates the correspo
 import Queue
 import sys
 sys.path +=['..']
-import libevents.if_events as events
+import libevents.evstrframes as evstrframes
 # The next import is defined only for test
-import libevents.events as Events
+import libevents.if_events as if_events
 
 import libutils.gnscheduler as Scheduler
 
@@ -24,14 +24,14 @@ class SchedFrToEv(Scheduler.Scheduler):
     '''
 
     def fn_sched(self):
-        '''Scheduling function, reads frames, outputs events by type.
+        '''Scheduling function, reads frames, outputs evstrframes by type.
         
         Reads one element from the input frame queue, generates an event, and puts the event in one of the output queues according to its type.
         out_queues: a dictionary of {nm_queue: (out_queue)}; nm_queue is a name for the queue, out_queue is the output queue.
         '''
         in_qu = self.in_queues[0]
         frame = in_qu.get(True)
-        event= events.mkevent(pframe=frame)
+        event = evstrframes.mkevent(pframe=frame)
         if event != None:
             for item_type in self.out_queues.keys():
                 if  event.ev_type == item_type:
@@ -67,10 +67,8 @@ def test():
 
     # put events in input queue
     for name in ['MgmtBeacon', 'CtrlRTS', 'CtrlCTS', 'DataData']:
-        ev = Events.mkevent(name)
-        ev.src_addr = "100"
-        ev.dst_addr=  "150"
-        frame=events.mkframe(ev)
+        ev = if_events.mkevent(name, ev_dc={'src_addr':'100','dst_addr':'150'})
+        frame = evstrframes.mkframe(ev)
         print " Frame = ", frame
         frame_q.put(frame,False)
     print '=== Scheduler based on item type ==='

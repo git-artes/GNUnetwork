@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
+
+'''
 Created on Mon May 27 15:30:00 2013
 
 @author: belza
-"""
+'''
 
 import sys
 sys.path +=['..']
@@ -12,11 +13,10 @@ import threading, Queue,time
 
 
 class VirtualChannel(threading.Thread) :
+    '''This class simulates a communication channel.
     
-        
-    """ This class simulates a communication channel.
-        Every frame recieved in its queue is send it to the nodes queues        
-    """
+    Every frame recieved in its queue is send it to the nodes queues        
+    '''
     def __init__(self, queue_rx):
         '''  
         Constructor: build an empty list and asign it reception queue    
@@ -25,12 +25,13 @@ class VirtualChannel(threading.Thread) :
         self.node_list=[]
         self.queue_rx = queue_rx
         self.finished = False
+
+
     def add(self,node_queue):
-        """
+        '''Add node queue to node list.
             
-            @param node_queue:  the reception queue of a new node in the network.
-        
-        """
+        @param node_queue:  the reception queue of a new node in the network.
+        '''
         self.node_list.append({'node_queue':node_queue})
 
 
@@ -69,4 +70,5 @@ if __name__ == '__main__':
         test()
     except KeyboardInterrupt:
         pass
-        
+
+

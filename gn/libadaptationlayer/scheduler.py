@@ -7,9 +7,9 @@ Created on Thu May  2 12:49:21 2013
 import threading,Queue
 import sys
 sys.path +=['..']
-import libevents.if_events as events
+import libevents.evstrframes as evstrframes
 " The next import is defined only for test"
-import libevents.events as Events
+import libevents.if_events as if_events
 
 
 class Scheduler(threading.Thread):
@@ -20,15 +20,10 @@ class Scheduler(threading.Thread):
         '''  
         Constructor
         
-          @param frame_queue : The queue to get the frames from the L1.
-
-          @param ctrl_queue : The queue to put the control events.
-          
-          @param data_queue : The queue to put the data events.
-
-          @param mgmt_queue : The queue to put the management events.
-
-
+        @param frame_queue : The queue to get the frames from the L1.
+        @param ctrl_queue : The queue to put the control events.
+        @param data_queue : The queue to put the data events.
+        @param mgmt_queue : The queue to put the management events.
         '''
         threading.Thread.__init__(self)
         self.frame_queue = frame_queue
@@ -40,7 +35,7 @@ class Scheduler(threading.Thread):
     def run(self):
         while not self.finished:
             frame = self.frame_queue.get()
-            event= events.mkevent(pframe=frame)
+            event= evstrframes.mkevent(pframe=frame)
             if event.ev_type == "Ctrl":
                 self.ctrl_queue.put(event,False)
             if event.ev_type == "Data":
@@ -56,9 +51,7 @@ class Scheduler(threading.Thread):
 
         
 def test():
-    ev = Events.mkevent("MgmtBeacon")
-    ev.src_addr = "100"
-    ev.dst_addr=  "150"
+    ev = if_events.mkevent("MgmtBeacon", ev_dc={'src_addr':'100','dst_addr':'150'})
     frame_q = Queue.Queue(10)
     ctrl_q = Queue.Queue(10)
     mgmt_q = Queue.Queue(10)
@@ -66,7 +59,7 @@ def test():
     sch = Scheduler(frame_q,ctrl_q,data_q,mgmt_q)
     sch.start()
     
-    frame=events.mkframe(ev)
+    frame=evstrframes.mkframe(ev)
     print " Frame = ", frame
     frame_q.put(frame,False)
     

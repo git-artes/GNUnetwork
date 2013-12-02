@@ -6,7 +6,7 @@ import sys
 sys.path +=['..']
 import Queue,time,threading
 import libfsm.fsm as fsm
-import libevents.events as events
+import libevents.if_events as if_events
 import libtimer.timer as Timer
 import libmanagement.NetworkConfiguration as NetworkConfiguration
 
@@ -17,8 +17,7 @@ aRTSThreshold = 20
 dot11LongRetryLimit = 100
 
 class ieee80211mac() :
-	"""   The 802.11 mac finite state machine.
-    
+    """   The 802.11 mac finite state machine.
 	"""
 	
 	def __init__( self, net_conf, tx_q ):

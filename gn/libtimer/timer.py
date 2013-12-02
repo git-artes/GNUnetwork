@@ -1,38 +1,38 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
+
+'''
 Created on Thu Dec 13 14:31:45 2012
 
 @author: belza
-"""
+'''
+
 import threading, time,Queue
 import sys
 sys.path +=sys.path + ['..']
-import libevents.events as events
+import libevents.if_events as if_events
+
 
 class Timer(threading.Thread):
-    """ This class is a timer (is a Thread) that waits for a given interval. After that generates an event of Type TIMER and SUPTYPE the name given in subTypeEvent1.
-         The timer retries the number of times gven in the parameter retry. After the given number of retries generates the event of TYPE TIMER and subtype given in subTypeEvent2 if it is not None.    
-    """
-    def __init__(self, q_event, interval, retry,nickname1,add_info =None,nickname2=None ):
+    '''A timer (thread) that waits an interval and generates a Timer Event.
+    
+    This class is a timer (is a Thread) that waits for a given interval. After that generates an event of Yype TIMER and Subtype the name given in subTypeEvent1.
+    The timer retries the number of times gven in the parameter retry. After the given number of retries it generates the event of Type TIMER and subtype given in subTypeEvent2 if it is not None.
+    '''
+
+    def __init__(self, q_event, interval, retry,nickname1, \
+            add_info=None, nickname2=None):
         '''  
-        Constructor
+        Constructor.
         
-        @param q_event : The event queue where the events must be inserted.
-
-        @param interval : The interval of time.
-
-        @param retry : The number of retries.
-        
-        @param nickname1 : The nickname of the event that must be called after each retry.
-        
-        @param nickname2 : The nickname of the event that must be called after the given number of retries.
-        
-        @param add_info : additional information that will be send with the Timer Event        
-        
+        @param q_event: The event queue where the events must be inserted.
+        @param interval: The interval of time.
+        @param retry: The number of retries.
+        @param nickname1: The nickname of the event that must be called after each retry.
+        @param nickname2: The nickname of the event that must be called after the given number of retries.
+        @param add_info: additional information that will be send with the Timer Event.
         '''        
-        
-        
-        
+
         threading.Thread.__init__(self)
         self.interval = interval
         self.retry = retry
@@ -43,7 +43,8 @@ class Timer(threading.Thread):
         self.finished = False
         
     def run(self):
-        """ This is the private thread that generates ."""
+        '''This is the private thread that generates.
+        '''
         for i in range(self.retry):    
             time.sleep(self.interval)
             if self.finished:
@@ -53,11 +54,12 @@ class Timer(threading.Thread):
             self.tout2()                
         
     def tout1(self):      
-            event= events.mkevent(self.nickname1)
+            event= if_events.mkevent(self.nickname1)
             event.add_info = self.add_info
             self.q_event.put(event,False)
+
     def tout2(self):
-            event= events.mkevent(self.nickname2)
+            event= if_events.mkevent(self.nickname2)
             event.add_info = self.add_info
             self.q_event.put(event,False)    
                 
@@ -66,13 +68,15 @@ class Timer(threading.Thread):
             self._Thread__stop()
 
 def test():
+    '''A test function.
+    '''
     myQueue=Queue.Queue(10)
     myTimer = Timer(myQueue,0.5,10,"TimerTOR1",None,"TimerTOR2")
     myTimer.start()
     aux=""
     while aux  is not "TimerTOR2":
         event= myQueue.get()
-        aux = event.ev_nickname
+        aux = event.nickname
         print " LLEGO EVENTO ", event, " ", int(round(time.time() * 1000)) 
    
     print "Segunda parte"
@@ -92,3 +96,5 @@ if __name__ == '__main__':
         test()
     except KeyboardInterrupt:
         pass
+
+

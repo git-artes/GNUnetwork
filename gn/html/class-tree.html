@@ -60,24 +60,39 @@
 </b></center><br />
 <h1 class="epydoc">Class Hierarchy</h1>
 <ul class="nomargin-top">
+    <li> <strong class="uidlink"><a href="gn.libmanagement.DiscoveryPeeringFSM.DiscoveryPeeringFSM-class.html">gn.libmanagement.DiscoveryPeeringFSM.DiscoveryPeeringFSM</a></strong>:
+      <em class="summary">The discovery and peering finite state machine.</em>
+    </li>
     <li> <strong class="uidlink"><a href="gn.libevents.events.Event-class.html">gn.libevents.events.Event</a></strong>:
       <em class="summary">A general class for all types of event.</em>
     <ul>
-    <li> <strong class="uidlink"><a href="gn.libevents.events.EventFrame-class.html">gn.libevents.events.EventFrame</a></strong>:
+    <li> <strong class="uidlink"><a href="gn.libevents.evframes80211.EventFrame-class.html">gn.libevents.evframes80211.EventFrame</a></strong>:
       <em class="summary">An event associated with a frame.</em>
     <ul>
-    <li> <strong class="uidlink"><a href="gn.libevents.events.EventFrameMgmt-class.html">gn.libevents.events.EventFrameMgmt</a></strong>:
-      <em class="summary">An event associated with a management frame.</em>
+    <li> <strong class="uidlink"><a href="gn.libevents.evframes80211.EventFrameMgmt-class.html">gn.libevents.evframes80211.EventFrameMgmt</a></strong>
     </li>
     </ul>
     </li>
-    <li> <strong class="uidlink"><a href="gn.libevents.events.EventTimer-class.html">gn.libevents.events.EventTimer</a></strong>:
+    <li> <strong class="uidlink"><a href="gn.libevents.evtimer.EventTimer-class.html">gn.libevents.evtimer.EventTimer</a></strong>:
       <em class="summary">An event associated with a timer.</em>
     </li>
     </ul>
     </li>
+    <li> <strong class="uidlink"><a href="gn.libfsm.fsm.FSM-class.html">gn.libfsm.fsm.FSM</a></strong>:
+      <em class="summary">This is a Finite State Machine (FSM).</em>
+    </li>
     <li> <strong class="uidlink"><a href="gn.libutils.sched_bytype.Item-class.html">gn.libutils.sched_bytype.Item</a></strong>:
       <em class="summary">A class to define items to enqueue, dequeue.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="gn.libmanagement.NetworkConfiguration.NetworkConfiguration-class.html">gn.libmanagement.NetworkConfiguration.NetworkConfiguration</a></strong>:
+      <em class="summary">This class represents the actual network configuration</em>
+    </li>
+    <li> <strong class="uidlink"><a href="gn.libmanagement.PeersTable.PeersTable-class.html">gn.libmanagement.PeersTable.PeersTable</a></strong>:
+      <em class="summary">This class maintain the active peer links list.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="gn.libmanagement.Profile.Profile-class.html">gn.libmanagement.Profile.Profile</a></strong>:
+      <em class="summary">This class represents the profile of the network, in order to join 
+        the network the profile must be supported by all nodes.</em>
     </li>
     <li> <strong class="uidlink">object</strong>:
       <em class="summary">The most base type</em>
@@ -91,6 +106,9 @@
     <li> <strong class="uidlink"><a href="gn.libevents.events.EventNameException-class.html">gn.libevents.events.EventNameException</a></strong>:
       <em class="summary">An exception to rise on non valid parameters for event 
         construction.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="gn.libfsm.fsm.ExceptionFSM-class.html">gn.libfsm.fsm.ExceptionFSM</a></strong>:
+      <em class="summary">This is the FSM Exception class.</em>
     </li>
     <li> <strong class="uidlink"><a href="gn.libframes.frames.FrameException-class.html">gn.libframes.frames.FrameException</a></strong>:
       <em class="summary">An exception class for general frames.</em>
@@ -163,6 +181,16 @@
     <ul>
     <li> <strong class="uidlink">threading.Thread</strong>
     <ul>
+    <li> <strong class="uidlink"><a href="gn.libmanagement.Beacon.Beacon-class.html">gn.libmanagement.Beacon.Beacon</a></strong>:
+      <em class="summary">The Beacon  is a Thread.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="gn.libmanagement.DiscoveryPeeringFSM.ControllerFsmEmulator-class.html">gn.libmanagement.DiscoveryPeeringFSM.ControllerFsmEmulator</a></strong>
+    </li>
+    <li> <strong class="uidlink"><a href="gn.libmanagement.DiscoveryPeeringController.DiscoveryPeeringController-class.html">gn.libmanagement.DiscoveryPeeringController.DiscoveryPeeringController</a></strong>:
+      <em class="summary">The discovery and peering controller, a Thread.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="gn.libmanagement.DiscoveryPeeringFSM.ReadQueueTxEmulator-class.html">gn.libmanagement.DiscoveryPeeringFSM.ReadQueueTxEmulator</a></strong>
+    </li>
     <li> <strong class="uidlink">libutils.gnscheduler.Scheduler</strong>:
       <em class="summary">Gets elements from input queues, processes, puts elements in output
         queues.</em>
@@ -178,9 +206,6 @@
     </li>
     </ul>
     </li>
-    <li> <strong class="uidlink"><a href="gn.libadaptationlayer.scheduler.Scheduler-class.html">gn.libadaptationlayer.scheduler.Scheduler</a></strong>:
-      <em class="summary">This class gets L1 frames from a queue.</em>
-    </li>
     <li> <strong class="uidlink"><a href="gn.libutils.gnscheduler.Scheduler-class.html">gn.libutils.gnscheduler.Scheduler</a></strong>:
       <em class="summary">Gets elements from input queues, processes, puts elements in output
         queues.</em>
@@ -193,9 +218,16 @@
     </li>
     </ul>
     </li>
+    <li> <strong class="uidlink"><a href="gn.libadaptationlayer.scheduler.Scheduler-class.html">gn.libadaptationlayer.scheduler.Scheduler</a></strong>:
+      <em class="summary">This class gets L1 frames from a queue.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="gn.libtimer.timer.Timer-class.html">gn.libtimer.timer.Timer</a></strong>:
+      <em class="summary">A timer (thread) that waits an interval and generates a Timer 
+        Event.</em>
+    </li>
     <li> <strong class="uidlink"><a href="gn.libadaptationlayer.transmitFrame.TransmitFrame-class.html">gn.libadaptationlayer.transmitFrame.TransmitFrame</a></strong>:
-      <em class="summary">This class puts L1 frames into a queue.It gets events from the L2 
-        queues AND generates frames.</em>
+      <em class="summary">Puts L1 frames into a queue, gets events from the L2 queues AND 
+        generates frames.</em>
     </li>
     </ul>
     </li>
@@ -244,7 +276,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Nov 11 12:52:20 2013
+    Generated by Epydoc 3.0.1 on Mon Dec  2 13:10:57 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

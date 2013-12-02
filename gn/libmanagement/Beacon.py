@@ -1,30 +1,34 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
+
+'''
 Created on Tue May  7 11:05:17 2013
 
 @author: belza
-"""
+'''
 
 import sys
 sys.path +=['..']
 import libtimer.timer as Timer
-import libevents.events as events
+import libevents.if_events as if_events
 import threading,Queue,time
 import NetworkConfiguration
+
+
 class Beacon(threading.Thread) :
-    """   The Beacon  is a Thread.
+    '''The Beacon  is a Thread.
     
-          This class control the Beacon generation.       
-    """
+    This class controls the Beacon generation.       
+    '''
 
     def __init__(self,network_conf,tx_event_q):
         '''  
-        Constructor
+        Constructor.
         
         @param network_conf : actual network configuration.        
         @param tx_event_q : The event queue where the beacon events will be added.
-        
         '''
+
         threading.Thread.__init__(self)
         self.finished = False        
         self.my_addr = network_conf. getStationId()
@@ -38,25 +42,26 @@ class Beacon(threading.Thread) :
     def run(self):
         while not self.finished :
             aux= self.my_queue.get()
-            if aux.ev_nickname == "TimerTimer":
-                timer=Timer.Timer(self.my_queue, self.my_actual_net_conf.beacon_period,1,"TimerTimer")
+            if aux.nickname == "TimerTimer":
+                timer=Timer.Timer(self.my_queue, \
+                    self.my_actual_net_conf.beacon_period,1,"TimerTimer")
                 timer.start()
-                event = events.mkevent("MgmtBeacon")
+                event = if_events.mkevent("MgmtBeacon")
                 event.src_addr=self.my_addr
                 event.dst_addr= self.broadcast_addr
                 self.tx_event_q.put(event,False)
 
     def activateBeacon(self):
-        timer=Timer.Timer(self.my_queue, self.my_actual_net_conf.beacon_period,1,"TimerTimer")
+        timer=Timer.Timer(self.my_queue, \
+            self.my_actual_net_conf.beacon_period,1,"TimerTimer")
         timer.start()
     
     def stop(self):
         self.finished = True
         self._Thread__stop()
 
-        
-        
-        
+
+
 def test():
     myQueue=Queue.Queue(10)
     net_conf1 = NetworkConfiguration.NetworkConfiguration(100,'my network',256,1)
@@ -75,3 +80,5 @@ if __name__ == '__main__':
         test()
     except KeyboardInterrupt:
         pass
+
+

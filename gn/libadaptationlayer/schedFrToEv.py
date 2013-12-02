@@ -31,7 +31,7 @@ class SchedFrToEv(Scheduler.Scheduler):
         '''
         in_qu = self.in_queues[0]
         frame = in_qu.get(True)
-        event= evstrframes.mkevent(pframe=frame)
+        event = evstrframes.mkevent(pframe=frame)
         if event != None:
             for item_type in self.out_queues.keys():
                 if  event.ev_type == item_type:
@@ -68,7 +68,7 @@ def test():
     # put events in input queue
     for name in ['MgmtBeacon', 'CtrlRTS', 'CtrlCTS', 'DataData']:
         ev = if_events.mkevent(name, ev_dc={'src_addr':'100','dst_addr':'150'})
-        frame=evstrframes.mkframe(ev)
+        frame = evstrframes.mkframe(ev)
         print " Frame = ", frame
         frame_q.put(frame,False)
     print '=== Scheduler based on item type ==='

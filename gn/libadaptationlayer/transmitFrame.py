@@ -18,7 +18,7 @@ class TransmitFrame(threading.Thread):
     '''Puts L1 frames into a queue, gets events from the L2 queues AND generates frames.
     '''
     
-    def __init__(self,frame_queue,event_queue):
+    def __init__(self, frame_queue, event_queue):
         '''  
         Constructor
         

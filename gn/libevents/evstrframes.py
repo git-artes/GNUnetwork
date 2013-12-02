@@ -8,6 +8,7 @@ This module defines two functions, mkevent() to make an Event object from a nick
 
 import events
 import if_events
+import sys
 
 
 def mkevent(pnickname=None, pframe=None):
@@ -21,14 +22,16 @@ def mkevent(pnickname=None, pframe=None):
         raise events.EventNameException('No nickname or frame received.')
         return None
     if pnickname:
-        pass
-        return  # ...an Event object
+        return if_events.mkevent(pnickname, ev_dc={'src_addr':'', 'dst_addr':''})
     if pframe:
+        print "evstrframes.frame:", pframe
         ev_dc = {}
         nickname, ev_dc['src_addr'], ev_dc['dst_addr'] = pframe.split(',')
         ev = if_events.mkevent(nickname, frmpkt=pframe, ev_dc=ev_dc)
         #ev.src_addr=src_addr
         #ev.dst_addr = dst_addr
+        print "evstrframes.mkevent:"
+        print ev
         return  ev
 
 
@@ -41,13 +44,27 @@ def mkframe(ev_obj):
     if not isinstance(ev_obj, events.Event):
         raise EventNameException('Parameter is not an Event object.')
         return None
+    if not ev_obj.ev_dc:
+        raise EventNameException('ev_dc not in event object.')
+    if not ev_obj.ev_dc.has_key('src_addr') or not ev_obj.ev_dc.has_key('dst_addr'):
+        raise EventNameException('ev_dc does not contain src_addr, dst_addr keys.')
+    if not ev_obj.nickname:
+        raise EventNameException('even with no nickname.')
+    print 'evstrframes.mkframe, event object:'
+    if not ev_obj.ev_dc['src_addr']:
+        ev_obj.ev_dc['src_addr'] = ''
+    if not ev_obj.ev_dc['dst_addr']:
+        ev_obj.ev_dc['dst_addr'] = ''
+    print ev_obj
     frame = "" + ev_obj.nickname + "," + \
         ev_obj.ev_dc['src_addr'] + "," + ev_obj.ev_dc['dst_addr']
+    #print frame
+    #sys.exit()
     return frame
 
 
 def test():
-    ev = events.mkevent("MgmtBeacon", ev_dc={})
+    ev = if_events.mkevent("MgmtBeacon", ev_dc={})
     ev.ev_dc['src_addr'] = "100"
     ev.ev_dc['dst_addr'] =  "150"
     print "=== Event to frame:"; print ev

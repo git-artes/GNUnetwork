@@ -34,7 +34,7 @@ class SchedEvToFr(Scheduler.Scheduler):
         '''
         in_qu = self.in_queues[0]
         event = in_qu.get(True)
-        #print 'event', event
+        print 'SchedEvToFr, event', event
         frame = evstrframes.mkframe(event)
         out_queue = self.out_queues['frames']
         out_queue.put(frame, False)   # add to queue, don't block 
@@ -59,9 +59,10 @@ def test():
  
     # create events and put in input queue
     for name in ['MgmtBeacon', 'CtrlRTS', 'CtrlCTS', 'DataData']:
+        #ev = if_events.mkevent(name, ev_dc={'src_addr':'100','dst_addr':'150'})
         ev = if_events.mkevent(name, ev_dc={'src_addr':'100','dst_addr':'150'})
         print ev
-        ev_q.put(ev,False)
+        ev_q.put(ev, False)
     print 'Input queue size', ev_q.qsize()
 
     # create and start scheduler

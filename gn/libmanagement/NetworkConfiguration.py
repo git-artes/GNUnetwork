@@ -1,13 +1,22 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
+
+'''
 Created on Fri Dec  7 14:23:26 2012
 
 @author: belza
-"""
+'''
+
+
 
 class NetworkConfiguration :
-    """ This class represents the actual network configuration"""
-    def __init__(self, station_id, net_id, broadcast_addr, beacon_period=20, number_of_peering=0, accepting_additional_peerings=True, max_retry=6, retry_timeout=20, confirm_timeout=20, holding_timeout=40, active_path_selection_protocol=1, active_path_selection_metric=1, forwarding=True, TTL=31, active_congestion_control_mode=0, active_syn_method=1):
+    ''' This class represents the actual network configuration'''
+    def __init__(self, station_id, net_id, broadcast_addr, beacon_period=20, \
+        number_of_peering=0, accepting_additional_peerings=True, max_retry=6, \
+        retry_timeout=20, confirm_timeout=20, holding_timeout=40, \
+        active_path_selection_protocol=1, active_path_selection_metric=1, \
+        forwarding=True, TTL=31, active_congestion_control_mode=0, \
+        active_syn_method=1):
         '''  
         Constructor.
         

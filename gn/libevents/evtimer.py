@@ -39,32 +39,6 @@ dc_nicknames = { \
     }
 
 
-"""
-def mkevent(nickname, ev_dc={}):
-    '''Returns an event of the given event nickname.
-
-    NOTE: this function generalized in module 'events'.
-    @param nickname: a valid event nickname, i.e. one that is a key in dictionary of valid nicknames.    
-    >>> ev_ob_tmr = mkevent('TimerTOH')
-    >>> print ev_ob_tmr
-    Event class name: EventTimer
-      Nickname: 'TimerTOH'; Type: 'Timer'; SubType: 'TOH'
-      add_info: None
-    >>> ev_ob_tmr = mkevent('TimerTOH', ev_dc={'add_info':'additional info, testing'})
-    >>> print ev_ob_tmr
-    Event class name: EventTimer
-      Nickname: 'TimerTOH'; Type: 'Timer'; SubType: 'TOH'
-      add_info: additional info, testing
-      
-    '''
-    #if not type(eventclass) == types.ClassType:
-    #    raise EventNameException('eventclass must be a class object.')
-    if dc_nicknames.has_key(nickname):
-        ptype, psubtype, eventclass = dc_nicknames[nickname]
-        return eventclass(nickname, ptype, psubtype, ev_dc)
-    else:
-        raise EventNameException(nickname + ' is not a valid nickname.')
-"""
 
 if __name__ == '__main__':
     import doctest

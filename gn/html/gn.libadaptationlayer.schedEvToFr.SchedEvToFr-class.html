@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>gn.libevents.events.EventFrame</title>
+  <title>gn.libadaptationlayer.schedEvToFr.SchedEvToFr</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -43,9 +43,9 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="gn-module.html">Package&nbsp;gn</a> ::
-        <a href="gn.libevents-module.html">Package&nbsp;libevents</a> ::
-        <a href="gn.libevents.events-module.html">Module&nbsp;events</a> ::
-        Class&nbsp;EventFrame
+        <a href="gn.libadaptationlayer-module.html">Package&nbsp;libadaptationlayer</a> ::
+        <a href="gn.libadaptationlayer.schedEvToFr-module.html">Module&nbsp;schedEvToFr</a> ::
+        Class&nbsp;SchedEvToFr
       </span>
     </td>
     <td>
@@ -55,28 +55,28 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="gn.libevents.events.EventFrame-class.html"
+            >]&nbsp;|&nbsp;<a href="gn.libadaptationlayer.schedEvToFr.SchedEvToFr-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class EventFrame</h1><p class="nomargin-top"><span class="codelink"><a href="gn.libevents.events-pysrc.html#EventFrame">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class SchedEvToFr</h1><p class="nomargin-top"><span class="codelink"><a href="gn.libadaptationlayer.schedEvToFr-pysrc.html#SchedEvToFr">source&nbsp;code</a></span></p>
 <pre class="base-tree">
-<a href="gn.libevents.events.Event-class.html">Event</a> --+
-        |
-       <strong class="uidshort">EventFrame</strong>
+            object --+            
+                     |            
+    threading._Verbose --+        
+                         |        
+          threading.Thread --+    
+                             |    
+libutils.gnscheduler.Scheduler --+
+                                 |
+                                <strong class="uidshort">SchedEvToFr</strong>
 </pre>
 
-<dl><dt>Known Subclasses:</dt>
-<dd>
-      <ul class="subclass-list">
-<li><a href="gn.libevents.events.EventFrameMgmt-class.html">EventFrameMgmt</a></li>  </ul>
-</dd></dl>
-
 <hr />
-<p>An event associated with a frame.</p>
+<p>Subclass of Scheduler for adapting Layers 1 and 2.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -101,30 +101,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="gn.libevents.events.EventFrame-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">pnickname</span>,
-        <span class="summary-sig-arg">ptype</span>,
-        <span class="summary-sig-arg">psubtype</span>,
-        <span class="summary-sig-arg">pfrmpkt</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
-      Constructor.</td>
+          <td><span class="summary-sig"><a href="gn.libadaptationlayer.schedEvToFr.SchedEvToFr-class.html#fn_sched" class="summary-sig-name">fn_sched</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Scheduling function to process an events queue.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="gn.libevents.events-pysrc.html#EventFrame.__init__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="gn.libevents.events.EventFrame-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="gn.libevents.events-pysrc.html#EventFrame.__str__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="gn.libadaptationlayer.schedEvToFr-pysrc.html#SchedEvToFr.fn_sched">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -134,75 +114,76 @@
   </tr>
   <tr>
     <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="gn.libevents.events.Event-class.html">Event</a></code></b>:
-      <code><a href="gn.libevents.events.Event-class.html#getname">getname</a></code>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>libutils.gnscheduler.Scheduler</code></b>:
+      <code>__init__</code>,
+      <code>run</code>,
+      <code>stop</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>threading.Thread</code></b>:
+      <code>__repr__</code>,
+      <code>getName</code>,
+      <code>isAlive</code>,
+      <code>isDaemon</code>,
+      <code>is_alive</code>,
+      <code>join</code>,
+      <code>setDaemon</code>,
+      <code>setName</code>,
+      <code>start</code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>threading.Thread</code></b> (private):
+      <code>_reset_internal_locks</code>,
+      <code>_set_daemon</code>,
+      <code>_set_ident</code>
+      </p></div>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>threading._Verbose</code></b> (private):
+      <code>_note</code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
       </p>
     </td>
   </tr>
 </table>
-<!-- ==================== INSTANCE VARIABLES ==================== -->
-<a name="section-InstanceVariables"></a>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td colspan="2" class="table-header">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr valign="top">
-        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="left"><span class="table-header">Properties</span></td>
         <td align="right" valign="top"
-         ><span class="options">[<a href="#section-InstanceVariables"
+         ><span class="options">[<a href="#section-Properties"
          class="privatelink" onclick="toggle_private();"
          >hide private</a>]</span></td>
       </tr>
     </table>
   </td>
 </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="dst_addr"></a><span class="summary-name">dst_addr</span><br />
-      destination address.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="ev_nickname"></a><span class="summary-name">ev_nickname</span><br />
-      a descriptive name for this event.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="ev_subtype"></a><span class="summary-name">ev_subtype</span><br />
-      frame event subtype.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="ev_type"></a><span class="summary-name">ev_type</span><br />
-      frame event type.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="frmpkt"></a><span class="summary-name">frmpkt</span><br />
-      a packed frame in bin format, as for transmission.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="src_addr"></a><span class="summary-name">src_addr</span><br />
-      source address.
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>threading.Thread</code></b>:
+      <code>daemon</code>,
+      <code>ident</code>,
+      <code>name</code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>threading.Thread</code></b> (private):
+      <code>_block</code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
     </td>
   </tr>
 </table>
@@ -224,57 +205,27 @@
   </td>
 </tr>
 </table>
-<a name="__init__"></a>
+<a name="fn_sched"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">pnickname</span>,
-        <span class="sig-arg">ptype</span>,
-        <span class="sig-arg">psubtype</span>,
-        <span class="sig-arg">pfrmpkt</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
-    <br /><em class="fname">(Constructor)</em>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fn_sched</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="gn.libevents.events-pysrc.html#EventFrame.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="gn.libadaptationlayer.schedEvToFr-pysrc.html#SchedEvToFr.fn_sched">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Constructor.</p>
-  <p>Frame event type and subtype must be valid frame type and subtype.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>pnickname</code></strong> - a descriptive name for this event.</li>
-        <li><strong class="pname"><code>ptype</code></strong> - frame event type.</li>
-        <li><strong class="pname"><code>psubtype</code></strong> - frame event subtype.</li>
-        <li><strong class="pname"><code>pfrmpkt</code></strong> - a packed frame in bin format, as for transmission.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="__str__"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">__str__</span>(<span class="sig-arg">self</span>)</span>
-    <br /><em class="fname">(Informal representation operator)</em>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="gn.libevents.events-pysrc.html#EventFrame.__str__">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  
+  <p>Scheduling function to process an events queue.</p>
+  <p>Scheduling function to process an events queue: reads one element from
+  the input event queue, generates a frame, and puts this frame in  the 
+  output queue. out_queues: a dictionary.</p>
   <dl class="fields">
     <dt>Overrides:
-        <a href="gn.libevents.events.Event-class.html#__str__">Event.__str__</a>
+        libutils.gnscheduler.Scheduler.fn_sched
     </dt>
   </dl>
 </td></tr></table>
@@ -311,7 +262,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Nov 11 12:52:21 2013
+    Generated by Epydoc 3.0.1 on Mon Dec  2 13:10:58 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

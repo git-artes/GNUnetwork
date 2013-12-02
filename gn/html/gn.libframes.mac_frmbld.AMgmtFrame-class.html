@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>gn.libevents.events.EventTimer</title>
+  <title>gn.libframes.mac_frmbld.AMgmtFrame</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -43,9 +43,9 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="gn-module.html">Package&nbsp;gn</a> ::
-        <a href="gn.libevents-module.html">Package&nbsp;libevents</a> ::
-        <a href="gn.libevents.events-module.html">Module&nbsp;events</a> ::
-        Class&nbsp;EventTimer
+        <a href="gn.libframes-module.html">Package&nbsp;libframes</a> ::
+        <a href="gn.libframes.mac_frmbld-module.html">Module&nbsp;mac_frmbld</a> ::
+        Class&nbsp;AMgmtFrame
       </span>
     </td>
     <td>
@@ -55,22 +55,26 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="gn.libevents.events.EventTimer-class.html"
+            >]&nbsp;|&nbsp;<a href="gn.libframes.mac_frmbld.AMgmtFrame-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class EventTimer</h1><p class="nomargin-top"><span class="codelink"><a href="gn.libevents.events-pysrc.html#EventTimer">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class AMgmtFrame</h1><p class="nomargin-top"><span class="codelink"><a href="gn.libframes.mac_frmbld-pysrc.html#AMgmtFrame">source&nbsp;code</a></span></p>
 <pre class="base-tree">
-<a href="gn.libevents.events.Event-class.html">Event</a> --+
-        |
-       <strong class="uidshort">EventTimer</strong>
+  object --+        
+           |        
+<a href="gn.libframes.frames.Frame-class.html">frames.Frame</a> --+    
+               |    
+          <a href="gn.libframes.mac_frmbld.AFrame-class.html">AFrame</a> --+
+                   |
+                  <strong class="uidshort">AMgmtFrame</strong>
 </pre>
 
 <hr />
-<p>An event associated with a timer.</p>
+<p>A class to ease creation of Management frames.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -89,32 +93,34 @@
     </table>
   </td>
 </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="gn.libevents.events.EventTimer-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">pnickname</span>,
-        <span class="summary-sig-arg">ptype</span>,
-        <span class="summary-sig-arg">psubtype</span>,
-        <span class="summary-sig-arg">padd_info</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Constructor.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="gn.libevents.events-pysrc.html#EventTimer.__init__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
   <tr>
     <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="gn.libevents.events.Event-class.html">Event</a></code></b>:
-      <code><a href="gn.libevents.events.Event-class.html#__str__">__str__</a></code>,
-      <code><a href="gn.libevents.events.Event-class.html#getname">getname</a></code>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="gn.libframes.mac_frmbld.AFrame-class.html">AFrame</a></code></b>:
+      <code><a href="gn.libframes.mac_frmbld.AFrame-class.html#__init__">__init__</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="gn.libframes.frames.Frame-class.html">frames.Frame</a></code></b>:
+      <code><a href="gn.libframes.frames.Frame-class.html#__str__">__str__</a></code>,
+      <code><a href="gn.libframes.frames.Frame-class.html#consistchk">consistchk</a></code>,
+      <code><a href="gn.libframes.frames.Frame-class.html#fillfldvals">fillfldvals</a></code>,
+      <code><a href="gn.libframes.frames.Frame-class.html#mkdcfields">mkdcfields</a></code>,
+      <code><a href="gn.libframes.frames.Frame-class.html#mkdic">mkdic</a></code>,
+      <code><a href="gn.libframes.frames.Frame-class.html#mkhexfl">mkhexfl</a></code>,
+      <code><a href="gn.libframes.frames.Frame-class.html#mkpkt">mkpkt</a></code>,
+      <code><a href="gn.libframes.frames.Frame-class.html#setfrmbdy">setfrmbdy</a></code>,
+      <code><a href="gn.libframes.frames.Frame-class.html#updtfldvals">updtfldvals</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__subclasshook__</code>
       </p>
     </td>
   </tr>
@@ -136,89 +142,53 @@
     </table>
   </td>
 </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="add_info"></a><span class="summary-name">add_info</span><br />
-      additional info.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="pnickname"></a><span class="summary-name">pnickname</span><br />
-      a descriptive name for this event.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="psubtype"></a><span class="summary-name">psubtype</span><br />
-      timer event subtype.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="ptype"></a><span class="summary-name">ptype</span><br />
-      timer event type.
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="gn.libframes.mac_frmbld.AFrame-class.html">AFrame</a></code></b>:
+      <code><a href="gn.libframes.mac_frmbld.AFrame-class.html#bitbyte">bitbyte</a></code>,
+      <code><a href="gn.libframes.mac_frmbld.AFrame-class.html#dc_fields">dc_fields</a></code>,
+      <code><a href="gn.libframes.mac_frmbld.AFrame-class.html#dc_fldvals">dc_fldvals</a></code>,
+      <code><a href="gn.libframes.mac_frmbld.AFrame-class.html#frame_len">frame_len</a></code>,
+      <code><a href="gn.libframes.mac_frmbld.AFrame-class.html#frmtype">frmtype</a></code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="gn.libframes.mac_frmbld.AFrame-class.html">AFrame</a></code></b> (private):
+      <code><a href="gn.libframes.mac_frmbld.AFrame-class.html#_fb_obj" onclick="show_private();">_fb_obj</a></code>,
+      <code><a href="gn.libframes.mac_frmbld.AFrame-class.html#_fc_obj" onclick="show_private();">_fc_obj</a></code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="gn.libframes.frames.Frame-class.html">frames.Frame</a></code></b>:
+      <code><a href="gn.libframes.frames.Frame-class.html#body_len">body_len</a></code>,
+      <code><a href="gn.libframes.frames.Frame-class.html#ls_fields">ls_fields</a></code>,
+      <code><a href="gn.libframes.frames.Frame-class.html#mask_len">mask_len</a></code>,
+      <code><a href="gn.libframes.frames.Frame-class.html#max_frame_len">max_frame_len</a></code>
+      </p>
     </td>
   </tr>
 </table>
-<!-- ==================== METHOD DETAILS ==================== -->
-<a name="section-MethodDetails"></a>
-<table class="details" border="1" cellpadding="3"
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td colspan="2" class="table-header">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr valign="top">
-        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="left"><span class="table-header">Properties</span></td>
         <td align="right" valign="top"
-         ><span class="options">[<a href="#section-MethodDetails"
+         ><span class="options">[<a href="#section-Properties"
          class="privatelink" onclick="toggle_private();"
          >hide private</a>]</span></td>
       </tr>
     </table>
   </td>
 </tr>
-</table>
-<a name="__init__"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">pnickname</span>,
-        <span class="sig-arg">ptype</span>,
-        <span class="sig-arg">psubtype</span>,
-        <span class="sig-arg">padd_info</span>=<span class="sig-default">None</span>)</span>
-    <br /><em class="fname">(Constructor)</em>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="gn.libevents.events-pysrc.html#EventTimer.__init__">source&nbsp;code</a></span>&nbsp;
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
     </td>
-  </tr></table>
-  
-  <p>Constructor.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>pnickname</code></strong> - a descriptive name for this event.</li>
-        <li><strong class="pname"><code>ptype</code></strong> - timer event type.</li>
-        <li><strong class="pname"><code>psubtype</code></strong> - timer event subtype.</li>
-        <li><strong class="pname"><code>padd_info</code></strong> - additional info.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<br />
+  </tr>
+</table>
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
@@ -250,7 +220,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Nov 11 12:52:21 2013
+    Generated by Epydoc 3.0.1 on Mon Dec  2 13:10:58 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

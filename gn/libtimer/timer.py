@@ -20,16 +20,17 @@ class Timer(threading.Thread):
     The timer retries the number of times gven in the parameter retry. After the given number of retries it generates the event of Type TIMER and subtype given in subTypeEvent2 if it is not None.
     '''
 
-    def __init__(self, q_event, interval, retry,nickname1,add_info =None,nickname2=None ):
+    def __init__(self, q_event, interval, retry,nickname1, \
+            add_info=None, nickname2=None):
         '''  
-        Constructor
+        Constructor.
         
         @param q_event: The event queue where the events must be inserted.
         @param interval: The interval of time.
         @param retry: The number of retries.
         @param nickname1: The nickname of the event that must be called after each retry.
         @param nickname2: The nickname of the event that must be called after the given number of retries.
-        @param add_info: additional information that will be send with the Timer Event        
+        @param add_info: additional information that will be send with the Timer Event.
         '''        
 
         threading.Thread.__init__(self)
@@ -56,6 +57,7 @@ class Timer(threading.Thread):
             event= if_events.mkevent(self.nickname1)
             event.add_info = self.add_info
             self.q_event.put(event,False)
+
     def tout2(self):
             event= if_events.mkevent(self.nickname2)
             event.add_info = self.add_info
@@ -94,3 +96,5 @@ if __name__ == '__main__':
         test()
     except KeyboardInterrupt:
         pass
+
+

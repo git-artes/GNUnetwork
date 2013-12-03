@@ -34,5 +34,13 @@ $ checkout master
 $ git pull gn master
 para traer todos los cambios que pudieran haber habido en master, y deshacer los que ocurrieron en branch para el directorio local.
 
-Continuará...
+Merge
+
+$ git checkout master         # volver a master
+$ git merge events2           # el merge!
+$ git branch -d events2       # borra branch events2
+
+$ git push gn master          # no sé si lo requiere, lo hice igual
+
+Observación: la rama events2 no desaparece del web, aunque se le pidió borrar, pero el master queda actualizado con los cambios.
 

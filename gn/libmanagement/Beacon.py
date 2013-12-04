@@ -47,8 +47,9 @@ class Beacon(threading.Thread) :
                     self.my_actual_net_conf.beacon_period,1,"TimerTimer")
                 timer.start()
                 event = if_events.mkevent("MgmtBeacon")
-                event.src_addr=self.my_addr
-                event.dst_addr= self.broadcast_addr
+                event.ev_dc['src_addr'] = self.my_addr
+                event.ev_dc['dst_addr'] = self.broadcast_addr
+                event.ev_dc['peerlinkId']=0
                 self.tx_event_q.put(event,False)
 
     def activateBeacon(self):

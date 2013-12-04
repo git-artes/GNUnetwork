@@ -31,6 +31,7 @@ class EventFrame(Event):
             'src_addr': None, \
             'dst_addr': None, \
             'duration': None, \
+            'peerlinkId': 0, \
 
             }
         self.ev_dc.update(ev_dc)

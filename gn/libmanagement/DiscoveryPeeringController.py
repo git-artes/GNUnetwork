@@ -48,7 +48,7 @@ class DiscoveryPeeringController(threading.Thread) :
         while not self.finished :
             event= self.my_queue.get()
             if event.ev_type == "Timer":
-                #print "Evento Timer: ", event, '\n'
+                print "Evento Timer: ", event, '\n'
                 sm= self.my_peers.getSM(localLinkId = event.ev_dc['add_info'] )
                 sm.fsm.process(event.ev_subtype) 
                 self.my_peers.printPeersTable()
@@ -71,13 +71,14 @@ class DiscoveryPeeringController(threading.Thread) :
                             self.moveFSM(event,sm)
                             self.my_peers.printPeersTable()
                         else:
+                            #print "LLEGO EVENTO ................................", event
                             # in this case peer link does not exist in peer table
                             #print "Evento 2: ", event,'  my mac: ',self.my_addr,'\n'
                             #self.my_peers.printPeersTable()
                             self.local_linkId = self.local_linkId + 1
                             self.my_peers.add(event.ev_dc['src_addr'], \
                                 self.my_queue, self.tx_event_q, self.net_conf, \
-                                    self.local_linkId, event. ev_dc['peerlinkId'])
+                                    self.local_linkId, event.ev_dc['peerlinkId'])
                             self.net_conf.number_of_peering = \
                                 self.net_conf.number_of_peering + 1
                             sm = self.my_peers.getSM(peerMACaddr = \
@@ -86,10 +87,11 @@ class DiscoveryPeeringController(threading.Thread) :
                             #print "Evento 3: ", event,'  my mac: ',self.my_addr,'\n'
                             self.my_peers.printPeersTable()
                     else:
-                        print "Error: wrong MAC address, destination address:", \
-                            event.ev_dc['dst_addr'], " source address : ", \
-                            event.ev_dc['src_addr']," my address : ", \
-                            self.my_addr               
+                        pass
+#                        print "Error: wrong MAC address, destination address:", \
+#                            event.ev_dc['dst_addr'], " source address : ", \
+#                            event.ev_dc['src_addr']," my address : ", \
+#                            self.my_addr               
     
                 else: 
                     print "Error: wrong event type"

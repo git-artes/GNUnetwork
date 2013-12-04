@@ -34,7 +34,7 @@ class SchedEvToFr(Scheduler.Scheduler):
         '''
         in_qu = self.in_queues[0]
         event = in_qu.get(True)
-        print 'SchedEvToFr, event', event
+        #print 'SchedEvToFr, event', event
         frame = evstrframes.mkframe(event)
         out_queue = self.out_queues['frames']
         out_queue.put(frame, False)   # add to queue, don't block 

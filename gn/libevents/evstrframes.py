@@ -24,14 +24,15 @@ def mkevent(pnickname=None, pframe=None):
     if pnickname:
         return if_events.mkevent(pnickname, ev_dc={'src_addr':'', 'dst_addr':''})
     if pframe:
-        print "evstrframes.frame:", pframe
+        #print "evstrframes.frame:", pframe
         ev_dc = {}
-        nickname, ev_dc['src_addr'], ev_dc['dst_addr'] = pframe.split(',')
+        nickname, ev_dc['src_addr'], ev_dc['dst_addr'], aux  = pframe.split(',')
+        ev_dc['peerlinkId'] = int(aux)
         ev = if_events.mkevent(nickname, frmpkt=pframe, ev_dc=ev_dc)
         #ev.src_addr=src_addr
         #ev.dst_addr = dst_addr
-        print "evstrframes.mkevent:"
-        print ev
+        #print "evstrframes.mkevent:"
+        #print ev
         return  ev
 
 
@@ -50,14 +51,16 @@ def mkframe(ev_obj):
         raise EventNameException('ev_dc does not contain src_addr, dst_addr keys.')
     if not ev_obj.nickname:
         raise EventNameException('even with no nickname.')
-    print 'evstrframes.mkframe, event object:'
+    #print 'evstrframes.mkframe, event object:'
     if not ev_obj.ev_dc['src_addr']:
         ev_obj.ev_dc['src_addr'] = ''
     if not ev_obj.ev_dc['dst_addr']:
         ev_obj.ev_dc['dst_addr'] = ''
-    print ev_obj
+    if not ev_obj.ev_dc['peerlinkId']:
+        ev_obj.ev_dc['peerlinkId'] = 0
+    #print ev_obj
     frame = "" + ev_obj.nickname + "," + \
-        ev_obj.ev_dc['src_addr'] + "," + ev_obj.ev_dc['dst_addr']
+        ev_obj.ev_dc['src_addr'] + "," + ev_obj.ev_dc['dst_addr']  + "," + str(ev_obj.ev_dc['peerlinkId'])
     #print frame
     #sys.exit()
     return frame

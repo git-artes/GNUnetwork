@@ -55,12 +55,12 @@ class Timer(threading.Thread):
         
     def tout1(self):      
             event= if_events.mkevent(self.nickname1)
-            event.add_info = self.add_info
+            event.ev_dc['add_info'] =  self.add_info
             self.q_event.put(event,False)
 
     def tout2(self):
             event= if_events.mkevent(self.nickname2)
-            event.add_info = self.add_info
+            event.ev_dc['add_info'] =  self.add_info
             self.q_event.put(event,False)    
                 
     def stop(self):
@@ -85,7 +85,7 @@ def test():
     aux= 0
     while aux  < 3:
         event= myQueue.get()
-        print " LLEGO EVENTO ", event, " add_info ", event.add_info, int(round(time.time() * 1000)) 
+        print " LLEGO EVENTO ", event, " add_info ",  event.ev_dc['add_info'], int(round(time.time() * 1000)) 
         aux += 1
     myTimer.stop()
 

@@ -5,6 +5,8 @@
 
 '''A library for events management.
 
+
+
 Package contents:
     - events: classes and functions for events.
 

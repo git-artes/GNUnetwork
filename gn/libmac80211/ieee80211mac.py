@@ -98,22 +98,22 @@ class ieee80211mac() :
 		
     def sndRTS ( self, fsm ):
 		event = events.mkevent("CtrlRTS")
-		event.src_addr=self.net_conf.station_id
-		#event.dst_addr= self.peer_addr
+		event.ev_dc['src_addr']=self.net_conf.station_id
+		#event.ev_dc['dst_addr']= self.peer_addr
 		event.duration=0;
 		self.snd_frame( event )
 
     def sndCTS ( self, fsm ):
 		event = events.mkevent("CtrlCTS")
-		event.src_addr=self.net_conf.station_id
-		#event.dst_addr= self.peer_addr
+		event.ev_dc['src_addr']=self.net_conf.station_id
+		#event.ev_dc['dst_addr']= self.peer_addr
 		self.snd_frame( event )
 
     def rcvRTS ( self, fsm ):
 		print 'MAC: Receive RTS'
 		self.updNAV( fsm )
 		event = self.mac_fsm.memory
-		if ( event.dst_addr == self.net_conf.station_id ):
+		if ( event.ev_dc['dst_addr'] == self.net_conf.station_id ):
 			self.sndCTS( fsm )
 			self.start_timer()
 
@@ -210,8 +210,8 @@ def test():
     print "MAC START TEST 1 --------------------------------------------" 
     print "MAC STATE BEFORE PROCESS ..... ", mymac.mac_fsm.current_state
     ev = events.mkevent("CtrlRTS")
-    ev.src_addr=100
-    ev.dst_addr=100
+    ev.ev_dc['src_addr']=100
+    ev.ev.dc['dst_addr']=100
     mymac.mac_fsm.memory = ev
     mymac.mac_fsm.process('RTS')    
     print "MAC STATE AFTER PROCESS ...... ", mymac.mac_fsm.current_state

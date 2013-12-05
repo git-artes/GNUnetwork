@@ -26,9 +26,9 @@ def mkevent(pnickname=None, pframe=None):
     if pframe:
         #print "evstrframes.frame:", pframe
         ev_dc = {}
-        nickname, ev_dc['src_addr'], ev_dc['dst_addr'], aux  = pframe.split(',')
-        ev_dc['peerlinkId'] = int(aux)
-        ev = if_events.mkevent(nickname, frmpkt=pframe, ev_dc=ev_dc)
+        nickname, ev_dc  = pframe.split(',',1)
+        print ev_dc
+        ev = if_events.mkevent(nickname, frmpkt=pframe, ev_dc=eval(ev_dc))
         #ev.src_addr=src_addr
         #ev.dst_addr = dst_addr
         #print "evstrframes.mkevent:"
@@ -59,8 +59,7 @@ def mkframe(ev_obj):
     if not ev_obj.ev_dc['peerlinkId']:
         ev_obj.ev_dc['peerlinkId'] = 0
     #print ev_obj
-    frame = "" + ev_obj.nickname + "," + \
-        ev_obj.ev_dc['src_addr'] + "," + ev_obj.ev_dc['dst_addr']  + "," + str(ev_obj.ev_dc['peerlinkId'])
+    frame = "" + ev_obj.nickname + "," + str(ev_obj.ev_dc)
     #print frame
     #sys.exit()
     return frame

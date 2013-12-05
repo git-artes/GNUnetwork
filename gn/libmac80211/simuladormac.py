@@ -22,7 +22,7 @@ def simulates():
     "-------------------NODE 1: MAC Addr 100-------------------------------------------------------"    
     " Layer 3 packet queues"
     pkt_rx_q1 = Queue.Queue(10)
-    pkt_tx_q1 = Queue.Queue(10)
+    #pkt_tx_q1 = Queue.Queue(10)
 
     " Configuration of the Scheduler of Node 1 that recieves frames and generates management events."
     frame_rx_q1 = Queue.Queue(10)
@@ -50,22 +50,22 @@ def simulates():
 
     " Starts the Controller of The FSM for Peering Discovering"
     dpcontrol1 =  DiscoveryPeeringController.DiscoveryPeeringController(net_conf1,None,mgmt_q1,tx_ev_q1)
-    ## dpcontrol1 =  DiscoveryPeeringController.DiscoveryPeeringController(net_conf1,None,pkt_tx_q1,pkt_rx_q1)
     dpcontrol1.start()
 
     " Start the MAC controller"
-    macctrl1 = Mac.ControllerMAC( net_conf1, ctrl_q1, mgmt_q1, data_q1, tx_ev_q1, pkt_rx_q1, pkt_tx_q1 )
+    macctrl1 = Mac.ControllerMAC( net_conf1, ctrl_q1, mgmt_q1, data_q1, tx_ev_q1, pkt_rx_q1, tx_ev_q1 )
     macctrl1.start()
 
     "Starts the beacon generator of this node"
-    myBeacon1 = Beacon.Beacon(net_conf1 ,tx_ev_q1)
+    #myBeacon1 = Beacon.Beacon(net_conf1 ,tx_ev_q1)
+    myBeacon1 = Beacon.Beacon(net_conf1 ,pkt_rx_q1 )
     myBeacon1.start()    
     "---------------------END NODE 1 -----------------------------------------------"
     
     "-------------------NODE 2: MAC Addr 101-------------------------------------------------------"    
     " Layer 3 packet queues"
     pkt_rx_q2 = Queue.Queue(10)
-    pkt_tx_q2 = Queue.Queue(10)
+    #pkt_tx_q2 = Queue.Queue(10)
 
     " Configuration of the Scheduler of Node 2 that recieves frames and generates management events."
     frame_rx_q2 = Queue.Queue(10)
@@ -97,11 +97,12 @@ def simulates():
     dpcontrol2.start()
 
     " Start the MAC controller"
-    macctrl2 = Mac.ControllerMAC( net_conf2, ctrl_q2, mgmt_q2, data_q2, tx_ev_q2, pkt_rx_q2, pkt_tx_q2 )
+    macctrl2 = Mac.ControllerMAC( net_conf2, ctrl_q2, mgmt_q2, data_q2, tx_ev_q2, pkt_rx_q2, tx_ev_q2 )
     macctrl2.start()
 
     "Starts the beacon generator of this node"
-    myBeacon2 = Beacon.Beacon(net_conf2 ,tx_ev_q2)
+    #myBeacon2 = Beacon.Beacon(net_conf2 ,tx_ev_q2)
+    myBeacon2 = Beacon.Beacon(net_conf2 ,pkt_rx_q2 )
     myBeacon2.start()  
     
     "-------------------END NODE 101-------------------------------------------------------"    
@@ -111,7 +112,7 @@ def simulates():
     "-------------------NODE 3: MAC Addr 102-------------------------------------------------------"    
     " Layer 3 packet queues"
     pkt_rx_q3 = Queue.Queue(10)
-    pkt_tx_q3 = Queue.Queue(10)
+    #pkt_tx_q3 = Queue.Queue(10)
 
     " Configuration of the Scheduler of Node 3 that recieves frames and generates management events."
     frame_rx_q3 = Queue.Queue(10)
@@ -143,11 +144,12 @@ def simulates():
     dpcontrol3.start()
 
     " Start the MAC controller"
-    macctrl3 = Mac.ControllerMAC( net_conf3, ctrl_q3, mgmt_q3, data_q3, tx_ev_q3, pkt_rx_q3, pkt_tx_q3 )
+    macctrl3 = Mac.ControllerMAC( net_conf3, ctrl_q3, mgmt_q3, data_q3, tx_ev_q3, pkt_rx_q3, tx_ev_q3 )
     macctrl3.start()
 
     "Starts the beacon generator of this node"
-    myBeacon3 = Beacon.Beacon(net_conf3 ,tx_ev_q3)
+    #myBeacon3 = Beacon.Beacon(net_conf3 ,tx_ev_q3)
+    myBeacon3 = Beacon.Beacon(net_conf3 ,pkt_rx_q3 )
     myBeacon3.start()  
     "---------------------END NODO 102 -----------------------------------------------"
 

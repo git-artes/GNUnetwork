@@ -31,6 +31,7 @@ class EventFrame(Event):
             'src_addr': None, \
             'dst_addr': None, \
             'duration': None, \
+            'frame_length': 50, \
             'peerlinkId': 0, \
 
             }

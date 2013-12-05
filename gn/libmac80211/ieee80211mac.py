@@ -20,7 +20,7 @@ class ieee80211mac() :
     """   The 802.11 mac finite state machine.
 	"""
 	
-    def __init__( self, net_conf, tx_ql1, tx_ql3 ):
+    def __init__( self, tname, net_conf, tx_ql1, tx_ql3 ):
 		'''  
 			Constructor
 			@param tx_q: The transmition event queue ( Events to layer 1 )
@@ -29,15 +29,17 @@ class ieee80211mac() :
 		self.tx_ql1 = tx_ql1
 		self.tx_ql3 = tx_ql3
 		self.net_conf = net_conf
+		self.tname = tname
 		
 		self.LRC = 0 # Long Retry Counter
 		self.SRC = 0 # Short Retry Counter
 	
-		print 'MAC: init'
+		log( self.tname, 'MAC: init' )
 		self.mac_fsm = fsm.FSM ('IDLE', []) 
 		self.mac_fsm.set_default_transition ( self.Error, 'IDLE')
 
 		self.mac_fsm.add_transition      ('L3_DATA',		'IDLE',            self.rcvL3,      'WAIT_ACK'	)
+		self.mac_fsm.add_transition      ('Beacon',		    'IDLE',            self.rcvL3,      'WAIT_ACK'	)
 		self.mac_fsm.add_transition      ('L2_DATA',		'IDLE',        	   self.rcvL2,      'IDLE'	 	)
 		self.mac_fsm.add_transition      ('RTS',            'IDLE',        	   self.rcvRTS,     'WAIT_CTS'	)
 		self.mac_fsm.add_transition      ('CTS',            'IDLE',        	   self.updNAV,     'IDLE'    	)
@@ -54,15 +56,16 @@ class ieee80211mac() :
 		self.mac_fsm.add_transition_any  (					'WAIT_CTS', 	   self.Error, 	   	'WAIT_CTS'	)
 
     def Error ( self, fsm ):
-		print 'MAC: Error: Default transition for symbol: '
+		log( self.tname, 'MAC: Error: Default transition for symbol: ' )
 		print str( fsm.input_symbol )
 
     def rcvL3( self, fsm ):
 		event = self.mac_fsm.memory
-		if ( event.frame_length > aRTSThreshold ):
-			self.snd_frame( RTS )
+		if ( event.ev_dc['frame_length'] > aRTSThreshold ):
+			#self.snd_frame( RTS )
+			self.sndRTS( fsm )
 			self.start_timer()
-			self.mac_fsm.process( RTSSent )
+			self.mac_fsm.process( 'RTSSent' )
 		else:
 			self.snd_frame( DATA )
 			self.start_timer()
@@ -71,7 +74,7 @@ class ieee80211mac() :
 		self.snd_frame( DATA )
 
     def snd_frame( self, event ):
-		print 'MAC: Retry Data'
+		log( self.tname, 'MAC: Retry Data' )
 		if ( self.SRC == 0 and self.LRC == 0 ):
 			if ( not self.freeChannel() ):
 				self.waitfree()
@@ -97,20 +100,21 @@ class ieee80211mac() :
 		self.start_timer()
 		
     def sndRTS ( self, fsm ):
-		event = events.mkevent("CtrlRTS")
+		event = if_events.mkevent("CtrlRTS")
 		event.ev_dc['src_addr']=self.net_conf.station_id
-		#event.ev_dc['dst_addr']= self.peer_addr
-		event.duration=0;
+		rcv_event = self.mac_fsm.memory
+		event.ev_dc['dst_addr']= rcv_event.ev_dc['dst_addr']
+		event.ev_dc['duration']=0;
 		self.snd_frame( event )
 
     def sndCTS ( self, fsm ):
-		event = events.mkevent("CtrlCTS")
+		event = if_events.mkevent("CtrlCTS")
 		event.ev_dc['src_addr']=self.net_conf.station_id
 		#event.ev_dc['dst_addr']= self.peer_addr
 		self.snd_frame( event )
 
     def rcvRTS ( self, fsm ):
-		print 'MAC: Receive RTS'
+		log( self.tname, 'MAC: Receive RTS' )
 		self.updNAV( fsm )
 		event = self.mac_fsm.memory
 		if ( event.ev_dc['dst_addr'] == self.net_conf.station_id ):
@@ -118,7 +122,7 @@ class ieee80211mac() :
 			self.start_timer()
 
     def updNAV ( self, fsm ):
-		print 'MAC: Update NAV'
+		log( self.tname, 'MAC: Update NAV' )
 		event = self.mac_fsm.memory
 		if ( fsm.input_symbol == "RTS" ):
 			waitT = 2*aSIFSTime + CTSTime + 2*aSlotTime
@@ -130,7 +134,7 @@ class ieee80211mac() :
 				NAV = testNAV
 
     def rcvACK ( self, fsm ):
-		print 'MAC: Receive ACK'
+		log( self.tname, 'MAC: Receive ACK' )
 		event = self.mac_fsm.memory
 		CW = aCWmin
 		if event.frame_length > aRTSThreshold:
@@ -140,7 +144,7 @@ class ieee80211mac() :
 		## TODO fragmentation 
 
     def sendtoL1( self, event ):
-		print "MAC: transmito al fin!!"
+		log( self.tname, 'MAC: transmito al fin!!' )
 		self.tx_ql1.put( event, False )
 				
     def backoff():
@@ -156,30 +160,30 @@ class ieee80211mac() :
 				time.sleep( DIFS )
 
     def rcvL2 ( self, fsm ):
-		print 'MAC: Send ACK'
+		log( self.tname, 'MAC: Send ACK' )
 		self.updNAV( fsm )
 		time.sleep( SIFS )
 		self.snd_frame( ACK )
 
     def currentTime( self ):
-		print "MAC: get Current Time"	
+		log( self.tname, 'MAC: get Current Time' )
 		return time.time()
 
     def freeChannel( self ):
-		print "MAC: freeChannel?"
+		log( self.tname, 'MAC: freeChannel?' )
 		return True
 
     def waitfree( self ):
-		print "MAC: waitfree"
+		log( self.tname, 'MAC: waitfree' )
 		time.sleep( 1 )
 		return True
 
     def discard( self ):
-		print "MAC: discard"
+		log( self.tname, 'MAC: discard' )
 		return True
 
     def start_timer( self ):
-		print "MAC: start timer"
+		log( self.tname, 'MAC: start timer' )
 		return True
 
 def test():
@@ -255,42 +259,47 @@ class ControllerMAC(threading.Thread) :
         self.tx_q_l1 = txq_l1
         self.tx_q_l3 = txq_l3
         self.finished = False
-        self.mac_fsm = ieee80211mac( self.net_conf, self.tx_q_l1, self.tx_q_l3 )
+        self.mymac = None        
+        self.tname = self.net_conf.station_id
 
     def run(self):
+        self.mymac = ieee80211mac( self.tname, self.net_conf, self.tx_q_l1, self.tx_q_l3 )
         while not self.finished:
 			# read control frames from L1
 			if ( not self.rx_q_l1c.empty() ):
 				event = self.rx_q_l1c.get_nowait()
-				print "MAC: L1 control event arrives at the fsm controller ", event, " ",event.add_info, int(round(time.time() * 1000)) 
-				print "MAC: state before processing event ", self.mac_fsm.current_state 
-				self.mac_fsm.memory = event
-				self.mac_fsm.process( event.ev_subtype )
-				print "MAC: state after processing event ", self.mac_fsm.current_state
+				log( self.tname, "MAC: L1 control event arrives at the fsm controller " )
+				print event, " ", int(round(time.time() * 1000))
+				log( self.tname, "MAC: state before processing event " + str( self.mymac.mac_fsm.current_state ) )
+				self.mymac.mac_fsm.memory = event
+				self.mymac.mac_fsm.process( event.ev_subtype )
+				log( self.tname, "MAC: state after processing event " + str( self.mymac.mac_fsm.current_state ) )
 			# read data frames from L1
 			if ( not self.rx_q_l1d.empty() ):
 				event = self.rx_q_l1d.get_nowait()
-				print "MAC: L1 data event arrives at the fsm controller ", event, " ",event.add_info, int(round(time.time() * 1000)) 
-				print "MAC: state before processing event ", self.mac_fsm.current_state 
-				self.mac_fsm.memory = event
-				self.mac_fsm.process( event.ev_subtype )
-				print "MAC: state after processing event ", self.mac_fsm.current_state
+				log( self.tname, "MAC: L1 data event arrives at the fsm controller " )
+				print event, " ", int(round(time.time() * 1000)) 
+				log( self.tname, "MAC: state before processing event " + str( self.mymac.mac_fsm.current_state ) )
+				self.mymac.mac_fsm.memory = event
+				self.mymac.mac_fsm.process( event.ev_subtype )
+				log( self.tname, "MAC: state after processing event " + str( self.mymac.mac_fsm.current_state ) )
 			# read management frames from L1
 			#if ( not self.rx_q_l1m.empty() ):
 			#	event = self.rx_q_l1m.get_nowait()
-			#	print "MAC: L1 management event arrives at the fsm controller ", event, " ",event.add_info, int(round(time.time() * 1000)) 
-			#	print "MAC: state before processing event ", self.mac_fsm.current_state 
+			#	log( self.tname, "MAC: L1 management event arrives at the fsm controller ", event, " ", int(round(time.time() * 1000)) )
+			#	log( self.tname, "MAC: state before processing event ", self.mac_fsm.current_state )
 			#	self.mac_fsm.memory = event
 			#	self.mac_fsm.process( event.ev_subtype )
-			#	print "MAC: state after processing event ", self.mac_fsm.current_state
+			#	log( self.tname, "MAC: state after processing event ", self.mac_fsm.current_state )
 			# read from L3
 			if ( not self.rx_q_l3.empty() ):
 				event = self.rx_q_l3.get_nowait()
-				print "MAC: L3 event arrives at the fsm controller ", event, " ",event.add_info, int(round(time.time() * 1000)) 
-				print "MAC: state before processing event ", self.mac_fsm.current_state 
-				self.mac_fsm.memory = event
-				self.mac_fsm.process( event.ev_subtype )
-				print "MAC: state after processing event ", self.mac_fsm.current_state
+				log( self.tname, "MAC: L3 event arrives at the fsm controller " )
+				print event, " ", int(round(time.time() * 1000)) 
+				log( self.tname, "MAC: state before processing event " + str( self.mymac.mac_fsm.current_state) )
+				self.mymac.mac_fsm.memory = event
+				self.mymac.mac_fsm.process( event.ev_subtype )
+				log( self.tname, "MAC: state after processing event " + str( self.mymac.mac_fsm.current_state ) )
 			
     def stop(self):
         print "MAC: STOP Controller fsm emulator CALLED"
@@ -311,14 +320,14 @@ class ControllerMACFsmEmulator(threading.Thread) :
         while not self.finished:
 			# read from L1
 			event = self.rx_q_l1.get_nowait()
-			print "MAC: L2 event arrives at the fsm controller ", event, " ",event.add_info, int(round(time.time() * 1000)) 
+			print "MAC: L2 event arrives at the fsm controller ", event, " ", int(round(time.time() * 1000)) 
 			print "MAC: state before processing event ", self.mac_fsm.current_state 
 			self.mac_fsm.memory = event
 			self.mac_fsm.process( event.ev_subtype )
 			print "MAC: state after processing event ", self.mac_fsm.current_state
 			# read from L3
 			event = self.rx_q_l3.get_nowait()
-			print "MAC: L3 event arrives at the fsm controller ", event, " ",event.add_info, int(round(time.time() * 1000)) 
+			print "MAC: L3 event arrives at the fsm controller ", event, " ", int(round(time.time() * 1000)) 
 			print "MAC: state before processing event ", self.mac_fsm.current_state 
 			self.mac_fsm.memory = event
 			self.mac_fsm.process( event.ev_subtype )
@@ -329,7 +338,10 @@ class ControllerMACFsmEmulator(threading.Thread) :
         self.finished = True
         print "MAC: Controller DONE"
         self._Thread__stop()
-            
+        
+def log( tname, msg ):
+    print "\n" + tname + " " + msg
+    
 if __name__ == '__main__':
     try:
         test()

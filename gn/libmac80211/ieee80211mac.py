@@ -38,7 +38,7 @@ class ieee80211mac() :
 		self.mac_fsm = fsm.FSM ('IDLE', []) 
 		self.mac_fsm.set_default_transition ( self.Error, 'IDLE')
 
-		self.mac_fsm.add_transition      ('L3_DATA',		'IDLE',            self.rcvL3,      'WAIT_ACK'	)
+		self.mac_fsm.add_transition      ('Data',		    'IDLE',            self.rcvL3,      'WAIT_ACK'	)
 		self.mac_fsm.add_transition      ('Beacon',		    'IDLE',            self.rcvL3,      'WAIT_ACK'	)
 		self.mac_fsm.add_transition      ('L2_DATA',		'IDLE',        	   self.rcvL2,      'IDLE'	 	)
 		self.mac_fsm.add_transition      ('RTS',            'IDLE',        	   self.rcvRTS,     'WAIT_CTS'	)

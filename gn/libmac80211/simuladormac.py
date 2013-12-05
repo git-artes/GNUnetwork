@@ -16,6 +16,7 @@ import libadaptationlayer.schedEvToFr as schedEvToFr
 import libadaptationlayer.schedFrToEv as schedFrToEv
 import ieee80211mac as Mac
 import libvirtualchannel.virtualchannel as virtualchannel
+import libvirtualchannel.EventSimulator as eventsimulator
 
 def simulates():
 
@@ -49,8 +50,8 @@ def simulates():
     net_conf1.retry_timeout = 5    
 
     " Starts the Controller of The FSM for Peering Discovering"
-    dpcontrol1 =  DiscoveryPeeringController.DiscoveryPeeringController(net_conf1,None,mgmt_q1,tx_ev_q1)
-    dpcontrol1.start()
+    #dpcontrol1 =  DiscoveryPeeringController.DiscoveryPeeringController(net_conf1,None,mgmt_q1,tx_ev_q1)
+    #dpcontrol1.start()
 
     " Start the MAC controller"
     macctrl1 = Mac.ControllerMAC( net_conf1, ctrl_q1, mgmt_q1, data_q1, tx_ev_q1, pkt_rx_q1, tx_ev_q1 )
@@ -58,8 +59,11 @@ def simulates():
 
     "Starts the beacon generator of this node"
     #myBeacon1 = Beacon.Beacon(net_conf1 ,tx_ev_q1)
-    myBeacon1 = Beacon.Beacon(net_conf1 ,pkt_rx_q1 )
-    myBeacon1.start()    
+    #myBeacon1 = Beacon.Beacon(net_conf1 ,pkt_rx_q1 )
+    #myBeacon1.start()    
+
+    mySimulator = eventsimulator.EventSimulator( 5,"DataData", pkt_rx_q1,100,101)
+    mySimulator.start()
     "---------------------END NODE 1 -----------------------------------------------"
     
     "-------------------NODE 2: MAC Addr 101-------------------------------------------------------"    
@@ -93,8 +97,8 @@ def simulates():
     net_conf2.retry_timeout = 5    
 
     " Starts the Controller of The FSM for Peering Discovering"
-    dpcontrol2 =  DiscoveryPeeringController.DiscoveryPeeringController(net_conf2,None,mgmt_q2,tx_ev_q2)
-    dpcontrol2.start()
+    #dpcontrol2 =  DiscoveryPeeringController.DiscoveryPeeringController(net_conf2,None,mgmt_q2,tx_ev_q2)
+    #dpcontrol2.start()
 
     " Start the MAC controller"
     macctrl2 = Mac.ControllerMAC( net_conf2, ctrl_q2, mgmt_q2, data_q2, tx_ev_q2, pkt_rx_q2, tx_ev_q2 )
@@ -102,8 +106,9 @@ def simulates():
 
     "Starts the beacon generator of this node"
     #myBeacon2 = Beacon.Beacon(net_conf2 ,tx_ev_q2)
-    myBeacon2 = Beacon.Beacon(net_conf2 ,pkt_rx_q2 )
-    myBeacon2.start()  
+    #myBeacon2 = Beacon.Beacon(net_conf2 ,pkt_rx_q2 )
+    #myBeacon2.start()  
+
     
     "-------------------END NODE 101-------------------------------------------------------"    
   
@@ -140,8 +145,8 @@ def simulates():
     net_conf3.retry_timeout = 5    
 
     " Starts the Controller of The FSM for Peering Discovering"
-    dpcontrol3 =  DiscoveryPeeringController.DiscoveryPeeringController(net_conf3,None,mgmt_q3,tx_ev_q3)
-    dpcontrol3.start()
+    #dpcontrol3 =  DiscoveryPeeringController.DiscoveryPeeringController(net_conf3,None,mgmt_q3,tx_ev_q3)
+    #dpcontrol3.start()
 
     " Start the MAC controller"
     macctrl3 = Mac.ControllerMAC( net_conf3, ctrl_q3, mgmt_q3, data_q3, tx_ev_q3, pkt_rx_q3, tx_ev_q3 )
@@ -149,8 +154,8 @@ def simulates():
 
     "Starts the beacon generator of this node"
     #myBeacon3 = Beacon.Beacon(net_conf3 ,tx_ev_q3)
-    myBeacon3 = Beacon.Beacon(net_conf3 ,pkt_rx_q3 )
-    myBeacon3.start()  
+    #myBeacon3 = Beacon.Beacon(net_conf3 ,pkt_rx_q3 )
+    #myBeacon3.start()  
     "---------------------END NODO 102 -----------------------------------------------"
 
     vc= virtualchannel.VirtualChannel(frame_tx_q2)

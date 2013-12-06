@@ -9,6 +9,7 @@ import libfsm.fsm as fsm
 import libevents.if_events as if_events
 import libtimer.timer as Timer
 import libmanagement.NetworkConfiguration as NetworkConfiguration
+import libtimer.timer as Timer
 
 aSIFSTime = 1
 CTSTime = 4
@@ -20,7 +21,7 @@ class ieee80211mac() :
     """   The 802.11 mac finite state machine.
 	"""
 	
-    def __init__( self, tname, net_conf, tx_ql1, tx_ql3 ):
+    def __init__( self, tname, net_conf, timer_q, tx_ql1, tx_ql3 ):
 		'''  
 			Constructor
 			@param tx_q: The transmition event queue ( Events to layer 1 )
@@ -30,6 +31,8 @@ class ieee80211mac() :
 		self.tx_ql3 = tx_ql3
 		self.net_conf = net_conf
 		self.tname = tname
+		self.timer_q = timer_q
+		self.tout = 100
 		
 		self.LRC = 0 # Long Retry Counter
 		self.SRC = 0 # Short Retry Counter
@@ -43,35 +46,38 @@ class ieee80211mac() :
 		self.mac_fsm.add_transition      ('L2_DATA',		'IDLE',        	   self.rcvL2,      'IDLE'	 	)
 		self.mac_fsm.add_transition      ('RTS',            'IDLE',        	   self.rcvRTS,     'WAIT_CTS'	)
 		self.mac_fsm.add_transition      ('CTS',            'IDLE',        	   self.updNAV,     'IDLE'    	)
+		self.mac_fsm.add_transition      ('RTSSent',        'IDLE',        	   None,     		'WAIT_CTS'	)
 		self.mac_fsm.add_transition_any  (					'IDLE', 		   self.Error, 	   	'IDLE'    	)
 
 		self.mac_fsm.add_transition      ('ACK',            'WAIT_ACK',        self.rcvACK, 	'IDLE'    	)
-		self.mac_fsm.add_transition      ('TIMER',          'WAIT_ACK',        self.sndData,    'WAIT_ACK'	)
+		self.mac_fsm.add_transition      ('Timer',          'WAIT_ACK',        self.sndData,    'WAIT_ACK'	)
+		self.mac_fsm.add_transition      ('RTS',            'WAIT_ACK',        self.rcvRTS,     'WAIT_CTS'	)
 		self.mac_fsm.add_transition_any  (					'WAIT_ACK', 	   self.Error, 	   	'WAIT_ACK'	)
 
 		self.mac_fsm.add_transition      ('RTSSent',        'WAIT_ACK',        None,       		'WAIT_CTS'	)
 
 		self.mac_fsm.add_transition      ('CTS',            'WAIT_CTS',        self.sndData,    'WAIT_ACK'	)
-		self.mac_fsm.add_transition      ('TIMER',          'WAIT_CTS',        self.sndRTS,     'WAIT_CTS'	)
+		self.mac_fsm.add_transition      ('Timer',          'WAIT_CTS',        self.sndRTS,     'WAIT_CTS'	)
+		self.mac_fsm.add_transition      ('RTS',            'WAIT_CTS',        self.rcvRTS,     'WAIT_CTS'	)
 		self.mac_fsm.add_transition_any  (					'WAIT_CTS', 	   self.Error, 	   	'WAIT_CTS'	)
 
     def Error ( self, fsm ):
-		log( self.tname, 'MAC: Error: Default transition for symbol: ' )
-		print str( fsm.input_symbol )
+		log( self.tname, 'MAC: Error: Default transition for symbol: '+ str( fsm.input_symbol ) + " state: " + str( fsm.current_state ) )
 
     def rcvL3( self, fsm ):
+		log( self.tname, 'MAC: Receive from L3' )
 		event = self.mac_fsm.memory
 		if ( event.ev_dc['frame_length'] > aRTSThreshold ):
-			#self.snd_frame( RTS )
 			self.sndRTS( fsm )
 			self.start_timer()
 			self.mac_fsm.process( 'RTSSent' )
 		else:
-			self.snd_frame( DATA )
+			self.sndData( fsm )
 			self.start_timer()
 
     def sndData ( self, fsm ):
-		self.snd_frame( DATA )
+		log( self.tname, 'MAC: Send Data' )
+		self.snd_frame( self.mac_fsm.memory )
 
     def snd_frame( self, event ):
 		log( self.tname, 'MAC: Retry Data' )
@@ -97,9 +103,9 @@ class ieee80211mac() :
 					return
 			self.backoff()
 		self.sendtoL1( event )
-		self.start_timer()
 		
     def sndRTS ( self, fsm ):
+		log( self.tname, 'MAC: Send RTS' )
 		event = if_events.mkevent("CtrlRTS")
 		event.ev_dc['src_addr']=self.net_conf.station_id
 		rcv_event = self.mac_fsm.memory
@@ -108,9 +114,11 @@ class ieee80211mac() :
 		self.snd_frame( event )
 
     def sndCTS ( self, fsm ):
+		log( self.tname, 'MAC: Send CTS' )
 		event = if_events.mkevent("CtrlCTS")
 		event.ev_dc['src_addr']=self.net_conf.station_id
-		#event.ev_dc['dst_addr']= self.peer_addr
+		rcv_event = self.mac_fsm.memory
+		event.ev_dc['dst_addr']= rcv_event.ev_dc['dst_addr']
 		self.snd_frame( event )
 
     def rcvRTS ( self, fsm ):
@@ -118,8 +126,10 @@ class ieee80211mac() :
 		self.updNAV( fsm )
 		event = self.mac_fsm.memory
 		if ( event.ev_dc['dst_addr'] == self.net_conf.station_id ):
+			log( self.tname, 'MAC: Receive RTS (for me)' )
 			self.sndCTS( fsm )
-			self.start_timer()
+		else:
+			log( self.tname, 'MAC: Receive RTS (not for me, ignoring)' )
 
     def updNAV ( self, fsm ):
 		log( self.tname, 'MAC: Update NAV' )
@@ -129,9 +139,17 @@ class ieee80211mac() :
 			time.sleep( waitT )
 			NAV = self.currentTime()
 		else:
-			testNAV = self.currentTime() + event.duration 
+			testNAV = self.currentTime() + int(event.ev_dc['duration'])
 			if ( testNAV > NAV ):
 				NAV = testNAV
+
+    def sndACK ( self, fsm ):
+		log( self.tname, 'MAC: Send ACK' )
+		event = if_events.mkevent("CtrlACK")
+		event.ev_dc['src_addr']=self.net_conf.station_id
+		rcv_event = self.mac_fsm.memory
+		event.ev_dc['dst_addr']= rcv_event.ev_dc['dst_addr']
+		self.snd_frame( event )
 
     def rcvACK ( self, fsm ):
 		log( self.tname, 'MAC: Receive ACK' )
@@ -148,6 +166,7 @@ class ieee80211mac() :
 		self.tx_ql1.put( event, False )
 				
     def backoff():
+		log( self.tname, 'MAC: backoff' )
 		if ( BC == 0 ):
 			BC = random.randint( 0, CW )
 		while ( BC != 0 ):
@@ -160,10 +179,10 @@ class ieee80211mac() :
 				time.sleep( DIFS )
 
     def rcvL2 ( self, fsm ):
-		log( self.tname, 'MAC: Send ACK' )
+		log( self.tname, 'MAC: rcv L2' )
 		self.updNAV( fsm )
 		time.sleep( SIFS )
-		self.snd_frame( ACK )
+		self.sndACK( fsm )
 
     def currentTime( self ):
 		log( self.tname, 'MAC: get Current Time' )
@@ -184,6 +203,8 @@ class ieee80211mac() :
 
     def start_timer( self ):
 		log( self.tname, 'MAC: start timer' )
+		timer=Timer.Timer( self.timer_q, self.tout, 1, "TimerTimer" )
+		timer.start()
 		return True
 
 def test():
@@ -261,10 +282,20 @@ class ControllerMAC(threading.Thread) :
         self.finished = False
         self.mymac = None        
         self.tname = self.net_conf.station_id
+        self.timer_q = Queue.Queue( 10 )
 
     def run(self):
-        self.mymac = ieee80211mac( self.tname, self.net_conf, self.tx_q_l1, self.tx_q_l3 )
+        self.mymac = ieee80211mac( self.tname, self.net_conf, self.timer_q, self.tx_q_l1, self.tx_q_l3 )
         while not self.finished:
+			# read timer events
+			if ( not self.timer_q.empty() ):
+				event = self.timer_q.get_nowait()
+				log( self.tname, "MAC: Timer event arrives at the fsm controller " )
+				print event, " ", int(round(time.time() * 1000))
+				log( self.tname, "MAC: state before processing event " + str( self.mymac.mac_fsm.current_state ) )
+				self.mymac.mac_fsm.memory = event
+				self.mymac.mac_fsm.process( event.ev_subtype )
+				log( self.tname, "MAC: state after processing event " + str( self.mymac.mac_fsm.current_state ) )
 			# read control frames from L1
 			if ( not self.rx_q_l1c.empty() ):
 				event = self.rx_q_l1c.get_nowait()

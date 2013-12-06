@@ -62,7 +62,7 @@ def simulates():
     #myBeacon1 = Beacon.Beacon(net_conf1 ,pkt_rx_q1 )
     #myBeacon1.start()    
 
-    mySimulator = eventsimulator.EventSimulator( 5,"DataData", pkt_rx_q1,100,101)
+    mySimulator = eventsimulator.EventSimulator( 30,"DataData", pkt_rx_q1,"100","101")
     mySimulator.start()
     "---------------------END NODE 1 -----------------------------------------------"
     

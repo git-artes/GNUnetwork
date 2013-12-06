@@ -30,7 +30,7 @@ class EventFrame(Event):
         self.ev_dc = { \
             'src_addr': None, \
             'dst_addr': None, \
-            'duration': None, \
+            'duration': 10, \
             'frame_length': 50, \
             'peerlinkId': 0, \
 

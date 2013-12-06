@@ -66,41 +66,6 @@ dc_nicknames = { \
     'MgmtBeacon'      : ('Mgmt',   'Beacon',  EventFrameMgmt ), \
     }
 
-"""
-def mkevent(nickname, frmpkt=None, ev_dc={}):
-    '''Returns an event of the given event nickname.
-
-    NOTE: this function generalized in module 'events'.
-    @param nickname: a valid event nickname, i.e. one that is a key in dictionary of valid nicknames.
-    
-    >>> ev_ob_frm = mkevent('CtrlCTS')
-    >>> print ev_ob_frm
-    Event class name: EventFrame
-      Nickname: 'CtrlCTS'; Type: 'Ctrl'; SubType: 'CTS'
-      duration: None
-      src_addr: None
-      dst_addr: None
-      Frame packet: None
-    >>> ev_mg = mkevent('ActionOpen', ev_dc={'src_addr':'aaaa', 'dst_addr':'bbbb', 'peerLinkId':'the peer link ID'})
-    >>> print ev_mg
-    Event class name: EventFrameMgmt
-      Nickname: 'ActionOpen'; Type: 'Mgmt'; SubType: 'Action'
-      src_addr: aaaa
-      duration: None
-      peerLinkId: the peer link ID
-      dst_addr: bbbb
-      Frame packet: None
-    '''
-    #if not type(eventclass) == types.ClassType:
-    #    raise EventNameException('eventclass must be a class object.')
-    if dc_nicknames.has_key(nickname):
-        ev_type, ev_subtype, eventclass = dc_nicknames[nickname]
-        return eventclass(nickname, ev_type, ev_subtype, frmpkt, ev_dc)
-    else:
-        raise EventNameException(nickname + ' is not a valid nickname.')
-"""
-
-
 
 if __name__ == '__main__':
     import doctest

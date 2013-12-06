@@ -122,11 +122,11 @@
         <a href="gn.libevents.evframes80211-module.html#dc_nicknames" class="summary-name">dc_nicknames</a> = <code title="{'ActionClose': ('Mgmt',
                  'Action',
                  &lt;class gn.libevents.evframes80211.EventFrameMgmt at 0\
-x2f98e20&gt;),
+x250ac18&gt;),
  'ActionConfirm': ('Mgmt',
                    'Action',
                    &lt;class gn.libevents.evframes80211.EventFrameMgmt at\
- 0x2f98e20&gt;),
+ 0x250ac18&gt;),
 ..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ActionClose</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">, </code>&lt;class gn.li<code class="variable-ellipsis">...</code></code><br />
       a dictionary of nicknames, types, subtypes, and classnames, <code> 
       {nickname: (type, subtype, classname)} </code>; 
@@ -165,41 +165,11 @@ x2f98e20&gt;),
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <h3 class="epydoc">dc_nicknames</h3>
-  <pre class="literalblock">
-
-def mkevent(nickname, frmpkt=None, ev_dc={}):
-    '''Returns an event of the given event nickname.
-
-    NOTE: this function generalized in module 'events'.
-    @param nickname: a valid event nickname, i.e. one that is a key in dictionary of valid nicknames.
-    
-    &gt;&gt;&gt; ev_ob_frm = mkevent('CtrlCTS')
-    &gt;&gt;&gt; print ev_ob_frm
-    Event class name: EventFrame
-      Nickname: 'CtrlCTS'; Type: 'Ctrl'; SubType: 'CTS'
-      duration: None
-      src_addr: None
-      dst_addr: None
-      Frame packet: None
-    &gt;&gt;&gt; ev_mg = mkevent('ActionOpen', ev_dc={'src_addr':'aaaa', 'dst_addr':'bbbb', 'peerLinkId':'the peer link ID'})
-    &gt;&gt;&gt; print ev_mg
-    Event class name: EventFrameMgmt
-      Nickname: 'ActionOpen'; Type: 'Mgmt'; SubType: 'Action'
-      src_addr: aaaa
-      duration: None
-      peerLinkId: the peer link ID
-      dst_addr: bbbb
-      Frame packet: None
-    '''
-    #if not type(eventclass) == types.ClassType:
-    #    raise EventNameException('eventclass must be a class object.')
-    if dc_nicknames.has_key(nickname):
-        ev_type, ev_subtype, eventclass = dc_nicknames[nickname]
-        return eventclass(nickname, ev_type, ev_subtype, frmpkt, ev_dc)
-    else:
-        raise EventNameException(nickname + ' is not a valid nickname.')
-
-</pre>
+  a dictionary of nicknames, types, subtypes, and classnames, <code> 
+  {nickname: (type, subtype, classname)} </code>; <code>classname</code> is
+  the class used to build the object. This dictionary allows to build a 
+  frame event object by just saying its nickname. Module function 
+  <code>mkevent()</code> uses this module variable.
   <dl class="fields">
   </dl>
   <dl class="fields">
@@ -208,11 +178,11 @@ def mkevent(nickname, frmpkt=None, ev_dc={}):
 <code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ActionClose</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">,</code>
                  <code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">,</code>
                  &lt;class gn.libevents.evframes80211.EventFrameMgmt at 0<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-x2f98e20&gt;<code class="variable-group">)</code><code class="variable-op">,</code>
+x250ac18&gt;<code class="variable-group">)</code><code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">ActionConfirm</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">Mgmt</code><code class="variable-quote">'</code><code class="variable-op">,</code>
                    <code class="variable-quote">'</code><code class="variable-string">Action</code><code class="variable-quote">'</code><code class="variable-op">,</code>
                    &lt;class gn.libevents.evframes80211.EventFrameMgmt at<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
- 0x2f98e20&gt;<code class="variable-group">)</code><code class="variable-op">,</code>
+ 0x250ac18&gt;<code class="variable-group">)</code><code class="variable-op">,</code>
 <code class="variable-ellipsis">...</code>
 </pre></td></tr></table>
 </dd>
@@ -251,7 +221,7 @@ x2f98e20&gt;<code class="variable-group">)</code><code class="variable-op">,</co
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Dec  2 13:10:57 2013
+    Generated by Epydoc 3.0.1 on Fri Dec  6 15:40:55 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

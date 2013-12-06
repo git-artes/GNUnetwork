@@ -27,9 +27,9 @@ def pktfromobj(frmobj):  # pack
 
 
 def mkframeobj(frmname, dc_frcl_fldvals={}, dc_fldvals={}, dc_frbd_fldvals={} ):
-    '''Create a frame object from a nickname and dictionary of fields.
+    '''Create a frame object from a frame name and dictionary of fields.
 
-    @param frmtype: a conventional name for the type of frame.
+    @param frmname: a conventional name for the type of frame.
     @param dc_frcl_fldvals: a dictionary of {field: value} to update dictionary of field values in Frame Control field.
     @param dc_fldvals: a dictionary of {field: value} to update dictionary of field values in this frame.
     @param dc_frbd_fldvals: a dictionary of {field: value} to update dictionary of field values in frame body.

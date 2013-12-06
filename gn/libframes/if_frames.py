@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 '''An API to the IEEE 802.11 frame library.
+
+This module intends to be the only one a developer must know to create frame objects, pack frames into binary string format, unpack binary string formats into frame objects. This module offers functions to get information on known types of frames and their corresponding fields.
 '''
 
 import mac_frmbld

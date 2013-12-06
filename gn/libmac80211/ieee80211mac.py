@@ -36,6 +36,8 @@ class ieee80211mac() :
 		
 		self.LRC = 0 # Long Retry Counter
 		self.SRC = 0 # Short Retry Counter
+		self.NAV = 0 # Network Allocation Vector
+		self.PAV = 0 # Physical Allocation Vector
 	
 		log( self.tname, 'MAC: init' )
 		self.mac_fsm = fsm.FSM ('IDLE', []) 
@@ -44,17 +46,14 @@ class ieee80211mac() :
 		self.mac_fsm.add_transition      ('Data',		    'IDLE',            self.rcvL3,      'WAIT_ACK'	)
 		self.mac_fsm.add_transition      ('Beacon',		    'IDLE',            self.rcvL3,      'WAIT_ACK'	)
 		self.mac_fsm.add_transition      ('L2_DATA',		'IDLE',        	   self.rcvL2,      'IDLE'	 	)
-		self.mac_fsm.add_transition      ('RTS',            'IDLE',        	   self.rcvRTS,     'WAIT_CTS'	)
+		self.mac_fsm.add_transition      ('RTS',            'IDLE',        	   self.rcvRTS,     'IDLE'		)
 		self.mac_fsm.add_transition      ('CTS',            'IDLE',        	   self.updNAV,     'IDLE'    	)
-		self.mac_fsm.add_transition      ('RTSSent',        'IDLE',        	   None,     		'WAIT_CTS'	)
 		self.mac_fsm.add_transition_any  (					'IDLE', 		   self.Error, 	   	'IDLE'    	)
 
 		self.mac_fsm.add_transition      ('ACK',            'WAIT_ACK',        self.rcvACK, 	'IDLE'    	)
 		self.mac_fsm.add_transition      ('Timer',          'WAIT_ACK',        self.sndData,    'WAIT_ACK'	)
 		self.mac_fsm.add_transition      ('RTS',            'WAIT_ACK',        self.rcvRTS,     'WAIT_CTS'	)
 		self.mac_fsm.add_transition_any  (					'WAIT_ACK', 	   self.Error, 	   	'WAIT_ACK'	)
-
-		self.mac_fsm.add_transition      ('RTSSent',        'WAIT_ACK',        None,       		'WAIT_CTS'	)
 
 		self.mac_fsm.add_transition      ('CTS',            'WAIT_CTS',        self.sndData,    'WAIT_ACK'	)
 		self.mac_fsm.add_transition      ('Timer',          'WAIT_CTS',        self.sndRTS,     'WAIT_CTS'	)
@@ -63,6 +62,7 @@ class ieee80211mac() :
 
     def Error ( self, fsm ):
 		log( self.tname, 'MAC: Error: Default transition for symbol: '+ str( fsm.input_symbol ) + " state: " + str( fsm.current_state ) )
+		return True
 
     def rcvL3( self, fsm ):
 		log( self.tname, 'MAC: Receive from L3' )
@@ -70,17 +70,19 @@ class ieee80211mac() :
 		if ( event.ev_dc['frame_length'] > aRTSThreshold ):
 			self.sndRTS( fsm )
 			self.start_timer()
-			self.mac_fsm.process( 'RTSSent' )
+			self.mac_fsm.next_state = 'WAIT_CTS'
 		else:
 			self.sndData( fsm )
 			self.start_timer()
+		return True
 
     def sndData ( self, fsm ):
 		log( self.tname, 'MAC: Send Data' )
 		self.snd_frame( self.mac_fsm.memory )
+		return True
 
     def snd_frame( self, event ):
-		log( self.tname, 'MAC: Retry Data' )
+		log( self.tname, 'MAC: Send Frame' )
 		if ( self.SRC == 0 and self.LRC == 0 ):
 			if ( not self.freeChannel() ):
 				self.waitfree()
@@ -103,6 +105,7 @@ class ieee80211mac() :
 					return
 			self.backoff()
 		self.sendtoL1( event )
+		return True
 		
     def sndRTS ( self, fsm ):
 		log( self.tname, 'MAC: Send RTS' )
@@ -112,6 +115,7 @@ class ieee80211mac() :
 		event.ev_dc['dst_addr']= rcv_event.ev_dc['dst_addr']
 		event.ev_dc['duration']=0;
 		self.snd_frame( event )
+		return True
 
     def sndCTS ( self, fsm ):
 		log( self.tname, 'MAC: Send CTS' )
@@ -120,6 +124,7 @@ class ieee80211mac() :
 		rcv_event = self.mac_fsm.memory
 		event.ev_dc['dst_addr']= rcv_event.ev_dc['dst_addr']
 		self.snd_frame( event )
+		return True
 
     def rcvRTS ( self, fsm ):
 		log( self.tname, 'MAC: Receive RTS' )
@@ -130,6 +135,8 @@ class ieee80211mac() :
 			self.sndCTS( fsm )
 		else:
 			log( self.tname, 'MAC: Receive RTS (not for me, ignoring)' )
+			self.mac_fsm.next_state = self.mac_fsm.current_state
+		return True
 
     def updNAV ( self, fsm ):
 		log( self.tname, 'MAC: Update NAV' )
@@ -137,11 +144,12 @@ class ieee80211mac() :
 		if ( fsm.input_symbol == "RTS" ):
 			waitT = 2*aSIFSTime + CTSTime + 2*aSlotTime
 			time.sleep( waitT )
-			NAV = self.currentTime()
+			self.NAV = self.currentTime()
 		else:
 			testNAV = self.currentTime() + int(event.ev_dc['duration'])
-			if ( testNAV > NAV ):
-				NAV = testNAV
+			if ( testNAV > self.NAV ):
+				self.NAV = testNAV
+		return True
 
     def sndACK ( self, fsm ):
 		log( self.tname, 'MAC: Send ACK' )
@@ -150,6 +158,7 @@ class ieee80211mac() :
 		rcv_event = self.mac_fsm.memory
 		event.ev_dc['dst_addr']= rcv_event.ev_dc['dst_addr']
 		self.snd_frame( event )
+		return True
 
     def rcvACK ( self, fsm ):
 		log( self.tname, 'MAC: Receive ACK' )
@@ -160,10 +169,12 @@ class ieee80211mac() :
 		else:
 			self.SRC = 0
 		## TODO fragmentation 
+		return True
 
     def sendtoL1( self, event ):
 		log( self.tname, 'MAC: transmito al fin!!' )
 		self.tx_ql1.put( event, False )
+		return True
 				
     def backoff():
 		log( self.tname, 'MAC: backoff' )
@@ -171,18 +182,20 @@ class ieee80211mac() :
 			BC = random.randint( 0, CW )
 		while ( BC != 0 ):
 			time.sleep( TimeSlot )
-			if ( max( NAV, PAV ) < ( self.currentTime() - TimeSlot ) ):
+			if ( max( self.NAV, self.PAV ) < ( self.currentTime() - TimeSlot ) ):
 				BC -= 1
 			else:
 				while ( not self.freeChannel() ):
 					self.waitfree()
 				time.sleep( DIFS )
+		return True
 
     def rcvL2 ( self, fsm ):
 		log( self.tname, 'MAC: rcv L2' )
 		self.updNAV( fsm )
 		time.sleep( SIFS )
 		self.sndACK( fsm )
+		return True
 
     def currentTime( self ):
 		log( self.tname, 'MAC: get Current Time' )

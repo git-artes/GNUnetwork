@@ -158,12 +158,14 @@ def simulates():
     #myBeacon3.start()  
     "---------------------END NODO 102 -----------------------------------------------"
 
-    vc= virtualchannel.VirtualChannel(frame_tx_q2)
+    vc= virtualchannel.VirtualChannel(frame_tx_q1)
     vc.add(frame_rx_q1) 
     vc.add(frame_rx_q2)
     vc.add(frame_rx_q3)
     vc.start()
-
+	
+    rx_event = frame_tx_q1.get()
+    print "MACSIM: event received: " + str( rx_event )
 
 if __name__ == '__main__':
     try:

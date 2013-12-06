@@ -12,19 +12,6 @@ import copy
 
 
 
-def showfields(obj):
-    '''Prints all frame object information.
-    '''
-    print '=== Frame fields ==='
-    print obj           # main frame fields
-    print '=== Frame Control fields ==='
-    print obj._fc_obj   # frame control
-    if obj._fb_obj:
-        print '=== Frame Body fields ==='
-        print obj._fb_obj
-    return
-
-
 class FrameSpecsException(Exception):
     '''An exception class for frame specifications.
     '''
@@ -36,7 +23,6 @@ class FrameSpecsException(Exception):
         self.msg = msg
     def __str__(self):
         return repr(self.msg)
-
 
 
 class FrameSpecs(object):
@@ -200,7 +186,7 @@ class MeshActionFrameBody(FrameSpecs):
         'Category' : (0,  1, False, '!B'  ), \
         'Action'   : (1,  2, False, '!B'  ) , \
         'Dialog'   : (2,  3, False, '!B'  ) , \
-        'TCPreq'   : (4,  6, False, '!H'  )  \
+        'TCPreq'   : (3,  5, False, '!H'  )  \
             }
     dc_fldvals = { \
         'Category' : 13, \
@@ -319,5 +305,21 @@ def getfrmclass(frmtype):
     else:
         raise FrameSpecsException('Wrong frmtype,' + frmtype)
     return frmclass, frmbodyclass
+
+
+def showfldvals(obj):
+    '''Decently print all frame object information.
+
+    @param obj: a frame object.
+    '''
+    print '=== Frame fields ==='
+    print obj           # main frame fields
+    print '=== Frame Control fields ==='
+    print obj._fc_obj   # frame control
+    if obj._fb_obj:
+        print '=== Frame Body fields ==='
+        print obj._fb_obj   # frame body
+    return
+
 
 

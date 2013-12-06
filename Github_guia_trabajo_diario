@@ -17,8 +17,8 @@ agrega <nombre_archivo> al grupo de archivos a enviar; requerido para archivos n
   git commit -a -m ‘mensaje’
 Sugerencia para formato de mensaje: ‘nombre_módulo: modificaciones’
 Recordar:
-archivos nuevos requieren 'git add'; puede hacerse para modificados también;
-haciendo 'commit -a' hace el commit de los modificados automáticamente, pero no de los nuevos, que requieren 'add' específico.
+  - archivos nuevos requieren 'git add'; puede hacerse para modificados también;
+  - 'commit -a' hace el commit de los modificados automáticamente, pero NO de los nuevos, que requieren 'add' específico.
 
 3. Subir las modificaciones:
   git push gn master

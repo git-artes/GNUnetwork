@@ -29,7 +29,7 @@ Frame length: 5
   Category: bytes, no bitmask   0    1  False     !B :  13
     Action: bytes, no bitmask   1    2  False     !B :  1
     Dialog: bytes, no bitmask   2    3  False     !B :  0
-    TCPreq: bytes, no bitmask   4    6  False     !H :  0
+    TCPreq: bytes, no bitmask   3    5  False     !H :  0
 <BLANKLINE>
 
 >>> print ac_ob1._fc_obj

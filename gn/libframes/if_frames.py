@@ -37,8 +37,9 @@ def mkframeobj(frmname, dc_frcl_fldvals={}, dc_fldvals={}, dc_frbd_fldvals={} ):
     @param dc_frbd_fldvals: a dictionary of {field: value} to update dictionary of field values in frame body.
     @return: a frame object.
     '''
-    return mac_frmbld.AFrame(frmname, dc_frcl_fldvals={}, dc_fldvals={}, \
-        dc_frbd_fldvals={} )
+    #frmclass, frmbodyclass = mac_getfrmclass(frmname)
+    return mac_frmbld.AFrame(frmname, dc_frcl_fldvals=dc_frcl_fldvals, \
+        dc_fldvals=dc_fldvals, dc_frbd_fldvals=dc_frbd_fldvals )
 
  
 def showfldvals(frmobj):
@@ -46,7 +47,7 @@ def showfldvals(frmobj):
     
     @param frmobj: a frame object.
     '''
-    return mac_frmspecs.showfields(frmobj)
+    return mac_frmspecs.showfldvals(frmobj)
 
 
 def showfieldnames(frmname):
@@ -55,13 +56,15 @@ def showfieldnames(frmname):
     @param frmname: a frame name.
     '''
     frmclass, frmbodyclass = mac_frmspecs.getfrmclass(frmname)
-    print '== Fields for object name: ' + frmname
-    print '-- Frame field names:'
+    print '--- Fields for frame name: ' + frmname
+    print '-- Frame Control field names:'
+    print mac_frmspecs.FrmCtrlSpecs.ls_fields
+    print '-- ' + frmname +' frame field names:'
     print frmclass.ls_fields
     if frmbodyclass:
         print '-- Frame body field names:'
         print frmbodyclass.ls_fields
-    print '==\n'
+    print '===\n'
 
 
 def test():
@@ -69,9 +72,11 @@ def test():
 
     For the types of frame known, create a frame object, pack it into binary string format, create a second frame object from the packed frame.
     '''
+    print '=== TEST 1: object creation, packing, unpacking to object\n'
+
     ls_known = ['Beacon', 'RTS', 'CTS', 'ACK', 'Data', 'Action']
     for frtype in ls_known:
-        print '==== %15s ... ' % (frtype.ljust(15),),
+        print '--- %15s ... ' % (frtype.ljust(15),),
         try:
             ob = mkframeobj(frtype)
         except:
@@ -86,6 +91,21 @@ def test():
             print 'Unpacking error'
             continue
         print 'OK'
+
+    print '\n=== TEST 2: show field names as help to set values\n'
+    for name in ls_known:
+        showfieldnames(name)
+    
+    print '\n=== TEST 3: object creation setting field values\n'
+    #ac1 = mac_frmbld.AFrame('Action', \
+    ac1 = mkframeobj('Action', \
+        dc_fldvals={'fcs':555, 'address_1':'aaaaaa', 'address_2':'bbbbbb'},\
+        dc_frbd_fldvals={'TCPreq':222}, \
+        dc_frcl_fldvals={'ToDS':True} )
+    showfldvals(ac1)
+
+
+
     return
 
 

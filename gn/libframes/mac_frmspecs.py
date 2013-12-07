@@ -312,12 +312,12 @@ def showfldvals(obj):
 
     @param obj: a frame object.
     '''
-    print '=== Frame fields ==='
+    print '--- Frame fields ---'
     print obj           # main frame fields
-    print '=== Frame Control fields ==='
+    print '--- Frame Control fields ---'
     print obj._fc_obj   # frame control
     if obj._fb_obj:
-        print '=== Frame Body fields ==='
+        print '--- Frame Body fields ---'
         print obj._fb_obj   # frame body
     return
 

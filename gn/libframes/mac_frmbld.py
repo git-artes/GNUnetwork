@@ -175,8 +175,19 @@ class AFrame(Frame):
         @param dc_frcl_fldvals: a dictionary of {field: value} to update dictionary of field values in Frame Control field.
         @param dc_fldvals: a dictionary of {field: value} to update dictionary of field values in this frame.
         @param dc_frbd_fldvals: a dictionary of {field: value} to update dictionary of field values in frame body.
+        
+        >>> ac1 = AFrame('Action', dc_fldvals={'fcs':555, 'address_1':'aaaaaa', 'address_2':'bbbbbb'}, dc_frbd_fldvals={'TCPreq':222}, dc_frcl_fldvals={'ToDS':True})
+        >>> ac1.dc_fldvals['fcs'], ac1.dc_fldvals['address_1'], ac1.dc_fldvals['address_2']
+        (555, 'aaaaaa', 'bbbbbb')
+        >>> ac1.dc_frbd_fldvals['TCPreq']
+        222
+        >>> ac1.dc_frcl_fldvals['ToDS']
+        True
         '''
         self.frmtype = frmtype
+
+        self.dc_fldvals = dc_fldvals
+        self.dc_frbd_fldvals = dc_frbd_fldvals
         if mac_frmspecs.dc_frmclasses.has_key(frmtype):
             frmclass, frmbodyclass = \
                 mac_frmspecs.dc_frmclasses[self.frmtype]
@@ -193,6 +204,7 @@ class AFrame(Frame):
         #self._fc_obj.setfctype(frmclass.frmtype)
         self._fc_obj.dc_fldvals.update(dc_frcl_fldvals)
         self.updtfldvals({'frame_ctrl':self._fc_obj.getfcint()})
+        self.dc_frcl_fldvals = self._fc_obj.dc_fldvals  # point to FC obj dic
         # update other field values for this frame
         self.updtfldvals(dc_fldvals)
         # load frame body field if frame type stores mgmt info in it
@@ -200,8 +212,10 @@ class AFrame(Frame):
             self._fb_obj = AFrameBody(frmbodyclass, \
                  dc_fldvals=dc_frbd_fldvals)
             self.updtfldvals({'frame_body':self._fb_obj.mkpkt()})
+            self.dc_frbd_fldvals = self._fb_obj.dc_fldvals  # point to FB obj dic
         else:
             self._fb_obj = None     # required to recognize FB with data
+            self.dc_frbc_fldvals = {}
         return
 
 
@@ -253,25 +267,6 @@ class AMgmtFrame(AFrame):
     pass
 
 
-### functions
-
-
-"""
-REVISE!
-def mkdcfrmobjs():
-    '''Returns a dictionary {frmtype: object}.
-    '''
-    dc_frmobjs = {}
-    for frmtype in mac_frmspecs.dc_frmclasses.keys():
-        if frmtype in ['FC', 'BeaconFrameBody']:
-            pass
-        else:
-            frmclass = mac_frmspecs[frmtype][0]
-            dc_frmobjs[frmtype] = AFrame(frmtype)
-    dc_frmobjs['FC'] = AFrameControl()
-    return dc_frmobjs
-
-dc_frmobjs = mkdcfrmobjs()
-"""
-
-
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()

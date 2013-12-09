@@ -30,7 +30,9 @@ from gnuradio import digital
 from transmit_path import transmit_path
 from uhd_interface import uhd_transmitter
 
-from receive_path import receive_path
+from receive_path import receive_path as rp36
+from receive_path3_7 import receive_path as rp37
+
 from uhd_interface import uhd_receiver
 
 import sys, threading, math
@@ -65,7 +67,11 @@ class my_top_block_rx(gr.top_block):
         # Set up receive path
         # do this after for any adjustments to the options that may
         # occur in the sinks (specifically the UHD sink)
-        self.rxpath = receive_path(demodulator, self.rx_callback, options) 
+        if options.version == '6':
+            self.rxpath = rp36(demodulator, self.rx_callback, options) 
+        if options.version == '7':
+            self.rxpath = rp37(demodulator, self.rx_callback, options) 
+            
         self.connect(self.source, self.rxpath)
     
     def rx_callback(self,ok, payload):

@@ -32,7 +32,8 @@ from gnuradio import digital
 from transmit_path import transmit_path
 from uhd_interface import uhd_transmitter
 
-from receive_path import receive_path
+from receive_path import receive_path as rp36
+from receive_path3_7 import receive_path as rp37
 from uhd_interface import uhd_receiver
 import TxRxLayer1
 import time, struct, sys, threading,Queue
@@ -291,10 +292,13 @@ def main():
     parser.add_option("", "--testL1", type="int", default=0 , help = "if MAC is used (default=0) or not (1)")
     parser.add_option("", "--mac", default=None , help = "MAC addres")
     parser.add_option("", "--command", default=0 , help = "Command mode")
-    
+    parser.add_option("", "--version", default=6 , help = "gnuradio version, default 6 (3.6)")
+     
     transmit_path.add_options(parser, expert_grp)
     uhd_transmitter.add_options(parser)
-    receive_path.add_options(parser, expert_grp)
+  
+    rp36.add_options(parser, expert_grp)
+    rp37.add_options(parser, expert_grp)
     uhd_receiver.add_options(parser)
 
     for mod in demods.values():

@@ -29,7 +29,9 @@ from optparse import OptionParser
 from gnuradio import digital
 
 # from current dir
-from transmit_path import transmit_path
+from transmit_path import transmit_path as tp36
+from transmit_path import transmit_path as tp37
+
 from uhd_interface import uhd_transmitter
 
 from receive_path import receive_path as rp36
@@ -294,7 +296,9 @@ def main():
     parser.add_option("", "--command", default=0 , help = "Command mode")
     parser.add_option("", "--version", default=6 , help = "gnuradio version, default 6 (3.6)")
      
-    transmit_path.add_options(parser, expert_grp)
+    tp36.add_options(parser, expert_grp)
+    tp37.add_options(parser, expert_grp)
+
     uhd_transmitter.add_options(parser)
   
     rp36.add_options(parser, expert_grp)

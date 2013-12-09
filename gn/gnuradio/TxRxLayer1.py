@@ -27,7 +27,10 @@ from gnuradio import gr
 from gnuradio import digital
 
 # from current dir
-from transmit_path import transmit_path
+
+from transmit_path import transmit_path as tp36
+from transmit_path3_7 import transmit_path as tp37
+
 from uhd_interface import uhd_transmitter
 
 from receive_path import receive_path as rp36
@@ -111,7 +114,10 @@ class my_top_block_tx(gr.top_block):
         self.tx_l1.start()
         # do this after for any adjustments to the options that may
         # occur in the sinks (specifically the UHD sink)
-        self.txpath = transmit_path(modulator, options)
+        if options.version == '6':        
+            self.txpath = tp36(modulator, options)
+        if options.version == '7':
+            self.txpath = tp37(modulator, options)
         self.connect(self.txpath, self.sink)
 
     def set_freq(self,value):

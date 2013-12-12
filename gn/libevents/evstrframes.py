@@ -18,6 +18,7 @@ def mkevent(pnickname=None, pframe=None):
     @param pframe: a frame in bin dta format (confirm!)
     @return: an Event object.
     '''
+   
     if not pnickname and not pframe:
         raise events.EventNameException('No nickname or frame received.')
         return None
@@ -32,6 +33,7 @@ def mkevent(pnickname=None, pframe=None):
             ev = if_events.mkevent(nickname, frmpkt=pframe, ev_dc=eval(ev_dc))
         except:
             print "Cannot generates event: malformed packet"
+            ev =None
         #ev.src_addr=src_addr
         #ev.dst_addr = dst_addr
         #print "evstrframes.mkevent:"

@@ -294,7 +294,7 @@ def main():
     parser.add_option("", "--testL1", type="int", default=0 , help = "if MAC is used (default=0) or not (1)")
     parser.add_option("", "--mac", default=None , help = "MAC addres")
     parser.add_option("", "--command", default=0 , help = "Command mode")
-    parser.add_option("", "--version", default=6 , help = "gnuradio version, default 6 (3.6)")
+    parser.add_option("", "--version", default='6' , help = "gnuradio version, default 6 (3.6)")
      
     tp36.add_options(parser, expert_grp)
     tp37.add_options(parser, expert_grp)

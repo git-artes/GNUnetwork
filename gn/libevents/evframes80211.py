@@ -33,7 +33,7 @@ class EventFrame(Event):
             'duration': 10, \
             'frame_length': 50, \
             'peerlinkId': 0, \
-
+            'payload' : None,\
             }
         self.ev_dc.update(ev_dc)
         return

@@ -34,6 +34,7 @@ class Scheduler(threading.Thread):
         @param in_queues: a list of input queues from which items are extracted. If input queues are given within a more elaborate structure, functin run() must be overwritten.
         @param out_queues: a structure containing the output queues. A possible structure is a dictionary of key nm_queue, the name of an output queue; value may be a queue, a tuple (function, queue) or other structure to be processed by the scheduling function fn_sched, which must be overwritten.
         '''
+        print "inicializo"
         threading.Thread.__init__(self)
         self.daemon = True
         self.finished = False
@@ -54,6 +55,7 @@ class Scheduler(threading.Thread):
     def run(self):
         '''Runs the scheduler until stopped.
         '''
+        print "start .... run"
         while not self.finished:
             self.fn_sched()
         else:

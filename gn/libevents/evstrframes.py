@@ -20,7 +20,7 @@ def mkevent(pnickname=None, pframe=None):
     '''
    
     if not pnickname and not pframe:
-        raise events.EventNameException('No nickname or frame received.')
+        print 'No nickname or frame received.'
         return None
     if pnickname:
         return if_events.mkevent(pnickname, ev_dc={'src_addr':'', 'dst_addr':''})

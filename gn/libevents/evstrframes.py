@@ -27,9 +27,9 @@ def mkevent(pnickname=None, pframe=None):
     if pframe:
         #print "evstrframes.frame:", pframe
         ev_dc = {}
-        nickname, ev_dc  = pframe.split(',',1)
-        print ev_dc
-        try:
+        try:        
+            nickname, ev_dc  = pframe.split(',',1)
+            print ev_dc
             ev = if_events.mkevent(nickname, frmpkt=pframe, ev_dc=eval(ev_dc))
         except:
             print "Cannot generates event: malformed packet"

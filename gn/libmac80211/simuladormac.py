@@ -62,7 +62,7 @@ def simulates():
     #myBeacon1 = Beacon.Beacon(net_conf1 ,pkt_rx_q1 )
     #myBeacon1.start()    
 
-    mySimulator = eventsimulator.EventSimulator( 30,"DataData", pkt_rx_q1,"100","101")
+    mySimulator = eventsimulator.EventSimulator( 10,"DataData", pkt_rx_q1,"100","101")
     mySimulator.start()
     "---------------------END NODE 1 -----------------------------------------------"
     
@@ -164,8 +164,8 @@ def simulates():
     vc.add(frame_rx_q3)
     vc.start()
 	
-    rx_event = frame_tx_q1.get()
-    print "MACSIM: event received: " + str( rx_event )
+    # rx_event = frame_tx_q1.get()
+    # print "MACSIM: event received: " + str( rx_event )
 
 if __name__ == '__main__':
     try:

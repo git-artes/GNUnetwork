@@ -8,7 +8,7 @@ Created on Tue May 28 14:55:46 2013
 import sys
 sys.path +=['..']
 
-import Queue
+import Queue,time
 import libmanagement.NetworkConfiguration as NetworkConfiguration
 import libmanagement.DiscoveryPeeringController as DiscoveryPeeringController
 import libmanagement.Beacon as Beacon
@@ -23,7 +23,7 @@ def simulates():
     "-------------------NODE 1: MAC Addr 100-------------------------------------------------------"    
     " Layer 3 packet queues"
     pkt_rx_q1 = Queue.Queue(10)
-    #pkt_tx_q1 = Queue.Queue(10)
+    pkt_tx_q1 = Queue.Queue(10)
 
     " Configuration of the Scheduler of Node 1 that recieves frames and generates management events."
     frame_rx_q1 = Queue.Queue(10)
@@ -54,7 +54,7 @@ def simulates():
     #dpcontrol1.start()
 
     " Start the MAC controller"
-    macctrl1 = Mac.ControllerMAC( net_conf1, ctrl_q1, mgmt_q1, data_q1, tx_ev_q1, pkt_rx_q1, tx_ev_q1 )
+    macctrl1 = Mac.ControllerMAC( net_conf1, ctrl_q1, mgmt_q1, data_q1, tx_ev_q1, pkt_rx_q1, pkt_tx_q1 )
     macctrl1.start()
 
     "Starts the beacon generator of this node"
@@ -62,14 +62,14 @@ def simulates():
     #myBeacon1 = Beacon.Beacon(net_conf1 ,pkt_rx_q1 )
     #myBeacon1.start()    
 
-    mySimulator = eventsimulator.EventSimulator( 10,"DataData", pkt_rx_q1,"100","101")
+    mySimulator = eventsimulator.EventSimulator( 50,"DataData", pkt_rx_q1,"100","101")
     mySimulator.start()
     "---------------------END NODE 1 -----------------------------------------------"
     
     "-------------------NODE 2: MAC Addr 101-------------------------------------------------------"    
     " Layer 3 packet queues"
     pkt_rx_q2 = Queue.Queue(10)
-    #pkt_tx_q2 = Queue.Queue(10)
+    pkt_tx_q2 = Queue.Queue(10)
 
     " Configuration of the Scheduler of Node 2 that recieves frames and generates management events."
     frame_rx_q2 = Queue.Queue(10)
@@ -101,7 +101,7 @@ def simulates():
     #dpcontrol2.start()
 
     " Start the MAC controller"
-    macctrl2 = Mac.ControllerMAC( net_conf2, ctrl_q2, mgmt_q2, data_q2, tx_ev_q2, pkt_rx_q2, tx_ev_q2 )
+    macctrl2 = Mac.ControllerMAC( net_conf2, ctrl_q2, mgmt_q2, data_q2, tx_ev_q2, pkt_rx_q2, pkt_tx_q2 )
     macctrl2.start()
 
     "Starts the beacon generator of this node"
@@ -117,7 +117,7 @@ def simulates():
     "-------------------NODE 3: MAC Addr 102-------------------------------------------------------"    
     " Layer 3 packet queues"
     pkt_rx_q3 = Queue.Queue(10)
-    #pkt_tx_q3 = Queue.Queue(10)
+    pkt_tx_q3 = Queue.Queue(10)
 
     " Configuration of the Scheduler of Node 3 that recieves frames and generates management events."
     frame_rx_q3 = Queue.Queue(10)
@@ -149,7 +149,7 @@ def simulates():
     #dpcontrol3.start()
 
     " Start the MAC controller"
-    macctrl3 = Mac.ControllerMAC( net_conf3, ctrl_q3, mgmt_q3, data_q3, tx_ev_q3, pkt_rx_q3, tx_ev_q3 )
+    macctrl3 = Mac.ControllerMAC( net_conf3, ctrl_q3, mgmt_q3, data_q3, tx_ev_q3, pkt_rx_q3, pkt_tx_q3 )
     macctrl3.start()
 
     "Starts the beacon generator of this node"
@@ -166,6 +166,14 @@ def simulates():
 	
     # rx_event = frame_tx_q1.get()
     # print "MACSIM: event received: " + str( rx_event )
+
+	# read events
+    event_q1 = pkt_tx_q1.get()
+    print "MAC1 L3 receive " + event_q1;
+    event_q2 = pkt_tx_q2.get()
+    print "MAC2 L3 receive " + event_q2;
+    event_q3 = pkt_tx_q3.get()
+    print "MAC3 L3 receive " + event_q3;
 
 if __name__ == '__main__':
     try:

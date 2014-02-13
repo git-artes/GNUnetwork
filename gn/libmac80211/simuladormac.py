@@ -17,6 +17,7 @@ import libadaptationlayer.schedFrToEv as schedFrToEv
 import ieee80211mac as Mac
 import libvirtualchannel.virtualchannel as virtualchannel
 import libvirtualchannel.EventSimulator as eventsimulator
+import libvirtualchannel.EventConsumer as eventconsumer
 
 def simulates():
 
@@ -62,8 +63,6 @@ def simulates():
     #myBeacon1 = Beacon.Beacon(net_conf1 ,pkt_rx_q1 )
     #myBeacon1.start()    
 
-    mySimulator = eventsimulator.EventSimulator( 50,"DataData", pkt_rx_q1,"100","101")
-    mySimulator.start()
     "---------------------END NODE 1 -----------------------------------------------"
     
     "-------------------NODE 2: MAC Addr 101-------------------------------------------------------"    
@@ -165,15 +164,19 @@ def simulates():
     vc.start()
 	
     # rx_event = frame_tx_q1.get()
-    # print "MACSIM: event received: " + str( rx_event )
+    print "Start Simulator"
+    mySimulator = eventsimulator.EventSimulator( 10,"DataData", pkt_rx_q1,"100","101")
+    mySimulator.start()
 
-	# read events
-    event_q1 = pkt_tx_q1.get()
-    print "MAC1 L3 receive " + event_q1;
-    event_q2 = pkt_tx_q2.get()
-    print "MAC2 L3 receive " + event_q2;
-    event_q3 = pkt_tx_q3.get()
-    print "MAC3 L3 receive " + event_q3;
+    print "Start Consumers"
+    myConsumer1 = eventconsumer.EventConsumer( "Node1-L3", pkt_tx_q1 )
+    myConsumer1.start()
+
+    myConsumer2 = eventconsumer.EventConsumer( "Node2-L3", pkt_tx_q2 )
+    myConsumer2.start()
+
+    myConsumer3 = eventconsumer.EventConsumer( "Node3-L3", pkt_tx_q3 )
+    myConsumer3.start()
 
 if __name__ == '__main__':
     try:

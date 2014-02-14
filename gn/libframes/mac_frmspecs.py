@@ -291,14 +291,13 @@ dc_frmclasses = { \
     'ACK'   : (CtrlACK, None), \
     'Data'  : (Data, None), \
     'Beacon': (MgmtFrame, BeaconFrameBody), \
-    #'Beacon': (MgmtFrame, 'BeaconFrameBody'), \
     'Action': (MgmtFrame, MeshActionFrameBody),  \
     'BeaconFrameBody': (BeaconFrameBody, None) \
     }
 
 
 def getfrmclass(frmtype):
-    '''Returns classess to build an object of specified frame type.
+    '''Returns classes to build an object of specified frame type.
     '''
     if dc_frmclasses.has_key(frmtype):
         frmclass, frmbodyclass = dc_frmclasses[frmtype]

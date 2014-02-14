@@ -23,13 +23,17 @@ def mkevent(nickname, **kwargs):
     '''Returns an event of the given event nickname.
 
     @param nickname: a valid event nickname, i.e. one that is a key in dictionary of valid nicknames.
+    @param **kwargs: a dictionary of variables depending on the type of event. Field C{ev_dc} is a dictionary of fields and values for the corresponding event type; field C{frmpkt} is a binary packed frame.
     
     >>> ev_ob_frm = mkevent('CtrlCTS')
     >>> print ev_ob_frm
     Event class name: EventFrame
       Nickname: 'CtrlCTS'; Type: 'Ctrl'; SubType: 'CTS'
-      duration: None
       src_addr: None
+      peerlinkId: 0
+      payload: None
+      duration: 10
+      frame_length: 50
       dst_addr: None
       Frame packet: 
     >>> ev_mg = mkevent('ActionOpen', ev_dc={'src_addr':'aaaa', 'dst_addr':'bbbb', 'peerLinkId':'the peer link ID'})
@@ -37,8 +41,11 @@ def mkevent(nickname, **kwargs):
     Event class name: EventFrameMgmt
       Nickname: 'ActionOpen'; Type: 'Mgmt'; SubType: 'Action'
       src_addr: aaaa
-      duration: None
+      peerlinkId: 0
+      payload: None
       peerLinkId: the peer link ID
+      duration: 10
+      frame_length: 50
       dst_addr: bbbb
       Frame packet: 
     >>> ev_ob_tmr = mkevent('TimerTOH')

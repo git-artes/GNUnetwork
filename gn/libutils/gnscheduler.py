@@ -28,13 +28,15 @@ class Scheduler(threading.Thread):
     This scheduler gets one element from one of several input queues, and puts elements in one or several output queues. Behaviour is regulated by a scheduling function which is expected to be overwritten when subclassing this class. Selection of input queue to get element from, processing, creation of one or more elements of same or different type, and putting elements in output queues are all regulated by this scheduling function.
     '''
  
-    def __init__(self, in_queues, out_queues):
+    def __init__(self, in_queues, out_queues, debug=False):
         '''Constructor.
         
         @param in_queues: a list of input queues from which items are extracted. If input queues are given within a more elaborate structure, functin run() must be overwritten.
         @param out_queues: a structure containing the output queues. A possible structure is a dictionary of key nm_queue, the name of an output queue; value may be a queue, a tuple (function, queue) or other structure to be processed by the scheduling function fn_sched, which must be overwritten.
+        @param debug: if True prints some debug messages; default False.
         '''
-        print "inicializo"
+        if debug:
+            print "inicializo"
         threading.Thread.__init__(self)
         self.daemon = True
         self.finished = False
@@ -52,10 +54,13 @@ class Scheduler(threading.Thread):
         return
 
 
-    def run(self):
+    def run(self, debug=False):
         '''Runs the scheduler until stopped.
+
+        @param debug: if True prints some debug messages; default False.
         '''
-        print "start .... run"
+        if debug:
+            print "start .... run"
         while not self.finished:
             self.fn_sched()
         else:
@@ -66,10 +71,13 @@ class Scheduler(threading.Thread):
         return
 
 
-    def stop(self):
+    def stop(self, debug=False):
         '''Stops the scheduler.
+
+        @param debug: if True prints some debug messages; default False.
         '''
-        print 'Scheduler, in stop function'
+        if debug:
+            print 'Scheduler, in stop function'
         self.finished = True
         self._Thread__stop()
 

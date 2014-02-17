@@ -87,61 +87,68 @@
 </div><div id="mkevent-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="mkevent-expanded"><a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">    <tt class="py-docstring">'''Returns an event of the given event nickname.</tt> </tt>
 <a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring">    @param nickname: a valid event nickname, i.e. one that is a key in dictionary of valid nicknames.</tt> </tt>
-<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring">    </tt> </tt>
-<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; ev_ob_frm = mkevent('CtrlCTS')</tt> </tt>
-<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; print ev_ob_frm</tt> </tt>
-<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">    Event class name: EventFrame</tt> </tt>
-<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">      Nickname: 'CtrlCTS'; Type: 'Ctrl'; SubType: 'CTS'</tt> </tt>
-<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-docstring">      duration: None</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring">    @param **kwargs: a dictionary of variables depending on the type of event. Field C{ev_dc} is a dictionary of fields and values for the corresponding event type; field C{frmpkt} is a binary packed frame.</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring">    </tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; ev_ob_frm = mkevent('CtrlCTS')</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; print ev_ob_frm</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">    Event class name: EventFrame</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-docstring">      Nickname: 'CtrlCTS'; Type: 'Ctrl'; SubType: 'CTS'</tt> </tt>
 <a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-docstring">      src_addr: None</tt> </tt>
-<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-docstring">      dst_addr: None</tt> </tt>
-<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-docstring">      Frame packet: </tt> </tt>
-<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; ev_mg = mkevent('ActionOpen', ev_dc={'src_addr':'aaaa', 'dst_addr':'bbbb', 'peerLinkId':'the peer link ID'})</tt> </tt>
-<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; print ev_mg</tt> </tt>
-<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-docstring">    Event class name: EventFrameMgmt</tt> </tt>
-<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"><tt class="py-docstring">      Nickname: 'ActionOpen'; Type: 'Mgmt'; SubType: 'Action'</tt> </tt>
-<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line"><tt class="py-docstring">      src_addr: aaaa</tt> </tt>
-<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"><tt class="py-docstring">      duration: None</tt> </tt>
-<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"><tt class="py-docstring">      peerLinkId: the peer link ID</tt> </tt>
-<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line"><tt class="py-docstring">      dst_addr: bbbb</tt> </tt>
-<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line"><tt class="py-docstring">      Frame packet: </tt> </tt>
-<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; ev_ob_tmr = mkevent('TimerTOH')</tt> </tt>
-<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; print ev_ob_tmr</tt> </tt>
-<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line"><tt class="py-docstring">    Event class name: EventTimer</tt> </tt>
-<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"><tt class="py-docstring">      Nickname: 'TimerTOH'; Type: 'Timer'; SubType: 'TOH'</tt> </tt>
-<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"><tt class="py-docstring">      add_info: None</tt> </tt>
-<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; ev_ob_tmr = mkevent('TimerTOH', ev_dc={'add_info':'additional info, testing'})</tt> </tt>
-<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; print ev_ob_tmr</tt> </tt>
-<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"><tt class="py-docstring">    Event class name: EventTimer</tt> </tt>
-<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"><tt class="py-docstring">      Nickname: 'TimerTOH'; Type: 'Timer'; SubType: 'TOH'</tt> </tt>
-<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line"><tt class="py-docstring">      add_info: additional info, testing</tt> </tt>
-<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line"><tt class="py-docstring">    '''</tt> </tt>
-<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">    <tt class="py-name">frmpkt</tt><tt class="py-op">,</tt> <tt class="py-name">ev_dc</tt> <tt class="py-op">=</tt> <tt class="py-string">''</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt><tt class="py-op">}</tt> </tt>
-<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">kwargs</tt><tt class="py-op">.</tt><tt class="py-name">has_key</tt><tt class="py-op">(</tt><tt class="py-string">'ev_dc'</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line">        <tt class="py-name">ev_dc</tt> <tt class="py-op">=</tt> <tt class="py-name">kwargs</tt><tt class="py-op">[</tt><tt class="py-string">'ev_dc'</tt><tt class="py-op">]</tt> </tt>
-<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">kwargs</tt><tt class="py-op">.</tt><tt class="py-name">has_key</tt><tt class="py-op">(</tt><tt class="py-string">'frmpkt'</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line">        <tt class="py-name">frmpkt</tt> <tt class="py-op">=</tt> <tt class="py-name">kwargs</tt><tt class="py-op">[</tt><tt class="py-string">'frmpkt'</tt><tt class="py-op">]</tt> </tt>
-<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">         </tt>
-<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt id="link-4" class="py-name"><a title="gn.libevents.evtimer" class="py-name" href="#" onclick="return doclink('link-4', 'evtimer', 'link-2');">evtimer</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Variable gn.libevents.evframes80211.dc_nicknames=gn.libevents.evframes80211-module.html#dc_nicknames,Variable gn.libevents.evtimer.dc_nicknames=gn.libevents.evtimer-module.html#dc_nicknames"><a title="gn.libevents.evframes80211.dc_nicknames
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-docstring">      peerlinkId: 0</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-docstring">      payload: None</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"><tt class="py-docstring">      duration: 10</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"><tt class="py-docstring">      frame_length: 50</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-docstring">      dst_addr: None</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"><tt class="py-docstring">      Frame packet: </tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; ev_mg = mkevent('ActionOpen', ev_dc={'src_addr':'aaaa', 'dst_addr':'bbbb', 'peerLinkId':'the peer link ID'})</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; print ev_mg</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"><tt class="py-docstring">    Event class name: EventFrameMgmt</tt> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line"><tt class="py-docstring">      Nickname: 'ActionOpen'; Type: 'Mgmt'; SubType: 'Action'</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line"><tt class="py-docstring">      src_addr: aaaa</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"><tt class="py-docstring">      peerlinkId: 0</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"><tt class="py-docstring">      payload: None</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line"><tt class="py-docstring">      peerLinkId: the peer link ID</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"><tt class="py-docstring">      duration: 10</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"><tt class="py-docstring">      frame_length: 50</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line"><tt class="py-docstring">      dst_addr: bbbb</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line"><tt class="py-docstring">      Frame packet: </tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; ev_ob_tmr = mkevent('TimerTOH')</tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; print ev_ob_tmr</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line"><tt class="py-docstring">    Event class name: EventTimer</tt> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line"><tt class="py-docstring">      Nickname: 'TimerTOH'; Type: 'Timer'; SubType: 'TOH'</tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line"><tt class="py-docstring">      add_info: None</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; ev_ob_tmr = mkevent('TimerTOH', ev_dc={'add_info':'additional info, testing'})</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line"><tt class="py-docstring">    &gt;&gt;&gt; print ev_ob_tmr</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line"><tt class="py-docstring">    Event class name: EventTimer</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line"><tt class="py-docstring">      Nickname: 'TimerTOH'; Type: 'Timer'; SubType: 'TOH'</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line"><tt class="py-docstring">      add_info: additional info, testing</tt> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line"><tt class="py-docstring">    '''</tt> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line">    <tt class="py-name">frmpkt</tt><tt class="py-op">,</tt> <tt class="py-name">ev_dc</tt> <tt class="py-op">=</tt> <tt class="py-string">''</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt><tt class="py-op">}</tt> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">kwargs</tt><tt class="py-op">.</tt><tt class="py-name">has_key</tt><tt class="py-op">(</tt><tt class="py-string">'ev_dc'</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line">        <tt class="py-name">ev_dc</tt> <tt class="py-op">=</tt> <tt class="py-name">kwargs</tt><tt class="py-op">[</tt><tt class="py-string">'ev_dc'</tt><tt class="py-op">]</tt> </tt>
+<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">kwargs</tt><tt class="py-op">.</tt><tt class="py-name">has_key</tt><tt class="py-op">(</tt><tt class="py-string">'frmpkt'</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line">        <tt class="py-name">frmpkt</tt> <tt class="py-op">=</tt> <tt class="py-name">kwargs</tt><tt class="py-op">[</tt><tt class="py-string">'frmpkt'</tt><tt class="py-op">]</tt> </tt>
+<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line">         </tt>
+<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt id="link-4" class="py-name"><a title="gn.libevents.evtimer" class="py-name" href="#" onclick="return doclink('link-4', 'evtimer', 'link-2');">evtimer</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Variable gn.libevents.evframes80211.dc_nicknames=gn.libevents.evframes80211-module.html#dc_nicknames,Variable gn.libevents.evtimer.dc_nicknames=gn.libevents.evtimer-module.html#dc_nicknames"><a title="gn.libevents.evframes80211.dc_nicknames
 gn.libevents.evtimer.dc_nicknames" class="py-name" href="#" onclick="return doclink('link-5', 'dc_nicknames', 'link-5');">dc_nicknames</a></tt><tt class="py-op">.</tt><tt class="py-name">has_key</tt><tt class="py-op">(</tt><tt class="py-name">nickname</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line">        <tt class="py-name">ptype</tt><tt class="py-op">,</tt> <tt class="py-name">psubtype</tt><tt class="py-op">,</tt> <tt class="py-name">eventclass</tt> <tt class="py-op">=</tt> <tt id="link-6" class="py-name"><a title="gn.libevents.evtimer" class="py-name" href="#" onclick="return doclink('link-6', 'evtimer', 'link-2');">evtimer</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name"><a title="gn.libevents.evframes80211.dc_nicknames
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line">        <tt class="py-name">ptype</tt><tt class="py-op">,</tt> <tt class="py-name">psubtype</tt><tt class="py-op">,</tt> <tt class="py-name">eventclass</tt> <tt class="py-op">=</tt> <tt id="link-6" class="py-name"><a title="gn.libevents.evtimer" class="py-name" href="#" onclick="return doclink('link-6', 'evtimer', 'link-2');">evtimer</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name"><a title="gn.libevents.evframes80211.dc_nicknames
 gn.libevents.evtimer.dc_nicknames" class="py-name" href="#" onclick="return doclink('link-7', 'dc_nicknames', 'link-5');">dc_nicknames</a></tt><tt class="py-op">[</tt><tt class="py-name">nickname</tt><tt class="py-op">]</tt> </tt>
-<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">eventclass</tt><tt class="py-op">(</tt><tt class="py-name">nickname</tt><tt class="py-op">,</tt> <tt class="py-name">ptype</tt><tt class="py-op">,</tt> <tt class="py-name">psubtype</tt><tt class="py-op">,</tt> <tt class="py-name">ev_dc</tt><tt class="py-op">)</tt>     </tt>
-<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line">    <tt class="py-keyword">elif</tt> <tt id="link-8" class="py-name"><a title="gn.libevents.evframes80211" class="py-name" href="#" onclick="return doclink('link-8', 'evframes80211', 'link-3');">evframes80211</a></tt><tt class="py-op">.</tt><tt id="link-9" class="py-name"><a title="gn.libevents.evframes80211.dc_nicknames
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">eventclass</tt><tt class="py-op">(</tt><tt class="py-name">nickname</tt><tt class="py-op">,</tt> <tt class="py-name">ptype</tt><tt class="py-op">,</tt> <tt class="py-name">psubtype</tt><tt class="py-op">,</tt> <tt class="py-name">ev_dc</tt><tt class="py-op">)</tt>     </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line">    <tt class="py-keyword">elif</tt> <tt id="link-8" class="py-name"><a title="gn.libevents.evframes80211" class="py-name" href="#" onclick="return doclink('link-8', 'evframes80211', 'link-3');">evframes80211</a></tt><tt class="py-op">.</tt><tt id="link-9" class="py-name"><a title="gn.libevents.evframes80211.dc_nicknames
 gn.libevents.evtimer.dc_nicknames" class="py-name" href="#" onclick="return doclink('link-9', 'dc_nicknames', 'link-5');">dc_nicknames</a></tt><tt class="py-op">.</tt><tt class="py-name">has_key</tt><tt class="py-op">(</tt><tt class="py-name">nickname</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line">        <tt class="py-name">ev_type</tt><tt class="py-op">,</tt> <tt class="py-name">ev_subtype</tt><tt class="py-op">,</tt> <tt class="py-name">eventclass</tt> <tt class="py-op">=</tt> <tt id="link-10" class="py-name"><a title="gn.libevents.evframes80211" class="py-name" href="#" onclick="return doclink('link-10', 'evframes80211', 'link-3');">evframes80211</a></tt><tt class="py-op">.</tt><tt id="link-11" class="py-name"><a title="gn.libevents.evframes80211.dc_nicknames
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line">        <tt class="py-name">ev_type</tt><tt class="py-op">,</tt> <tt class="py-name">ev_subtype</tt><tt class="py-op">,</tt> <tt class="py-name">eventclass</tt> <tt class="py-op">=</tt> <tt id="link-10" class="py-name"><a title="gn.libevents.evframes80211" class="py-name" href="#" onclick="return doclink('link-10', 'evframes80211', 'link-3');">evframes80211</a></tt><tt class="py-op">.</tt><tt id="link-11" class="py-name"><a title="gn.libevents.evframes80211.dc_nicknames
 gn.libevents.evtimer.dc_nicknames" class="py-name" href="#" onclick="return doclink('link-11', 'dc_nicknames', 'link-5');">dc_nicknames</a></tt><tt class="py-op">[</tt><tt class="py-name">nickname</tt><tt class="py-op">]</tt> </tt>
-<a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">eventclass</tt><tt class="py-op">(</tt><tt class="py-name">nickname</tt><tt class="py-op">,</tt> <tt class="py-name">ev_type</tt><tt class="py-op">,</tt> <tt class="py-name">ev_subtype</tt><tt class="py-op">,</tt> <tt class="py-name">frmpkt</tt><tt class="py-op">,</tt> <tt class="py-name">ev_dc</tt><tt class="py-op">)</tt> </tt>
-<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
-<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt id="link-12" class="py-name" targets="Class gn.libevents.events.EventNameException=gn.libevents.events.EventNameException-class.html"><a title="gn.libevents.events.EventNameException" class="py-name" href="#" onclick="return doclink('link-12', 'EventNameException', 'link-12');">EventNameException</a></tt><tt class="py-op">(</tt><tt class="py-name">nickname</tt> <tt class="py-op">+</tt> <tt class="py-string">' is not a valid nickname.'</tt><tt class="py-op">)</tt> </tt>
-<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> </tt>
-</div><a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line"> </tt>
-<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line"> </tt>
-<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line"> </tt>
-<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line"><tt class="py-keyword">if</tt> <tt class="py-name">__name__</tt> <tt class="py-op">==</tt> <tt class="py-string">'__main__'</tt><tt class="py-op">:</tt> </tt>
-<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line">    <tt class="py-keyword">import</tt> <tt class="py-name">doctest</tt> </tt>
-<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line">    <tt class="py-name">doctest</tt><tt class="py-op">.</tt><tt class="py-name">testmod</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">eventclass</tt><tt class="py-op">(</tt><tt class="py-name">nickname</tt><tt class="py-op">,</tt> <tt class="py-name">ev_type</tt><tt class="py-op">,</tt> <tt class="py-name">ev_subtype</tt><tt class="py-op">,</tt> <tt class="py-name">frmpkt</tt><tt class="py-op">,</tt> <tt class="py-name">ev_dc</tt><tt class="py-op">)</tt> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt id="link-12" class="py-name" targets="Class gn.libevents.events.EventNameException=gn.libevents.events.EventNameException-class.html"><a title="gn.libevents.events.EventNameException" class="py-name" href="#" onclick="return doclink('link-12', 'EventNameException', 'link-12');">EventNameException</a></tt><tt class="py-op">(</tt><tt class="py-name">nickname</tt> <tt class="py-op">+</tt> <tt class="py-string">' is not a valid nickname.'</tt><tt class="py-op">)</tt> </tt>
+<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> </tt>
+</div><a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line"> </tt>
+<a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line"> </tt>
+<a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line"> </tt>
+<a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line"><tt class="py-keyword">if</tt> <tt class="py-name">__name__</tt> <tt class="py-op">==</tt> <tt class="py-string">'__main__'</tt><tt class="py-op">:</tt> </tt>
+<a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line">    <tt class="py-keyword">import</tt> <tt class="py-name">doctest</tt> </tt>
+<a name="L82"></a><tt class="py-lineno">82</tt>  <tt class="py-line">    <tt class="py-name">doctest</tt><tt class="py-op">.</tt><tt class="py-name">testmod</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L83"></a><tt class="py-lineno">83</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -179,7 +186,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Fri Dec  6 15:45:47 2013
+    Generated by Epydoc 3.0.1 on Mon Feb 17 11:00:21 2014
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

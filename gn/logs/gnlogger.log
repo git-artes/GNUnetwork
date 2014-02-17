@@ -1,0 +1,7 @@
+2014-02-17 11:03:44,730 INFO GNlogger: logging configured
+2014-02-17 11:03:44,731 INFO __main__: start this module
+2014-02-17 11:03:44,731 INFO __main__.Auxiliary: creating an instance of Auxiliary
+2014-02-17 11:03:44,731 INFO __main__.Auxiliary: doing something
+2014-02-17 11:03:44,731 INFO __main__.Auxiliary: done doing something
+2014-02-17 11:03:44,731 INFO __main__: received a call to "some_function"
+2014-02-17 11:03:44,731 INFO __main__: finish this module

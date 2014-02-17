@@ -115,7 +115,8 @@ threading._Verbose --+
         <tr>
           <td><span class="summary-sig"><a href="gn.libutils.gnscheduler.Scheduler-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">in_queues</span>,
-        <span class="summary-sig-arg">out_queues</span>)</span><br />
+        <span class="summary-sig-arg">out_queues</span>,
+        <span class="summary-sig-arg">debug</span>=<span class="summary-sig-default">False</span>)</span><br />
       Constructor.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="gn.libutils.gnscheduler-pysrc.html#Scheduler.__init__">source&nbsp;code</a></span>
@@ -149,7 +150,8 @@ threading._Verbose --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="gn.libutils.gnscheduler.Scheduler-class.html#run" class="summary-sig-name">run</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="gn.libutils.gnscheduler.Scheduler-class.html#run" class="summary-sig-name">run</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">debug</span>=<span class="summary-sig-default">False</span>)</span><br />
       Runs the scheduler until stopped.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="gn.libutils.gnscheduler-pysrc.html#Scheduler.run">source&nbsp;code</a></span>
@@ -166,7 +168,8 @@ threading._Verbose --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="stop"></a><span class="summary-sig-name">stop</span>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="gn.libutils.gnscheduler.Scheduler-class.html#stop" class="summary-sig-name">stop</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">debug</span>=<span class="summary-sig-default">False</span>)</span><br />
       Stops the scheduler.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="gn.libutils.gnscheduler-pysrc.html#Scheduler.stop">source&nbsp;code</a></span>
@@ -274,7 +277,8 @@ threading._Verbose --+
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">in_queues</span>,
-        <span class="sig-arg">out_queues</span>)</span>
+        <span class="sig-arg">out_queues</span>,
+        <span class="sig-arg">debug</span>=<span class="sig-default">False</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
@@ -294,6 +298,7 @@ threading._Verbose --+
           may be a queue, a tuple (function, queue) or other structure to 
           be processed by the scheduling function fn_sched, which must be 
           overwritten.</li>
+        <li><strong class="pname"><code>debug</code></strong> - if True prints some debug messages; default False.</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
@@ -308,7 +313,8 @@ threading._Verbose --+
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">run</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">run</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">debug</span>=<span class="sig-default">False</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="gn.libutils.gnscheduler-pysrc.html#Scheduler.run">source&nbsp;code</a></span>&nbsp;
@@ -317,9 +323,37 @@ threading._Verbose --+
   
   <p>Runs the scheduler until stopped.</p>
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>debug</code></strong> - if True prints some debug messages; default False.</li>
+    </ul></dd>
     <dt>Overrides:
         threading.Thread.run
     </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="stop"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">stop</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">debug</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="gn.libutils.gnscheduler-pysrc.html#Scheduler.stop">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Stops the scheduler.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>debug</code></strong> - if True prints some debug messages; default False.</li>
+    </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -355,7 +389,7 @@ threading._Verbose --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Fri Dec  6 15:45:47 2013
+    Generated by Epydoc 3.0.1 on Mon Feb 17 11:00:21 2014
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

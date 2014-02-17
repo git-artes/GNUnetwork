@@ -165,7 +165,7 @@ def simulates():
 	
     # rx_event = frame_tx_q1.get()
     print "Start Simulator"
-    mySimulator = eventsimulator.EventSimulator( 10,"DataData", pkt_rx_q1,"100","101")
+    mySimulator = eventsimulator.EventSimulator( 100,"DataData", pkt_rx_q1,"100","101")
     mySimulator.start()
 
     print "Start Consumers"

@@ -39,15 +39,15 @@ class EventSimulator(threading.Thread) :
         
     def run(self):
         while not self.finished :
+            event = if_events.mkevent(self.nickname)
+            event.ev_dc['src_addr'] = self.my_addr
+            event.ev_dc['dst_addr'] = self.dst_addr
+            self.tx_event_q.put(event,False)
             aux= self.my_queue.get()
             if aux.nickname == "TimerTimer":
                 timer=Timer.Timer(self.my_queue, \
                     self.tout,1,"TimerTimer")
                 timer.start()
-                event = if_events.mkevent(self.nickname)
-                event.ev_dc['src_addr'] = self.my_addr
-                event.ev_dc['dst_addr'] = self.dst_addr
-                self.tx_event_q.put(event,False)
 
     def activateSimulator(self):
         timer=Timer.Timer(self.my_queue, \

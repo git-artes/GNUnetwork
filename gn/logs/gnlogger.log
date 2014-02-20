@@ -1,7 +1,90 @@
-2014-02-17 11:03:44,730 INFO GNlogger: logging configured
-2014-02-17 11:03:44,731 INFO __main__: start this module
-2014-02-17 11:03:44,731 INFO __main__.Auxiliary: creating an instance of Auxiliary
-2014-02-17 11:03:44,731 INFO __main__.Auxiliary: doing something
-2014-02-17 11:03:44,731 INFO __main__.Auxiliary: done doing something
-2014-02-17 11:03:44,731 INFO __main__: received a call to "some_function"
-2014-02-17 11:03:44,731 INFO __main__: finish this module
+2014-02-20 17:01:37,883 INFO GNlogger: logging configured
+2014-02-20 17:01:37,883 INFO __main__: start this module
+2014-02-20 17:01:37,883 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100.... creating an instance of ProcessingL2Events
+2014-02-20 17:01:37,883 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100....  creating an instance of ProcessingL1CtrlEvents
+2014-02-20 17:01:37,884 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1DataEvents'>: 100.....creating an instance of ProcessingL1DataEvents
+2014-02-20 17:01:37,884 DEBUG <class 'libmacTDMA.MacTdma.MacTdma'>: 100...........creating an instance of MacTdma
+2014-02-20 17:01:37,886 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101.... creating an instance of ProcessingL2Events
+2014-02-20 17:01:37,886 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101....  creating an instance of ProcessingL1CtrlEvents
+2014-02-20 17:01:37,886 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1DataEvents'>: 101.....creating an instance of ProcessingL1DataEvents
+2014-02-20 17:01:37,893 DEBUG <class 'libmacTDMA.MacTdma.MacTdma'>: 101...........creating an instance of MacTdma
+2014-02-20 17:01:40,887 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
+2014-02-20 17:01:40,887 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
+2014-02-20 17:01:40,888 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:01:40,888 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
+2014-02-20 17:01:40,888 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:01:40,888 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
+2014-02-20 17:01:41,889 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   Timer received in ProcessingL2Events
+2014-02-20 17:01:41,889 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   This is my time slot and I have data to send:  Event class name: EventFrame;  Nickname: 'DataData'; Type: 'Data'; SubType: 'Data';  src_addr: 100;  peerlinkId: 0;  payload: None;  duration: 10;  frame_length: 50;  dst_addr: 100;  Frame packet: 
+2014-02-20 17:01:41,890 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1DataEvents'>: 101:   A data event arrives from L1;:  Event class name: EventFrame;  Nickname: 'DataData'; Type: 'Data'; SubType: 'Data';  src_addr: 100;  peerlinkId: 0;  payload: None;  duration: 10;  frame_length: 50;  dst_addr: 100;  Frame packet: DataData,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'duration': 10, 'frame_length': 50, 'dst_addr': 100}
+2014-02-20 17:01:41,890 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1DataEvents'>: 100:   I am the source of a Data event, the event is ignored
+2014-02-20 17:01:42,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   Timer received in ProcessingL2Events
+2014-02-20 17:01:42,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   This is my time slot and I have data to send:  Event class name: EventFrame;  Nickname: 'DataData'; Type: 'Data'; SubType: 'Data';  src_addr: 101;  peerlinkId: 0;  payload: None;  duration: 10;  frame_length: 50;  dst_addr: 100;  Frame packet: 
+2014-02-20 17:01:42,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1DataEvents'>: 100:   A data event arrives from L1;:  Event class name: EventFrame;  Nickname: 'DataData'; Type: 'Data'; SubType: 'Data';  src_addr: 101;  peerlinkId: 0;  payload: None;  duration: 10;  frame_length: 50;  dst_addr: 100;  Frame packet: DataData,{'src_addr': 101, 'peerlinkId': 0, 'payload': None, 'duration': 10, 'frame_length': 50, 'dst_addr': 100}
+2014-02-20 17:01:42,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1DataEvents'>: 101:   I am the source of a Data event, the event is ignored
+2014-02-20 17:01:43,890 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
+2014-02-20 17:01:43,890 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
+2014-02-20 17:01:43,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:01:43,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
+2014-02-20 17:01:43,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:01:43,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
+2014-02-20 17:01:44,893 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   Timer received in ProcessingL2Events
+2014-02-20 17:01:44,893 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   This is my time slot and I DO NOT have data to send
+2014-02-20 17:01:45,894 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   Timer received in ProcessingL2Events
+2014-02-20 17:01:45,894 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   This is my time slot and I DO NOT have data to send
+2014-02-20 17:01:46,893 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
+2014-02-20 17:01:46,893 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
+2014-02-20 17:01:46,894 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:01:46,894 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
+2014-02-20 17:01:46,894 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:01:46,894 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
+2014-02-20 17:01:47,895 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   Timer received in ProcessingL2Events
+2014-02-20 17:01:47,896 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   This is my time slot and I DO NOT have data to send
+2014-02-20 17:01:48,896 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   Timer received in ProcessingL2Events
+2014-02-20 17:01:48,897 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   This is my time slot and I DO NOT have data to send
+2014-02-20 17:01:49,897 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
+2014-02-20 17:01:49,897 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
+2014-02-20 17:01:49,898 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:01:49,898 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
+2014-02-20 17:01:49,898 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:01:49,898 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
+2014-02-20 17:01:50,899 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   Timer received in ProcessingL2Events
+2014-02-20 17:01:50,899 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   This is my time slot and I DO NOT have data to send
+2014-02-20 17:01:51,901 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   Timer received in ProcessingL2Events
+2014-02-20 17:01:51,901 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   This is my time slot and I DO NOT have data to send
+2014-02-20 17:01:52,898 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
+2014-02-20 17:01:52,898 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
+2014-02-20 17:01:52,899 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:01:52,900 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
+2014-02-20 17:01:52,900 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:01:52,900 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
+2014-02-20 17:01:53,901 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   Timer received in ProcessingL2Events
+2014-02-20 17:01:53,901 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   This is my time slot and I DO NOT have data to send
+2014-02-20 17:01:54,903 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   Timer received in ProcessingL2Events
+2014-02-20 17:01:54,903 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   This is my time slot and I DO NOT have data to send
+2014-02-20 17:01:55,901 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
+2014-02-20 17:01:55,901 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
+2014-02-20 17:01:55,902 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:01:55,902 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
+2014-02-20 17:01:55,902 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:01:55,903 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
+2014-02-20 17:01:56,905 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   Timer received in ProcessingL2Events
+2014-02-20 17:01:56,905 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   This is my time slot and I DO NOT have data to send
+2014-02-20 17:01:57,905 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   Timer received in ProcessingL2Events
+2014-02-20 17:01:57,905 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   This is my time slot and I DO NOT have data to send
+2014-02-20 17:01:58,906 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
+2014-02-20 17:01:58,906 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
+2014-02-20 17:01:58,907 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:01:58,908 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
+2014-02-20 17:01:58,908 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:01:58,908 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
+2014-02-20 17:01:59,909 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   Timer received in ProcessingL2Events
+2014-02-20 17:01:59,909 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   This is my time slot and I DO NOT have data to send
+2014-02-20 17:02:00,911 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   Timer received in ProcessingL2Events
+2014-02-20 17:02:00,911 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   This is my time slot and I DO NOT have data to send
+2014-02-20 17:02:01,909 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
+2014-02-20 17:02:01,909 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
+2014-02-20 17:02:01,910 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:02:01,910 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
+2014-02-20 17:02:01,910 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
+2014-02-20 17:02:01,910 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2

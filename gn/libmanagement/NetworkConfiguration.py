@@ -16,10 +16,11 @@ class NetworkConfiguration :
         retry_timeout=20, confirm_timeout=20, holding_timeout=40, \
         active_path_selection_protocol=1, active_path_selection_metric=1, \
         forwarding=True, TTL=31, active_congestion_control_mode=0, \
-        active_syn_method=1):
+        active_syn_method=1, control_time=8,slots=8,list_nodes=None):
         '''  
         Constructor.
         
+        802.11 management parameters
         @param station_id: MAC ADDRESS        
         @param net_id:  OCTET STRING, max 32
         @param broadcast_addr: MAC BROADCAST ADDRESS        
@@ -35,6 +36,12 @@ class NetworkConfiguration :
         @param TTL: Unsigned32, specifies the value of TTL subfield set at a source STA.DEFAULT = 31.
         @param active_congestion_control_mode: INTEGER {null(0), congestionControlSignaling (1), vendorSpecific (255) }, DEFAULT = 0.
         @param active_syn_method: INTEGER { neighborOffsetSynchronization (1), vendorSpecific (255) }, DEFAULT = 1.
+        
+        TDMA parameters, They are only necessary for the MASTER
+        @param control_time: time between control frames 
+        @param slots: number of slots
+        @param list_nodes: array of mac addresses of nodes, in the order of the slots each of them will use.        
+        
         '''
         self.station_id = station_id
         self.broadcast_addr = broadcast_addr
@@ -52,6 +59,14 @@ class NetworkConfiguration :
         self.TTL = TTL
         self.active_congestion_control_mode = active_congestion_control_mode
         self.active_syn_method = active_syn_method
+        "TDMA parameters"        
+        self.control_time =control_time
+        self.slots = slots
+        self.list_nodes = list_nodes
+        if self.list_nodes == None:
+            self.list_nodes = []
+            
+        
         
     def setStationId(self,station_id):
          self.station_id = station_id

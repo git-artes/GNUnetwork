@@ -29,7 +29,7 @@ def mkevent(pnickname=None, pframe=None):
         ev_dc = {}
         try:        
             nickname, ev_dc  = pframe.split(',',1)
-            print ev_dc
+            #print ev_dc
             ev = if_events.mkevent(nickname, frmpkt=pframe, ev_dc=eval(ev_dc))
         except:
             print "Cannot generates event: malformed packet"

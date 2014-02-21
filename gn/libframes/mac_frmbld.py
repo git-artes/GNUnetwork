@@ -47,10 +47,14 @@ def mkfrmobj(pkt):
     if frmbodyclass:
         _fb_obj = AFrameBody(frmbodyclass)
         body_pkt = fr_obj.dc_fldvals['frame_body']
-        dc_frbd_fldvals = _fb_obj.mkdic(body_pkt)
-        _fb_obj.updtfldvals(dc_fldvals=dc_frbd_fldvals)
+        _fb_obj.dc_fldvals = _fb_obj.mkdic(body_pkt)
+        #_fb_obj.updtfldvals(dc_fldvals=dc_frbd_fldvals)
         fr_obj._fb_obj = _fb_obj
-    
+        fr_obj.dc_frbd_fldvals = _fb_obj.dc_fldvals
+        print "ejecutado"
+    else:
+        _fb_obj = None
+
     return fr_obj
 
 
@@ -215,7 +219,7 @@ class AFrame(Frame):
             self.dc_frbd_fldvals = self._fb_obj.dc_fldvals  # point to FB obj dic
         else:
             self._fb_obj = None     # required to recognize FB with data
-            self.dc_frbc_fldvals = {}
+            self.dc_frbd_fldvals = {}
         return
 
 

@@ -1,6 +1,8 @@
 gn/draft
 gn/viejos
 gn/otros
+gn/logs
+*.log
 *.pyc
 *.bin
 *.hex

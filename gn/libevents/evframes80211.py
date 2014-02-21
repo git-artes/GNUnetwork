@@ -7,7 +7,7 @@
 '''
 
 from events import Event, EventNameException
-
+import libframes.if_frames as if_frames
 
 
 class EventFrame(Event):
@@ -43,6 +43,15 @@ class EventFrame(Event):
         ss += '\n  Frame packet: ' + str(self.frmpkt)
         return ss
 
+    def mkframepkt(self):
+        '''Makes a frame packet from this event.
+        '''
+        frame_name, dc_frbd_fldvals = dc_evtoframes[self.nickname]
+        frmobj = if_frames.mkframeobj(frame_name, dc_frcl_fldvals={}, \
+            dc_fldvals={}, dc_frbd_fldvals={})
+        frmpkt = frmobj.mkpkt()
+        return frmpkt
+
 
 
 class EventFrameMgmt(EventFrame):
@@ -53,8 +62,8 @@ class EventFrameMgmt(EventFrame):
         EventFrame.__init__(self, nickname, ev_type, ev_subtype, \
             frmpkt=frmpkt, ev_dc=ev_dc)
        
-
-
+## dictionary of event nicknames to event type, subtype and build class
+#    nickname         : (ev_type, ev_subtype, event class    )
 dc_nicknames = { \
     'CtrlRTS'         : ('Ctrl',   'RTS',     EventFrame     ), \
     'CtrlCTS'         : ('Ctrl',   'CTS',     EventFrame     ), \
@@ -66,6 +75,24 @@ dc_nicknames = { \
     'MgmtBeacon'      : ('Mgmt',   'Beacon',  EventFrameMgmt ), \
     }
 
+## dictionary of event nicknames to frame nicknames and field values
+#    nickname         : (frame_type, dc_frbd_fldvals             )
+dc_evtoframes = { \
+    'CtrlRTS'         : ('RTS', {} ), \
+    'CtrlCTS'         : ('CTS', {} ), \
+    'CtrlACK'         : ('ACK', {} ), \
+    'DataData'        : ('Data', {} ), \
+    'ActionOpen'      : ('Action', {'Action':'1'} ), \
+    'ActionClose'     : ('Action', {'Action':'3'}), \
+    'ActionConfirm'   : ('Action', {'Action':'2'}), \
+    'MgmtBeacon'      : ('Beacon', {} ), \
+    }
+
+dc_frametoev = {}
+for evnm in dc_evtoframes.keys():
+    (frmnm, dc_frbd_fldvals) = dc_evtoframes[evnm]
+    dc_frametoev[frmnm] = evnm
+    
 
 if __name__ == '__main__':
     import doctest

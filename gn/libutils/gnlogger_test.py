@@ -3,7 +3,7 @@
 
 '''A testing module for the GN logger.
 
-This testing module may be invoked as itself, but is also called from gnlogger main(); logging differs accordingly.
+This testing module may be invoked as itself, but is also called from gnlogger C{main()}; logging differs accordingly.
 
 Try both possibilities::
     python gnlogger.py

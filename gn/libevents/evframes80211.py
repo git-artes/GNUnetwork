@@ -43,15 +43,18 @@ class EventFrame(Event):
         ss += '\n  Frame packet: ' + str(self.frmpkt)
         return ss
 
+    """
     def mkframepkt(self):
         '''Makes a frame packet from this event.
+        
+        REVISE! fields are more complicated, this may not work.
         '''
         frame_name, dc_frbd_fldvals = dc_evtoframes[self.nickname]
         frmobj = if_frames.mkframeobj(frame_name, dc_frcl_fldvals={}, \
             dc_fldvals={}, dc_frbd_fldvals={})
         frmpkt = frmobj.mkpkt()
         return frmpkt
-
+    """
 
 
 class EventFrameMgmt(EventFrame):
@@ -82,9 +85,9 @@ dc_evtoframes = { \
     'CtrlCTS'         : ('CTS', {} ), \
     'CtrlACK'         : ('ACK', {} ), \
     'DataData'        : ('Data', {} ), \
-    'ActionOpen'      : ('Action', {'Action':'1'} ), \
-    'ActionClose'     : ('Action', {'Action':'3'}), \
-    'ActionConfirm'   : ('Action', {'Action':'2'}), \
+    'ActionOpen'      : ('Action', {'Action':1} ), \
+    'ActionClose'     : ('Action', {'Action':3}), \
+    'ActionConfirm'   : ('Action', {'Action':2}), \
     'MgmtBeacon'      : ('Beacon', {} ), \
     }
 

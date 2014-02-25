@@ -73,6 +73,7 @@ object --+
 
 <hr />
 <p>Specification for Beacon frame body.</p>
+  <p>NOTE: added peerlinkID for testing events; to be revised.</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -146,7 +147,7 @@ object --+
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="frame_len"></a><span class="summary-name">frame_len</span> = <code title="58">58</code>
+        <a name="frame_len"></a><span class="summary-name">frame_len</span> = <code title="60">60</code>
     </td>
   </tr>
 <tr>
@@ -164,7 +165,8 @@ object --+
  'BeaconInterval',
  'CapabilitiesInfo',
  'SSID',
- 'SupportedRates']"><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">Timestamp</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">BeaconInterval</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">CapabilitiesInfo</code><code class="variable-quote">'</code><code class="variable-ellipsis">...</code></code>
+ 'SupportedRates',
+ 'peerlinkID']"><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">Timestamp</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">BeaconInterval</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">CapabilitiesInfo</code><code class="variable-quote">'</code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr class="private">
@@ -175,7 +177,8 @@ object --+
  'CapabilitiesInfo': (10, 12, False, '!H'),
  'SSID': (12, 46, False, '!34s'),
  'SupportedRates': (46, 58, False, '!12s'),
- 'Timestamp': (0, 8, False, '!Q')}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">BeaconInterval</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>8<code class="variable-op">, </code>10<code class="variable-op">, </code>False<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">!H</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Capabil</code><code class="variable-ellipsis">...</code></code>
+ 'Timestamp': (0, 8, False, '!Q'),
+ 'peerlinkID': (58, 60, False, '!H')}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">BeaconInterval</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>8<code class="variable-op">, </code>10<code class="variable-op">, </code>False<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">!H</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Capabil</code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -186,14 +189,8 @@ object --+
  'CapabilitiesInfo': 1,
  'SSID': '\x00 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
  'SupportedRates': '------------',
- 'Timestamp': 1}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">BeaconInterval</code><code class="variable-quote">'</code><code class="variable-op">: </code>1<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">CapabilitiesInfo</code><code class="variable-quote">'</code><code class="variable-op">: </code>1<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">SSI</code><code class="variable-ellipsis">...</code></code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="dc_frbd_fldvals"></a><span class="summary-name">dc_frbd_fldvals</span> = <code title="{}"><code class="variable-group">{</code><code class="variable-group">}</code></code>
+ 'Timestamp': 1,
+ 'peerlinkID': 0}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">BeaconInterval</code><code class="variable-quote">'</code><code class="variable-op">: </code>1<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">CapabilitiesInfo</code><code class="variable-quote">'</code><code class="variable-op">: </code>1<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">SSI</code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 </table>
@@ -256,7 +253,8 @@ object --+
  <code class="variable-quote">'</code><code class="variable-string">BeaconInterval</code><code class="variable-quote">'</code><code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">CapabilitiesInfo</code><code class="variable-quote">'</code><code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">SSID</code><code class="variable-quote">'</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">SupportedRates</code><code class="variable-quote">'</code><code class="variable-group">]</code>
+ <code class="variable-quote">'</code><code class="variable-string">SupportedRates</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">peerlinkID</code><code class="variable-quote">'</code><code class="variable-group">]</code>
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -278,7 +276,8 @@ object --+
  <code class="variable-quote">'</code><code class="variable-string">CapabilitiesInfo</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>10<code class="variable-op">, </code>12<code class="variable-op">, </code>False<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">!H</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">SSID</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>12<code class="variable-op">, </code>46<code class="variable-op">, </code>False<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">!34s</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">SupportedRates</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>46<code class="variable-op">, </code>58<code class="variable-op">, </code>False<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">!12s</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">Timestamp</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>0<code class="variable-op">, </code>8<code class="variable-op">, </code>False<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">!Q</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-group">}</code>
+ <code class="variable-quote">'</code><code class="variable-string">Timestamp</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>0<code class="variable-op">, </code>8<code class="variable-op">, </code>False<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">!Q</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">peerlinkID</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>58<code class="variable-op">, </code>60<code class="variable-op">, </code>False<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">!H</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-group">}</code>
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -300,7 +299,8 @@ object --+
  <code class="variable-quote">'</code><code class="variable-string">CapabilitiesInfo</code><code class="variable-quote">'</code><code class="variable-op">: </code>1<code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">SSID</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">\x00 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS</code><code class="variable-quote">'</code><code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">SupportedRates</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">------------</code><code class="variable-quote">'</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">Timestamp</code><code class="variable-quote">'</code><code class="variable-op">: </code>1<code class="variable-group">}</code>
+ <code class="variable-quote">'</code><code class="variable-string">Timestamp</code><code class="variable-quote">'</code><code class="variable-op">: </code>1<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">peerlinkID</code><code class="variable-quote">'</code><code class="variable-op">: </code>0<code class="variable-group">}</code>
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -338,7 +338,7 @@ object --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Fri Feb 21 10:11:26 2014
+    Generated by Epydoc 3.0.1 on Tue Feb 25 21:26:43 2014
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

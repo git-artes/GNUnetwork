@@ -51,7 +51,6 @@ def mkfrmobj(pkt):
         #_fb_obj.updtfldvals(dc_fldvals=dc_frbd_fldvals)
         fr_obj._fb_obj = _fb_obj
         fr_obj.dc_frbd_fldvals = _fb_obj.dc_fldvals
-        print "ejecutado"
     else:
         _fb_obj = None
 

@@ -29,45 +29,20 @@ import evframes80211
 from libframes import if_frames as if_frames
 
 
+
+class EventFrameException(Exception):
+    '''An exception to rise on Event to/from Frame conversion.
+    '''
+    pass 
+
+
+
 def mkevent(nickname, **kwargs):
     '''Returns an event of the given event nickname.
 
     @param nickname: a valid event nickname, i.e. one that is a key in dictionary of valid nicknames.
     @param kwargs: a dictionary of variables depending on the type of event. Field C{ev_dc} is a dictionary of fields and values for the corresponding event type; field C{frmpkt} is a binary packed frame.
-    
-    >>> ev_ob_frm = mkevent('CtrlCTS')
-    >>> print ev_ob_frm
-    Event class name: EventFrame
-      Nickname: 'CtrlCTS'; Type: 'Ctrl'; SubType: 'CTS'
-      src_addr: None
-      peerlinkId: 0
-      payload: None
-      duration: 10
-      frame_length: 50
-      dst_addr: None
-      Frame packet: 
-    >>> ev_mg = mkevent('ActionOpen', ev_dc={'src_addr':'aaaa', 'dst_addr':'bbbb', 'peerLinkId':'the peer link ID'})
-    >>> print ev_mg
-    Event class name: EventFrameMgmt
-      Nickname: 'ActionOpen'; Type: 'Mgmt'; SubType: 'Action'
-      src_addr: aaaa
-      peerlinkId: 0
-      payload: None
-      peerLinkId: the peer link ID
-      duration: 10
-      frame_length: 50
-      dst_addr: bbbb
-      Frame packet: 
-    >>> ev_ob_tmr = mkevent('TimerTOH')
-    >>> print ev_ob_tmr
-    Event class name: EventTimer
-      Nickname: 'TimerTOH'; Type: 'Timer'; SubType: 'TOH'
-      add_info: None
-    >>> ev_ob_tmr = mkevent('TimerTOH', ev_dc={'add_info':'additional info, testing'})
-    >>> print ev_ob_tmr
-    Event class name: EventTimer
-      Nickname: 'TimerTOH'; Type: 'Timer'; SubType: 'TOH'
-      add_info: additional info, testing
+    @return: an Event object.
     '''
     frmpkt, ev_dc = '', {}
     if kwargs.has_key('ev_dc'):
@@ -83,11 +58,10 @@ def mkevent(nickname, **kwargs):
         return eventclass(nickname, ev_type, ev_subtype, frmpkt, ev_dc)
     else:
         raise EventNameException(nickname + ' is not a valid nickname.')
-    return
 
 
-def mkeventfromfrmobj(frmobj):
-    '''Make an event from a Frame object.
+def frmtoev(frmobj):
+    '''Make an Event object from a Frame object.
     
     @param frmobj: a Frame object.
     @return: an Event object.
@@ -109,37 +83,63 @@ def mkeventfromfrmobj(frmobj):
     else:
         frmname = evframes80211.dc_frametoev[frmobj.nickname]
 
-    # make event
+    # make Event object
     ev = mkevent(nickname)
     # set event values
-    #ev.nickname = ActionConfirm
-    #ev.ev_type = Mgmt
-    #ev.ev_subtype = Action
-    ev.ev_dc.update(frmobj.dc_fldvals)
+    # ev.ev_dc.update(frmobj.dc_fldvals)   # not the same names!
     return ev
 
 
-
-
-def test():
-    '''A testing function for this module.
+def evtofrm(evobj, fr_dc_fldvals={}, fr_dc_frbd_fldvals={}):
+    '''Make a Frame object from an Event object.
+    
+    Dictionaries of field values C{dc_fldvals, dc_frbd_fldvals} allow to adjust values in frame object fields and in frame body fields of frame object, respectively. 
+    @param evobj: an Event object.
+    @param fr_dc_fldvals: dictionary of field values for frame object, default {}.
+    @param fr_dc_frbd_fldvals: dictionary of field values for frame body in frame object, default {}.
+    @return: a Frame object.
     '''
-    print '=== ActionOpen event'
-    ev_actopen = mkevent('ActionOpen')
-    print ev_actopen
-    print '--- Action Open frame packet'
-    ev_actopen.frmpkt = ev_actopen.mkframepkt()
-    print repr(ev_actopen.frmpkt)
-    print '--- Action Open frame object'
-    frmobj = if_frames.objfrompkt(ev_actopen.frmpkt)
-    print frmobj
-    print '--- Frame body dictionary'
-    print frmobj.dc_frbd_fldvals
-    return
+    if evframes80211.dc_evtoframes.has_key(evobj.nickname):
+        frmname, dc_frbd_fldvals = evframes80211.dc_evtoframes[evobj.nickname]
+        dc_frbd_fldvals.update(fr_dc_frbd_fldvals)
+        dc_fldvals = fr_dc_fldvals
+    else:
+        raise EventFrameException(evobj.nickname + ' not a frame name')
+
+    ## set frame field values from event field values
+    dc_fldvals['duration'] = evobj.ev_dc['duration']
+    if 'Ctrl' in evobj.nickname:        # a Ctrl event 
+        dc_fldvals['ta'] = evobj.ev_dc['src_addr']
+        dc_fldvals['ra'] = evobj.ev_dc['dst_addr']
+    elif 'Mgmt' in evobj.nickname:      # a Mgmt event
+        dc_fldvals['address_1'] = evobj.ev_dc['src_addr'] # Mgmt, Data frames
+        dc_fldvals['address_2'] = evobj.ev_dc['dst_addr'] # Mgmt, Data frames
+        if 'Beacon' in evobj.nickname:  # a Mgmt Beacon event
+            dc_frbd_fldvals['peerlinkID'] = evobj.ev_dc['peerlinkID']        
+    elif 'Action' in evobj.nickname:    # a Mgmt Action event
+        dc_fldvals['address_1'] = evobj.ev_dc['src_addr'] # Mgmt, Data frames
+        dc_fldvals['address_2'] = evobj.ev_dc['dst_addr'] # Mgmt, Data frames
+        dc_frbd_fldvals['peerlinkID'] = evobj.ev_dc['peerlinkID']
+    elif 'Data' in evobj.nickname:      # a Data event
+        dc_fldvals['address_1'] = evobj.ev_dc['src_addr'] # Mgmt, Data frames
+        dc_fldvals['address_2'] = evobj.ev_dc['dst_addr'] # Mgmt, Data frames
+        dc_fldvals['frame_body'] = evobj.ev_dc['payload']
+    else:                               # an unknown type of event
+        msg = 'not a valid event nickname for field settings'
+        raise EventFrameException(evobj.nickname + msg)
+    ##
+
+    # make Frame object, record frame length
+    frmobj = if_frames.mkframeobj(frmname, dc_fldvals=dc_fldvals, \
+        dc_frbd_fldvals=dc_frbd_fldvals) 
+    evobj.frmpkt = frmobj.mkpkt()
+    evobj.ev_dc['frame_len'] = frmobj.frame_len
+    return frmobj
+
+
     
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
 
-    test()
 

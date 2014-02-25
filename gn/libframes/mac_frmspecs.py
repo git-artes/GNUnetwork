@@ -142,18 +142,21 @@ class MgmtFrame(FrameSpecs):
 
 class BeaconFrameBody(FrameSpecs):
     '''Specification for Beacon frame body.
+
+    NOTE: added peerlinkID for testing events; to be revised.
     '''
     frmtype = 'BeaconFrameBody'
     bitbyte = 'bytes'
-    frame_len = 58
+    frame_len = 60
     mask_len = 0    # bytes, no bitmask
-    ls_fields = ['Timestamp', 'BeaconInterval', 'CapabilitiesInfo', 'SSID', 'SupportedRates']
+    ls_fields = ['Timestamp', 'BeaconInterval', 'CapabilitiesInfo', 'SSID', 'SupportedRates', 'peerlinkID']
     _dc_fields              = {\
-        'Timestamp'        : ( 0,  8, False, '!Q'  ), \
-        'BeaconInterval'   : ( 8, 10, False, '!H'  ), \
-        'CapabilitiesInfo' : (10, 12, False, '!H' ), \
+        'Timestamp'        : ( 0,  8, False, '!Q'   ), \
+        'BeaconInterval'   : ( 8, 10, False, '!H'   ), \
+        'CapabilitiesInfo' : (10, 12, False, '!H'   ), \
         'SSID'             : (12, 46, False, '!34s' ), \
-        'SupportedRates'   : (46, 58, False, '!12s'  ) \
+        'SupportedRates'   : (46, 58, False, '!12s' ), \
+        'peerlinkID'       : (58, 60, False, '!H'   )  \
         }
     dc_fldvals        = { \
         'Timestamp'        :   1, \
@@ -166,33 +169,40 @@ class BeaconFrameBody(FrameSpecs):
         'SupportedRates'   :  '-'*12, \
             #chr(1) + chr(10) + 'R'*10,
             #struct.pack('!2c', 0 , 10) +'R'*10 \
+        'peerlinkID'       :  0 \
         }
-    dc_frbd_fldvals = {}
+    #dc_frbd_fldvals = {}
 
 
 class MeshActionFrameBody(FrameSpecs):
     '''Specification for Action frame bodies.
 
     IEEE 802.11-2012 sec 8.3.3.13 pag 436.
+
     Example: 8.5.2.4 TPC Request frame format; different fields for different types of Action frames.
     Category 13: Mesh (table 8-38); Action: 1 Open, 2 Confirm, 3 Close (table 8-261).
+
+    NOTE: added peerlinkID for testing events; to be revised.    
+    Field peer Link ID: IEEE 802.11-2012 sec 8.4.2.104; in table 8-54, element 117: Mesh Peering Management, length = 5, 7, 9, 21, 23, or 25.
     '''
     frmtype = 'MeshActionFrameBody'
     bitbyte = 'bytes'
-    frame_len = 5   # variable if vendor specific parameters are present
+    frame_len = 7   # variable if vendor specific parameters are present
     mask_len = 0    # bytes, no bitmask
-    ls_fields = ['Category', 'Action', 'Dialog', 'TCPreq']
+    ls_fields = ['Category', 'Action', 'Dialog', 'TCPreq', 'peerlinkID']
     _dc_fields = {\
-        'Category' : (0,  1, False, '!B'  ), \
-        'Action'   : (1,  2, False, '!B'  ) , \
-        'Dialog'   : (2,  3, False, '!B'  ) , \
-        'TCPreq'   : (3,  5, False, '!H'  )  \
+        'Category'     : (0,  1, False, '!B'  ), \
+        'Action'       : (1,  2, False, '!B'  ), \
+        'Dialog'       : (2,  3, False, '!B'  ), \
+        'TCPreq'       : (3,  5, False, '!H'  ), \
+        'peerlinkID'   : (5,  7, False, '!H'  )  \
             }
     dc_fldvals = { \
-        'Category' : 13, \
-        'Action'   :  1, \
-        'Dialog'   :  0, \
-        'TCPreq'   :  0
+        'Category'     : 13, \
+        'Action'       :  1, \
+        'Dialog'       :  0, \
+        'TCPreq'       :  0, \
+        'peerlinkID'   :  0  \
             }
 
 

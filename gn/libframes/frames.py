@@ -109,14 +109,17 @@ class Frame(object):
     def fillfldvals(self, fillchr='0'):
         '''Fill values in {field : value} dictionary with int or character.
         
-        For byte fields, values are filled according to length and type of data in fields dictionary. For bit fields, values are set to 0.
+        For byte fields, if field is a string, values are filled with fillchr according to length and type of data in field values dictionary; if field is not a string, value is set to 0. For bit fields, values are set to 0.
         @param fillchr: the fill character, defaults to '0' for bytes, 0 for bits.
         '''
         if self.bitbyte == 'bytes':
             for fld in self.ls_fields:
-                fillval = fillchr * (self.dc_fields[fld].end - \
-                    self.dc_fields[fld].beg) 
-                self.dc_fldvals[fld] = fillchr
+                if type(self.dc_fldvals[fld]) == str:
+                    fillval = fillchr * (self.dc_fields[fld].end - \
+                        self.dc_fields[fld].beg) 
+                    self.dc_fldvals[fld] = fillval
+                else:
+                    self.dc_fldvals[fld] = 0
         else:
             for fld in self.ls_fields:
                 self.dc_fldvals[fld] = 0
@@ -137,15 +140,17 @@ class Frame(object):
         rslt = True
         if set(self.ls_fields) == set(self.dc_fields.keys()) and \
                 set(self.ls_fields) == set(self.dc_fldvals.keys()):
-            return
+            pass
         else:
-            msg = 'Fields difer in ls_fields, dc_fields and dc_fldvals'
+            msg = 'Fields differ in ls_fields, dc_fields and dc_fldvals'
             raise FrameException(msg)
         # verify lengths
+        """print 'en consistchk', be_obj
         if self.dc_fields[be_obj.ls_fields[-1]][1] != self.frame_len:
            msg = 'Lengths differ in frame_len and dc_fields'
            raise FrameException(msg)
-        return
+        """
+        return reslt
 
 
     def setfrmbdy(self, new_frmbdy=None):

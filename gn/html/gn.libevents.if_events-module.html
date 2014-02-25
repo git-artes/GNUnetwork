@@ -77,6 +77,32 @@
     </li>
   </ul>
 
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="gn.libevents.if_events.EventFrameException-class.html" class="summary-name">EventFrameException</a><br />
+      An exception to rise on Event to/from Frame conversion.
+    </td>
+  </tr>
+</table>
 <!-- ==================== FUNCTIONS ==================== -->
 <a name="section-Functions"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -118,10 +144,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="gn.libevents.if_events-module.html#mkeventfromfrmobj" class="summary-sig-name">mkeventfromfrmobj</a>(<span class="summary-sig-arg">frmobj</span>)</span><br />
-      Make an event from a Frame object.</td>
+          <td><span class="summary-sig"><a href="gn.libevents.if_events-module.html#frmtoev" class="summary-sig-name">frmtoev</a>(<span class="summary-sig-arg">frmobj</span>)</span><br />
+      Make an Event object from a Frame object.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="gn.libevents.if_events-pysrc.html#mkeventfromfrmobj">source&nbsp;code</a></span>
+            <span class="codelink"><a href="gn.libevents.if_events-pysrc.html#frmtoev">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -135,10 +161,12 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="test"></a><span class="summary-sig-name">test</span>()</span><br />
-      A testing function for this module.</td>
+          <td><span class="summary-sig"><a href="gn.libevents.if_events-module.html#evtofrm" class="summary-sig-name">evtofrm</a>(<span class="summary-sig-arg">evobj</span>,
+        <span class="summary-sig-arg">fr_dc_fldvals</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="summary-sig-arg">fr_dc_frbd_fldvals</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>)</span><br />
+      Make a Frame object from an Event object.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="gn.libevents.if_events-pysrc.html#test">source&nbsp;code</a></span>
+            <span class="codelink"><a href="gn.libevents.if_events-pysrc.html#evtofrm">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -214,60 +242,28 @@
         <li><strong class="pname"><code>kwargs</code></strong> - a dictionary of variables depending on the type of event. Field 
           <code>ev_dc</code> is a dictionary of fields and values for the 
           corresponding event type; field <code>frmpkt</code> is a binary 
-          packed frame.
-<pre class="py-doctest">
-<span class="py-prompt">&gt;&gt;&gt; </span>ev_ob_frm = mkevent(<span class="py-string">'CtrlCTS'</span>)
-<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> ev_ob_frm
-<span class="py-output">Event class name: EventFrame</span>
-<span class="py-output">  Nickname: 'CtrlCTS'; Type: 'Ctrl'; SubType: 'CTS'</span>
-<span class="py-output">  src_addr: None</span>
-<span class="py-output">  peerlinkId: 0</span>
-<span class="py-output">  payload: None</span>
-<span class="py-output">  duration: 10</span>
-<span class="py-output">  frame_length: 50</span>
-<span class="py-output">  dst_addr: None</span>
-<span class="py-output">  Frame packet: </span>
-<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>ev_mg = mkevent(<span class="py-string">'ActionOpen'</span>, ev_dc={<span class="py-string">'src_addr'</span>:<span class="py-string">'aaaa'</span>, <span class="py-string">'dst_addr'</span>:<span class="py-string">'bbbb'</span>, <span class="py-string">'peerLinkId'</span>:<span class="py-string">'the peer link ID'</span>})
-<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> ev_mg
-<span class="py-output">Event class name: EventFrameMgmt</span>
-<span class="py-output">  Nickname: 'ActionOpen'; Type: 'Mgmt'; SubType: 'Action'</span>
-<span class="py-output">  src_addr: aaaa</span>
-<span class="py-output">  peerlinkId: 0</span>
-<span class="py-output">  payload: None</span>
-<span class="py-output">  peerLinkId: the peer link ID</span>
-<span class="py-output">  duration: 10</span>
-<span class="py-output">  frame_length: 50</span>
-<span class="py-output">  dst_addr: bbbb</span>
-<span class="py-output">  Frame packet: </span>
-<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>ev_ob_tmr = mkevent(<span class="py-string">'TimerTOH'</span>)
-<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> ev_ob_tmr
-<span class="py-output">Event class name: EventTimer</span>
-<span class="py-output">  Nickname: 'TimerTOH'; Type: 'Timer'; SubType: 'TOH'</span>
-<span class="py-output">  add_info: None</span>
-<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>ev_ob_tmr = mkevent(<span class="py-string">'TimerTOH'</span>, ev_dc={<span class="py-string">'add_info'</span>:<span class="py-string">'additional info, testing'</span>})
-<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> ev_ob_tmr
-<span class="py-output">Event class name: EventTimer</span>
-<span class="py-output">  Nickname: 'TimerTOH'; Type: 'Timer'; SubType: 'TOH'</span>
-<span class="py-output">  add_info: additional info, testing</span></pre></li>
+          packed frame.</li>
     </ul></dd>
+    <dt>Returns:</dt>
+        <dd>an Event object.</dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="mkeventfromfrmobj"></a>
+<a name="frmtoev"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">mkeventfromfrmobj</span>(<span class="sig-arg">frmobj</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">frmtoev</span>(<span class="sig-arg">frmobj</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="gn.libevents.if_events-pysrc.html#mkeventfromfrmobj">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="gn.libevents.if_events-pysrc.html#frmtoev">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Make an event from a Frame object.</p>
+  <p>Make an Event object from a Frame object.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -275,6 +271,39 @@
     </ul></dd>
     <dt>Returns:</dt>
         <dd>an Event object.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="evtofrm"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">evtofrm</span>(<span class="sig-arg">evobj</span>,
+        <span class="sig-arg">fr_dc_fldvals</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="sig-arg">fr_dc_frbd_fldvals</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="gn.libevents.if_events-pysrc.html#evtofrm">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Make a Frame object from an Event object.</p>
+  <p>Dictionaries of field values <code>dc_fldvals, dc_frbd_fldvals</code> 
+  allow to adjust values in frame object fields and in frame body fields of
+  frame object, respectively.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>evobj</code></strong> - an Event object.</li>
+        <li><strong class="pname"><code>fr_dc_fldvals</code></strong> - dictionary of field values for frame object, default {}.</li>
+        <li><strong class="pname"><code>fr_dc_frbd_fldvals</code></strong> - dictionary of field values for frame body in frame object, 
+          default {}.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>a Frame object.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -310,7 +339,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Fri Feb 21 10:11:25 2014
+    Generated by Epydoc 3.0.1 on Tue Feb 25 21:26:43 2014
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

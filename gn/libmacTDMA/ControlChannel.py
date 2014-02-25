@@ -13,7 +13,8 @@ import libtimer.timer as Timer
 import libevents.if_events as if_events
 import threading,Queue,time
 import libmanagement.NetworkConfiguration as NetworkConfiguration
-
+import libutils.gnlogger as gnlogger
+import logging
 
 class ControlChannel(threading.Thread) :
     '''
@@ -29,8 +30,11 @@ class ControlChannel(threading.Thread) :
         '''
 
         threading.Thread.__init__(self)
-        self.finished = False        
         self.my_addr = network_conf. getStationId()
+        self.logger = logging.getLogger(str(self.__class__))
+        self.logger.debug(str(self.my_addr)+'...........creating an instance of Control Channel')
+        self.finished = False        
+        
         self.broadcast_addr =network_conf.getBroadcastAddr()
         self.my_queue = Queue.Queue(10)
         self.my_actual_net_conf = network_conf 
@@ -56,6 +60,7 @@ class ControlChannel(threading.Thread) :
         timer=Timer.Timer(self.my_queue, \
             self.my_actual_net_conf.control_time,1,"TimerTimer")
         timer.start()
+        self.logger.debug(str(self.my_addr)+' Control Channel activate control events')
     
     def stop(self):
         self.finished = True

@@ -20,6 +20,9 @@ import libevents.if_events as if_events
 import libutils.gnscheduler as Scheduler
 
 import os,struct,threading
+import libutils.gnlogger as gnlogger
+import logging
+module_logger = logging.getLogger(__name__)
 
 # ////////////////////////////////////////////////////////////////////
 #
@@ -60,6 +63,8 @@ class Layer3:
         @param mgmt_queue : The queue to put the management events.
         '''
         self.my_addr = my_addr
+        self.logger = logging.getLogger(str(self.__class__))
+        self.logger.debug(str(self.my_addr)+ '.... creating an instance of Layer 3 with virtual interfase')
         self.dst_addr = dst_addr
         self.out_queue = out_queue
         self.in_queue = in_queue
@@ -96,6 +101,9 @@ class ReadLayer3(threading.Thread):
         '''
         threading.Thread.__init__(self)
         self.my_addr = my_addr
+        self.logger = logging.getLogger(str(self.__class__))
+        self.logger.debug(str(self.my_addr)+ '.... Layer 3: creating an instance of Read layer 3 process')
+    
         self.dst_addr = dst_addr
         self.out_queue = out_queue
         self.tun_fd = tun_fd
@@ -110,19 +118,22 @@ class ReadLayer3(threading.Thread):
         Reads one element from the input event queue, and puts the event in the output queue.
         out_queues: a dictionary of {nm_queue: (out_queue)}; nm_queue is a name for the queue, out_queue is the output queue.
         '''
-        print "start..........................."     
         while not self.finished :
             payload = os.read(self.tun_fd, 10*1024)
             if not payload:
-                print "No payload"
+                module_logger.debug(str(self.my_addr) +' an empty packet from the virtual ethernet interface ' )
             else:
-                print "Tx: len(payload) = %4d" % (len(payload),)       
+                module_logger.debug(str(self.my_addr) +' Tx len(payload) : ' + str(len(payload)))
                 event = if_events.mkevent("DataData")
                 event.ev_dc['src_addr'] = self.my_addr
                 event.ev_dc['dst_addr'] = self.dst_addr
                 event.ev_dc['payload'] = payload
-                self.out_queue.put(event, False)   # add to queue, don't block         
-            
+                try:
+                    self.out_queue.put(event, False)   # add to queue, don't block  
+                    module_logger.debug(str(self.my_addr) +' L3: event from L3 transmited, queue size :  '+ str(self.out_queue.qsize()) )
+                except Queue.Full:
+                    module_logger.debug(str(self.my_addr) +' Layer 3 to Layer 2 queue is full, packet loss   ' )
+
         return
     def stop(self):
         self.finished = True
@@ -142,6 +153,8 @@ class ReadLayer2(threading.Thread):
         self.in_queue = in_queue
         self.tun_fd = tun_fd
         self.finished = False
+        self.logger = logging.getLogger(str(self.__class__))
+        self.logger.debug('.... Layer 3 :creating an instance of Read layer 2 process')
         
         
     def run(self):
@@ -153,7 +166,7 @@ class ReadLayer2(threading.Thread):
         while not self.finished :
             event = self.in_queue.get()
             payload = event.ev_dc['payload']
-            print "Rx:  len(payload) = %4d" % (len(payload))
+            module_logger.debug(' Length of payload recieved from usrp  and send it to virtual interface: ' + str(len(payload)) )
             os.write(self.tun_fd, payload)
         return
     def stop(self):

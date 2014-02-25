@@ -1,90 +1,105 @@
-2014-02-20 17:01:37,883 INFO GNlogger: logging configured
-2014-02-20 17:01:37,883 INFO __main__: start this module
-2014-02-20 17:01:37,883 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100.... creating an instance of ProcessingL2Events
-2014-02-20 17:01:37,883 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100....  creating an instance of ProcessingL1CtrlEvents
-2014-02-20 17:01:37,884 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1DataEvents'>: 100.....creating an instance of ProcessingL1DataEvents
-2014-02-20 17:01:37,884 DEBUG <class 'libmacTDMA.MacTdma.MacTdma'>: 100...........creating an instance of MacTdma
-2014-02-20 17:01:37,886 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101.... creating an instance of ProcessingL2Events
-2014-02-20 17:01:37,886 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101....  creating an instance of ProcessingL1CtrlEvents
-2014-02-20 17:01:37,886 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1DataEvents'>: 101.....creating an instance of ProcessingL1DataEvents
-2014-02-20 17:01:37,893 DEBUG <class 'libmacTDMA.MacTdma.MacTdma'>: 101...........creating an instance of MacTdma
-2014-02-20 17:01:40,887 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
-2014-02-20 17:01:40,887 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
-2014-02-20 17:01:40,888 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:01:40,888 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
-2014-02-20 17:01:40,888 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:01:40,888 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
-2014-02-20 17:01:41,889 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   Timer received in ProcessingL2Events
-2014-02-20 17:01:41,889 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   This is my time slot and I have data to send:  Event class name: EventFrame;  Nickname: 'DataData'; Type: 'Data'; SubType: 'Data';  src_addr: 100;  peerlinkId: 0;  payload: None;  duration: 10;  frame_length: 50;  dst_addr: 100;  Frame packet: 
-2014-02-20 17:01:41,890 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1DataEvents'>: 101:   A data event arrives from L1;:  Event class name: EventFrame;  Nickname: 'DataData'; Type: 'Data'; SubType: 'Data';  src_addr: 100;  peerlinkId: 0;  payload: None;  duration: 10;  frame_length: 50;  dst_addr: 100;  Frame packet: DataData,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'duration': 10, 'frame_length': 50, 'dst_addr': 100}
-2014-02-20 17:01:41,890 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1DataEvents'>: 100:   I am the source of a Data event, the event is ignored
-2014-02-20 17:01:42,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   Timer received in ProcessingL2Events
-2014-02-20 17:01:42,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   This is my time slot and I have data to send:  Event class name: EventFrame;  Nickname: 'DataData'; Type: 'Data'; SubType: 'Data';  src_addr: 101;  peerlinkId: 0;  payload: None;  duration: 10;  frame_length: 50;  dst_addr: 100;  Frame packet: 
-2014-02-20 17:01:42,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1DataEvents'>: 100:   A data event arrives from L1;:  Event class name: EventFrame;  Nickname: 'DataData'; Type: 'Data'; SubType: 'Data';  src_addr: 101;  peerlinkId: 0;  payload: None;  duration: 10;  frame_length: 50;  dst_addr: 100;  Frame packet: DataData,{'src_addr': 101, 'peerlinkId': 0, 'payload': None, 'duration': 10, 'frame_length': 50, 'dst_addr': 100}
-2014-02-20 17:01:42,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1DataEvents'>: 101:   I am the source of a Data event, the event is ignored
-2014-02-20 17:01:43,890 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
-2014-02-20 17:01:43,890 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
-2014-02-20 17:01:43,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:01:43,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
-2014-02-20 17:01:43,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:01:43,891 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
-2014-02-20 17:01:44,893 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   Timer received in ProcessingL2Events
-2014-02-20 17:01:44,893 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   This is my time slot and I DO NOT have data to send
-2014-02-20 17:01:45,894 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   Timer received in ProcessingL2Events
-2014-02-20 17:01:45,894 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   This is my time slot and I DO NOT have data to send
-2014-02-20 17:01:46,893 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
-2014-02-20 17:01:46,893 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
-2014-02-20 17:01:46,894 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:01:46,894 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
-2014-02-20 17:01:46,894 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:01:46,894 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
-2014-02-20 17:01:47,895 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   Timer received in ProcessingL2Events
-2014-02-20 17:01:47,896 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   This is my time slot and I DO NOT have data to send
-2014-02-20 17:01:48,896 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   Timer received in ProcessingL2Events
-2014-02-20 17:01:48,897 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   This is my time slot and I DO NOT have data to send
-2014-02-20 17:01:49,897 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
-2014-02-20 17:01:49,897 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
-2014-02-20 17:01:49,898 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:01:49,898 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
-2014-02-20 17:01:49,898 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:01:49,898 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
-2014-02-20 17:01:50,899 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   Timer received in ProcessingL2Events
-2014-02-20 17:01:50,899 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   This is my time slot and I DO NOT have data to send
-2014-02-20 17:01:51,901 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   Timer received in ProcessingL2Events
-2014-02-20 17:01:51,901 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   This is my time slot and I DO NOT have data to send
-2014-02-20 17:01:52,898 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
-2014-02-20 17:01:52,898 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
-2014-02-20 17:01:52,899 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:01:52,900 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
-2014-02-20 17:01:52,900 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:01:52,900 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
-2014-02-20 17:01:53,901 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   Timer received in ProcessingL2Events
-2014-02-20 17:01:53,901 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   This is my time slot and I DO NOT have data to send
-2014-02-20 17:01:54,903 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   Timer received in ProcessingL2Events
-2014-02-20 17:01:54,903 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   This is my time slot and I DO NOT have data to send
-2014-02-20 17:01:55,901 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
-2014-02-20 17:01:55,901 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
-2014-02-20 17:01:55,902 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:01:55,902 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
-2014-02-20 17:01:55,902 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:01:55,903 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
-2014-02-20 17:01:56,905 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   Timer received in ProcessingL2Events
-2014-02-20 17:01:56,905 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   This is my time slot and I DO NOT have data to send
-2014-02-20 17:01:57,905 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   Timer received in ProcessingL2Events
-2014-02-20 17:01:57,905 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   This is my time slot and I DO NOT have data to send
-2014-02-20 17:01:58,906 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
-2014-02-20 17:01:58,906 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
-2014-02-20 17:01:58,907 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:01:58,908 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
-2014-02-20 17:01:58,908 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:01:58,908 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
-2014-02-20 17:01:59,909 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   Timer received in ProcessingL2Events
-2014-02-20 17:01:59,909 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   This is my time slot and I DO NOT have data to send
-2014-02-20 17:02:00,911 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   Timer received in ProcessingL2Events
-2014-02-20 17:02:00,911 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 101:   This is my time slot and I DO NOT have data to send
-2014-02-20 17:02:01,909 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:   A control event arrives and will be send to the slaves
-2014-02-20 17:02:01,909 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 100:  Schedule a new transmission in : 1
-2014-02-20 17:02:01,910 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:02:01,910 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 100:   I am the source of a Ctrl event, the event is ignored
-2014-02-20 17:02:01,910 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101:  A control event arrives from L1:  Event class name: EventFrameMgmt;  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon';  src_addr: 100;  peerlinkId: 0;  payload: None;  allocation: [100, 101];  duration: 10;  frame_length: 50;  time_slot: 1;  dst_addr: 256;  Frame packet: MgmtBeacon,{'src_addr': 100, 'peerlinkId': 0, 'payload': None, 'allocation': [100, 101], 'duration': 10, 'frame_length': 50, 'time_slot': 1, 'dst_addr': 256}
-2014-02-20 17:02:01,910 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 101;  Schedule a new transmission in : 2
+2014-02-25 14:30:13,644 INFO GNlogger: logging configured
+2014-02-25 14:30:13,644 INFO __main__: start this module
+2014-02-25 14:30:20,982 DEBUG libadaptationlayer.schedLayer3.Layer3: 2523.... creating an instance of Layer 3 with virtual interfase
+2014-02-25 14:30:20,983 DEBUG <class 'libadaptationlayer.schedLayer3.ReadLayer3'>: 2523.... Layer 3: creating an instance of Read layer 3 process
+2014-02-25 14:30:20,983 DEBUG <class 'libadaptationlayer.schedLayer3.ReadLayer2'>: .... Layer 3 :creating an instance of Read layer 2 process
+2014-02-25 14:30:20,984 DEBUG <class 'libmacTDMA.MacTdma.MacTdma'>: 2523...........creating an instance of MacTdma
+2014-02-25 14:30:20,984 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL2Events'>: 2523.... creating an instance of ProcessingL2Events
+2014-02-25 14:30:20,984 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1CtrlEvents'>: 2523....  creating an instance of ProcessingL1CtrlEvents
+2014-02-25 14:30:20,984 DEBUG <class 'libmacTDMA.MacTdma.ProcessingL1DataEvents'>: 2523.....creating an instance of ProcessingL1DataEvents
+2014-02-25 14:30:30,405 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 90
+2014-02-25 14:30:30,405 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  1
+2014-02-25 14:30:30,405 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 54
+2014-02-25 14:30:30,405 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  2
+2014-02-25 14:30:30,498 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 166
+2014-02-25 14:30:30,498 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  3
+2014-02-25 14:30:30,681 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 296
+2014-02-25 14:30:30,681 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  4
+2014-02-25 14:30:30,705 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 78
+2014-02-25 14:30:30,705 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  5
+2014-02-25 14:30:30,744 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 200
+2014-02-25 14:30:30,744 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  6
+2014-02-25 14:30:30,932 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 296
+2014-02-25 14:30:30,932 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  7
+2014-02-25 14:30:31,125 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 54
+2014-02-25 14:30:31,125 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  8
+2014-02-25 14:30:31,183 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 296
+2014-02-25 14:30:31,183 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  9
+2014-02-25 14:30:31,384 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 272
+2014-02-25 14:30:31,384 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  10
+2014-02-25 14:30:31,499 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 166
+2014-02-25 14:30:31,499 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  11
+2014-02-25 14:30:31,705 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 70
+2014-02-25 14:30:31,705 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  12
+2014-02-25 14:30:31,713 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 110
+2014-02-25 14:30:31,713 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  13
+2014-02-25 14:30:31,806 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 186
+2014-02-25 14:30:31,806 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  14
+2014-02-25 14:30:31,977 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 288
+2014-02-25 14:30:31,977 DEBUG libadaptationlayer.schedLayer3: 2523 L3: event from L3 transmited, queue size :  15
+2014-02-25 14:30:31,989 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 374
+2014-02-25 14:30:31,989 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:31,989 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 191
+2014-02-25 14:30:31,989 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:31,990 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 88
+2014-02-25 14:30:31,990 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:32,052 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 220
+2014-02-25 14:30:32,052 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:32,239 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 374
+2014-02-25 14:30:32,239 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:32,240 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 191
+2014-02-25 14:30:32,240 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:32,490 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 374
+2014-02-25 14:30:32,490 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:32,490 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 191
+2014-02-25 14:30:32,490 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:32,490 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 104
+2014-02-25 14:30:32,491 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:32,616 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 233
+2014-02-25 14:30:32,624 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:32,690 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 350
+2014-02-25 14:30:32,690 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:32,690 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 179
+2014-02-25 14:30:32,690 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:32,807 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 186
+2014-02-25 14:30:32,807 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:33,284 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 320
+2014-02-25 14:30:33,284 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:33,500 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 166
+2014-02-25 14:30:33,500 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:33,923 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 350
+2014-02-25 14:30:33,923 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:33,923 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 179
+2014-02-25 14:30:33,923 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:34,209 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 288
+2014-02-25 14:30:34,209 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:34,807 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 186
+2014-02-25 14:30:34,807 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:34,849 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 300
+2014-02-25 14:30:34,849 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:35,516 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 320
+2014-02-25 14:30:35,517 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:35,713 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 70
+2014-02-25 14:30:35,714 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:36,155 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 350
+2014-02-25 14:30:36,156 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:36,156 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 179
+2014-02-25 14:30:36,156 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:37,500 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 166
+2014-02-25 14:30:37,501 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:38,810 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 186
+2014-02-25 14:30:38,810 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:39,721 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 70
+2014-02-25 14:30:39,721 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:40,105 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 90
+2014-02-25 14:30:40,105 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:45,507 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 166
+2014-02-25 14:30:45,507 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:46,811 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 186
+2014-02-25 14:30:46,811 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:30:49,775 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 211
+2014-02-25 14:30:49,775 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:31:01,511 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 166
+2014-02-25 14:31:01,511 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   
+2014-02-25 14:31:02,813 DEBUG libadaptationlayer.schedLayer3: 2523 Tx len(payload) : 186
+2014-02-25 14:31:02,813 DEBUG libadaptationlayer.schedLayer3: 2523 Layer 3 to Layer 2 queue is full, packet loss   

@@ -194,7 +194,10 @@ class MacTdma(threading.Thread) :
         @param L2_event_tx_q: The event queue where the MAC  puts the events to be send to L2 processes or uper layers.        
         '''
         threading.Thread.__init__(self)
-        self.my_addr = network_conf. getStationId()
+        self.my_addr = network_conf. getStationId()      
+        self.logger = logging.getLogger(str(self.__class__))
+        self.logger.debug(str(self.my_addr)+'...........creating an instance of MacTdma')
+       
         self.broadcast_addr =network_conf.getBroadcastAddr()
         self.net_conf = network_conf 
         self.L1_ctrl_rx_q = L1_ctrl_rx_q
@@ -210,18 +213,18 @@ class MacTdma(threading.Thread) :
         self.proc_l1_data_ev = ProcessingL1DataEvents(self.net_conf,self.L1_data_rx_q,self.L2_event_tx_q)
         self.proc_l1_data_ev.start()
         self.master = master
-        if master == True:
+        if self.master == True:
             self.myControl = ControlChannel.ControlChannel(self.net_conf ,L2_ctrl_rx_q)
-            self.myControl.start()   
-        self.logger = logging.getLogger(str(self.__class__))
-        self.logger.debug(str(self.my_addr)+'...........creating an instance of MacTdma')
+            self.myControl.start()
+            
+
 
 
     def stop(self):
         self.proc_l2_ev.stop()
         self.proc_l1_ctrl_ev.stop()
         self.proc_l1_data_ev.stop()
-        if self.master :
+        if self.master == True :
             self.myControl.stop()
             self.myControl.join()
         self.proc_l2_ev.join()

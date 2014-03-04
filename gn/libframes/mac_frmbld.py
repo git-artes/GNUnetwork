@@ -168,6 +168,7 @@ class AFrame(Frame):
     @ivar _fb_obj: a frame body object for the frame body of this frame, if the frame body is structured, as in Management Mesh Action frames; None if frame body is data.
     @ivar dc_fields: a dictionary of {field: FieldTemplate} for field parsing.
     @ivar dc_fldvals: a dictionary of {field: value} to update dictionary of field values in frame body.
+    @ivar frmpkt: the frame packed into binary data as for transmission. Defaults to None, load using self.mkpkt().
     '''
 
     def __init__(self, frmtype, \
@@ -219,6 +220,7 @@ class AFrame(Frame):
         else:
             self._fb_obj = None     # required to recognize FB with data
             self.dc_frbd_fldvals = {}
+        self.frmpkt = None          # load using self.mkpkt()
         return
 
 

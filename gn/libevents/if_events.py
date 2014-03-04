@@ -21,8 +21,8 @@ import events as events
 import evtimer
 import evframes80211
 
-#from libframes import MacFrameException as MacFrameException
-
+from libframes.mac_frmbld import MacFrameException # as MacFrameException
+from libevents.events import EventNameException 
 
 # import if_frames for test function
 
@@ -66,8 +66,14 @@ def frmtoev(frmobj):
     @param frmobj: a Frame object.
     @return: an Event object.
     '''
+
+    # load event fields common to all types of frames
+    ev_dc = {}
+    ev_dc['duration'] = frmobj.dc_fldvals['duration']
+
     # determine frame type; if Action, determine type of action frame
-    if frmobj.frmtype == 'Action':
+    # load event fields accordint to type of frame
+    if frmobj.frmtype == 'Action':                        # Mgmt Action frame
         act = frmobj.dc_frbd_fldvals['Action']
         if act == 1:
             nickname = 'ActionOpen'
@@ -79,14 +85,31 @@ def frmtoev(frmobj):
           #raise MacFrameException('invalid Action field code: ' + act)
           print 'error in action field'
           return
-        pass
+        ev_dc['src_addr'] = frmobj.dc_fldvals['address_1'] # Mgmt, Data frames
+        ev_dc['dst_addr'] = frmobj.dc_fldvals['address_2'] # Mgmt, Data frames
+        ev_dc['peerlinkId'] = frmobj.dc_frbd_fldvals['peerlinkId']
+    elif frmobj.frmtype in ['Beacon']:                    # Mgmt Beacon frame
+        nickname = 'MgmtBeacon'
+        ev_dc['src_addr'] = frmobj.dc_fldvals['address_1'] # Mgmt, Data frames
+        ev_dc['dst_addr'] = frmobj.dc_fldvals['address_2'] # Mgmt, Data frames
+        ev_dc['peerlinkId'] = frmobj.dc_frbd_fldvals['peerlinkId']
+    elif frmobj.frmtype == 'Data':      # a Data event
+        nickname = 'DataData'
+        ev_dc['src_addr'] = frmobj.dc_fldvals['address_1'] # Mgmt, Data frames
+        ev_dc['dst_addr'] = frmobj.dc_fldvals['address_2'] # Mgmt, Data frames
+        ev_dc['payload'] = frmobj.dc_fldvals['frame_body']
+    elif frmobj.frmtype in ['RTS', 'CTS', 'ACK']:    # Ctrl frames
+        nickname = 'Ctrl' + frmobj.frmtype[-3:]      # CtrlRTS --> RTS
+        if frmobj.dc_fldvals.has_key('ta'):
+            ev_dc['src_addr'] = frmobj.dc_fldvals['ta']
+        ev_dc['dst_addr'] = frmobj.dc_fldvals['ra']
     else:
-        frmname = evframes80211.dc_frametoev[frmobj.nickname]
-
+        raise MacFrameException(frmogj.frmtype + ' not a valid frame type')
+        
     # make Event object
-    ev = mkevent(nickname)
-    # set event values
-    # ev.ev_dc.update(frmobj.dc_fldvals)   # not the same names!
+    ev = mkevent(nickname, ev_dc=ev_dc)
+    ev.frmpkt = frmobj.frmpkt
+    ev.frmobj = frmobj    # ref to Frame obj associated with this event
     return ev
 
 
@@ -115,11 +138,11 @@ def evtofrm(evobj, fr_dc_fldvals={}, fr_dc_frbd_fldvals={}):
         dc_fldvals['address_1'] = evobj.ev_dc['src_addr'] # Mgmt, Data frames
         dc_fldvals['address_2'] = evobj.ev_dc['dst_addr'] # Mgmt, Data frames
         if 'Beacon' in evobj.nickname:  # a Mgmt Beacon event
-            dc_frbd_fldvals['peerlinkID'] = evobj.ev_dc['peerlinkID']        
+            dc_frbd_fldvals['peerlinkId'] = evobj.ev_dc['peerlinkId']        
     elif 'Action' in evobj.nickname:    # a Mgmt Action event
         dc_fldvals['address_1'] = evobj.ev_dc['src_addr'] # Mgmt, Data frames
         dc_fldvals['address_2'] = evobj.ev_dc['dst_addr'] # Mgmt, Data frames
-        dc_frbd_fldvals['peerlinkID'] = evobj.ev_dc['peerlinkID']
+        dc_frbd_fldvals['peerlinkId'] = evobj.ev_dc['peerlinkId']
     elif 'Data' in evobj.nickname:      # a Data event
         dc_fldvals['address_1'] = evobj.ev_dc['src_addr'] # Mgmt, Data frames
         dc_fldvals['address_2'] = evobj.ev_dc['dst_addr'] # Mgmt, Data frames
@@ -132,14 +155,19 @@ def evtofrm(evobj, fr_dc_fldvals={}, fr_dc_frbd_fldvals={}):
     # make Frame object, record frame length
     frmobj = if_frames.mkframeobj(frmname, dc_fldvals=dc_fldvals, \
         dc_frbd_fldvals=dc_frbd_fldvals) 
-    evobj.frmpkt = frmobj.mkpkt()
     evobj.ev_dc['frame_len'] = frmobj.frame_len
+    evobj.frmpkt = frmobj.mkpkt()
+    evobj.frmobj = frmobj    # ref to Frame obj associated with this event
     return frmobj
 
 
     
 if __name__ == '__main__':
     import doctest
-    doctest.testmod()
+    testfilename = sys.argv[0][:-2] + 'txt'
+    try:
+        doctest.testfile(testfilename)
+    except:      # no text file present
+        pass
 
 

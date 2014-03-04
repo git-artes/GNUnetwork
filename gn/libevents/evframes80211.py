@@ -16,8 +16,9 @@ class EventFrame(Event):
     @ivar nickname: a descriptive name for this event.
     @ivar ev_type: frame event type.
     @ivar ev_subtype: frame event subtype.
-    @ivar frmpkt: a packed frame in bin format, as for transmission.
     @ivar ev_dc: a dictionary of complementary data, e.g. {'src_addr': source address, 'dst_addr': destination address, 'duration': duration}.
+    @ivar frmpkt: a packed frame in bin format, as for transmission.
+    @ivar frmobj: a reference to a Frame object on which this event originated; defaults to None.
     '''
 
     def __init__(self, nickname, ev_type, ev_subtype, frmpkt=None, ev_dc={}):
@@ -27,13 +28,14 @@ class EventFrame(Event):
         self.ev_type = ev_type
         self.ev_subtype = ev_subtype
         self.frmpkt = frmpkt
+        self.frmobj = None    # ref to Frame obj associated with this event
         self.ev_dc = { \
-            'src_addr': None, \
-            'dst_addr': None, \
+            'src_addr': 'addr_1', \
+            'dst_addr': 'addr_1', \
             'duration': 10, \
             'frame_length': 50, \
             'peerlinkId': 0, \
-            'payload' : None,\
+            'payload' : '',\
             }
         self.ev_dc.update(ev_dc)
         return
@@ -43,18 +45,19 @@ class EventFrame(Event):
         ss += '\n  Frame packet: ' + str(self.frmpkt)
         return ss
 
-    """
-    def mkframepkt(self):
-        '''Makes a frame packet from this event.
-        
-        REVISE! fields are more complicated, this may not work.
-        '''
-        frame_name, dc_frbd_fldvals = dc_evtoframes[self.nickname]
-        frmobj = if_frames.mkframeobj(frame_name, dc_frcl_fldvals={}, \
-            dc_fldvals={}, dc_frbd_fldvals={})
-        frmpkt = frmobj.mkpkt()
-        return frmpkt
-    """
+    def __eq__(self, other):
+        eq = True
+        if self.nickname != other.nickname or \
+            self.ev_type != other.ev_type or \
+            self.ev_subtype != other.ev_subtype:
+            eq = False
+        #self.frmpkt = frmpkt
+        #self.frmobj = None    # ref to Frame obj associated with this event
+        for fld in self.ev_dc.keys():
+            if self.ev_dc[fld] != other.ev_dc[fld]:
+                eq = False
+                break
+        return eq
 
 
 class EventFrameMgmt(EventFrame):

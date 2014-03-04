@@ -16,6 +16,7 @@ gn.libadaptationlayer.schedLayer3.__package__	gn.libadaptationlayer.schedLayer3-
 gn.libadaptationlayer.schedLayer3.test	gn.libadaptationlayer.schedLayer3-module.html#test
 gn.libadaptationlayer.schedLayer3.IFF_ONE_QUEUE	gn.libadaptationlayer.schedLayer3-module.html#IFF_ONE_QUEUE
 gn.libadaptationlayer.schedLayer3.IFF_NO_PI	gn.libadaptationlayer.schedLayer3-module.html#IFF_NO_PI
+gn.libadaptationlayer.schedLayer3.module_logger	gn.libadaptationlayer.schedLayer3-module.html#module_logger
 gn.libadaptationlayer.scheduler	gn.libadaptationlayer.scheduler-module.html
 gn.libadaptationlayer.scheduler.__package__	gn.libadaptationlayer.scheduler-module.html#__package__
 gn.libadaptationlayer.scheduler.test	gn.libadaptationlayer.scheduler-module.html#test
@@ -65,8 +66,10 @@ gn.libevents.evtimer	gn.libevents.evtimer-module.html
 gn.libevents.evtimer.dc_nicknames	gn.libevents.evtimer-module.html#dc_nicknames
 gn.libevents.evtimer.__package__	gn.libevents.evtimer-module.html#__package__
 gn.libevents.if_events	gn.libevents.if_events-module.html
+gn.libevents.if_events.MacFrameException	gn.libframes.mac_frmbld.MacFrameException-class.html
 gn.libevents.if_events.frmtoev	gn.libevents.if_events-module.html#frmtoev
 gn.libevents.if_events.evtofrm	gn.libevents.if_events-module.html#evtofrm
+gn.libevents.if_events.EventNameException	gn.libevents.events.EventNameException-class.html
 gn.libevents.if_events.__package__	gn.libevents.if_events-module.html#__package__
 gn.libevents.if_events.mkevent	gn.libevents.if_events-module.html#mkevent
 gn.libframes	gn.libframes-module.html
@@ -141,6 +144,8 @@ gn.libtimer.timer.__package__	gn.libtimer.timer-module.html#__package__
 gn.libtimer.timer.test	gn.libtimer.timer-module.html#test
 gn.libutils	gn.libutils-module.html
 gn.libutils.__package__	gn.libutils-module.html#__package__
+gn.libutils.exampletest	gn.libutils.exampletest-module.html
+gn.libutils.exampletest.__package__	gn.libutils.exampletest-module.html#__package__
 gn.libutils.gnlogger	gn.libutils.gnlogger-module.html
 gn.libutils.gnlogger.fmode	gn.libutils.gnlogger-module.html#fmode
 gn.libutils.gnlogger.appname	gn.libutils.gnlogger-module.html#appname
@@ -237,6 +242,8 @@ gn.libevents.events.Event.__init__	gn.libevents.events.Event-class.html#__init__
 gn.libevents.events.EventNameException	gn.libevents.events.EventNameException-class.html
 gn.libevents.evframes80211.EventFrame	gn.libevents.evframes80211.EventFrame-class.html
 gn.libevents.evframes80211.EventFrame.ev_subtype	gn.libevents.evframes80211.EventFrame-class.html#ev_subtype
+gn.libevents.evframes80211.EventFrame.frmobj	gn.libevents.evframes80211.EventFrame-class.html#frmobj
+gn.libevents.evframes80211.EventFrame.__eq__	gn.libevents.evframes80211.EventFrame-class.html#__eq__
 gn.libevents.evframes80211.EventFrame.__str__	gn.libevents.evframes80211.EventFrame-class.html#__str__
 gn.libevents.evframes80211.EventFrame.ev_dc	gn.libevents.evframes80211.EventFrame-class.html#ev_dc
 gn.libevents.evframes80211.EventFrame.frmpkt	gn.libevents.evframes80211.EventFrame-class.html#frmpkt
@@ -246,11 +253,13 @@ gn.libevents.events.Event.getname	gn.libevents.events.Event-class.html#getname
 gn.libevents.evframes80211.EventFrame.__init__	gn.libevents.evframes80211.EventFrame-class.html#__init__
 gn.libevents.evframes80211.EventFrameMgmt	gn.libevents.evframes80211.EventFrameMgmt-class.html
 gn.libevents.evframes80211.EventFrame.ev_subtype	gn.libevents.evframes80211.EventFrame-class.html#ev_subtype
+gn.libevents.evframes80211.EventFrame.frmobj	gn.libevents.evframes80211.EventFrame-class.html#frmobj
+gn.libevents.evframes80211.EventFrame.nickname	gn.libevents.evframes80211.EventFrame-class.html#nickname
 gn.libevents.evframes80211.EventFrame.__str__	gn.libevents.evframes80211.EventFrame-class.html#__str__
 gn.libevents.evframes80211.EventFrame.ev_dc	gn.libevents.evframes80211.EventFrame-class.html#ev_dc
 gn.libevents.evframes80211.EventFrame.frmpkt	gn.libevents.evframes80211.EventFrame-class.html#frmpkt
 gn.libevents.evframes80211.EventFrame.ev_type	gn.libevents.evframes80211.EventFrame-class.html#ev_type
-gn.libevents.evframes80211.EventFrame.nickname	gn.libevents.evframes80211.EventFrame-class.html#nickname
+gn.libevents.evframes80211.EventFrame.__eq__	gn.libevents.evframes80211.EventFrame-class.html#__eq__
 gn.libevents.events.Event.getname	gn.libevents.events.Event-class.html#getname
 gn.libevents.evframes80211.EventFrameMgmt.__init__	gn.libevents.evframes80211.EventFrameMgmt-class.html#__init__
 gn.libevents.evtimer.EventTimer	gn.libevents.evtimer.EventTimer-class.html
@@ -313,6 +322,7 @@ gn.libframes.frames.Frame.updtfldvals	gn.libframes.frames.Frame-class.html#updtf
 gn.libframes.frames.Frame.setfrmbdy	gn.libframes.frames.Frame-class.html#setfrmbdy
 gn.libframes.mac_frmbld.AFrame.frmtype	gn.libframes.mac_frmbld.AFrame-class.html#frmtype
 gn.libframes.frames.Frame.mkpkt	gn.libframes.frames.Frame-class.html#mkpkt
+gn.libframes.mac_frmbld.AFrame.frmpkt	gn.libframes.mac_frmbld.AFrame-class.html#frmpkt
 gn.libframes.frames.Frame.consistchk	gn.libframes.frames.Frame-class.html#consistchk
 gn.libframes.frames.Frame.ls_fields	gn.libframes.frames.Frame-class.html#ls_fields
 gn.libframes.mac_frmbld.AFrame._fb_obj	gn.libframes.mac_frmbld.AFrame-class.html#_fb_obj
@@ -335,6 +345,7 @@ gn.libframes.frames.Frame.updtfldvals	gn.libframes.frames.Frame-class.html#updtf
 gn.libframes.frames.Frame.setfrmbdy	gn.libframes.frames.Frame-class.html#setfrmbdy
 gn.libframes.mac_frmbld.AFrame.frmtype	gn.libframes.mac_frmbld.AFrame-class.html#frmtype
 gn.libframes.frames.Frame.mkpkt	gn.libframes.frames.Frame-class.html#mkpkt
+gn.libframes.mac_frmbld.AFrame.frmpkt	gn.libframes.mac_frmbld.AFrame-class.html#frmpkt
 gn.libframes.frames.Frame.consistchk	gn.libframes.frames.Frame-class.html#consistchk
 gn.libframes.frames.Frame.ls_fields	gn.libframes.frames.Frame-class.html#ls_fields
 gn.libframes.mac_frmbld.AFrame._fb_obj	gn.libframes.mac_frmbld.AFrame-class.html#_fb_obj
@@ -357,6 +368,7 @@ gn.libframes.frames.Frame.updtfldvals	gn.libframes.frames.Frame-class.html#updtf
 gn.libframes.frames.Frame.setfrmbdy	gn.libframes.frames.Frame-class.html#setfrmbdy
 gn.libframes.mac_frmbld.AFrame.frmtype	gn.libframes.mac_frmbld.AFrame-class.html#frmtype
 gn.libframes.frames.Frame.mkpkt	gn.libframes.frames.Frame-class.html#mkpkt
+gn.libframes.mac_frmbld.AFrame.frmpkt	gn.libframes.mac_frmbld.AFrame-class.html#frmpkt
 gn.libframes.frames.Frame.consistchk	gn.libframes.frames.Frame-class.html#consistchk
 gn.libframes.frames.Frame.ls_fields	gn.libframes.frames.Frame-class.html#ls_fields
 gn.libframes.mac_frmbld.AFrame._fb_obj	gn.libframes.mac_frmbld.AFrame-class.html#_fb_obj
@@ -424,6 +436,7 @@ gn.libframes.frames.Frame.updtfldvals	gn.libframes.frames.Frame-class.html#updtf
 gn.libframes.frames.Frame.setfrmbdy	gn.libframes.frames.Frame-class.html#setfrmbdy
 gn.libframes.mac_frmbld.AFrame.frmtype	gn.libframes.mac_frmbld.AFrame-class.html#frmtype
 gn.libframes.frames.Frame.mkpkt	gn.libframes.frames.Frame-class.html#mkpkt
+gn.libframes.mac_frmbld.AFrame.frmpkt	gn.libframes.mac_frmbld.AFrame-class.html#frmpkt
 gn.libframes.frames.Frame.consistchk	gn.libframes.frames.Frame-class.html#consistchk
 gn.libframes.frames.Frame.ls_fields	gn.libframes.frames.Frame-class.html#ls_fields
 gn.libframes.mac_frmbld.AFrame._fb_obj	gn.libframes.mac_frmbld.AFrame-class.html#_fb_obj
@@ -612,6 +625,9 @@ gn.libtimer.timer.Timer.run	gn.libtimer.timer.Timer-class.html#run
 gn.libtimer.timer.Timer.stop	gn.libtimer.timer.Timer-class.html#stop
 gn.libtimer.timer.Timer.tout1	gn.libtimer.timer.Timer-class.html#tout1
 gn.libtimer.timer.Timer.tout2	gn.libtimer.timer.Timer-class.html#tout2
+gn.libutils.exampletest.AClass	gn.libutils.exampletest.AClass-class.html
+gn.libutils.exampletest.AClass.__str__	gn.libutils.exampletest.AClass-class.html#__str__
+gn.libutils.exampletest.AClass.__init__	gn.libutils.exampletest.AClass-class.html#__init__
 gn.libutils.gnlogger_test.Auxiliary	gn.libutils.gnlogger_test.Auxiliary-class.html
 gn.libutils.gnlogger_test.Auxiliary.do_something	gn.libutils.gnlogger_test.Auxiliary-class.html#do_something
 gn.libutils.gnlogger_test.Auxiliary.__init__	gn.libutils.gnlogger_test.Auxiliary-class.html#__init__

@@ -19,6 +19,9 @@ Sugerencia para formato de mensaje: ‘nombre_módulo: modificaciones’
 Recordar:
   - archivos nuevos requieren 'git add'; puede hacerse para modificados también;
   - 'commit -a' hace el commit de los modificados automáticamente, pero NO de los nuevos, que requieren 'add' específico.
+  - para quitar archivos del árbol de trabajo y el índice, 'git rm <archivo>' antes del commit
+  - la opción '--dry-run' en 'commit' muestra lo que se hará sin hacerlo.
+  - con 'git reset' inmediatamente después del 'commit' se puede retroceder.
 
 3. Subir las modificaciones:
   git push gn master

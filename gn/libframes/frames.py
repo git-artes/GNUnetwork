@@ -158,6 +158,8 @@ class Frame(object):
 
         @param new_frmbdy: new frame body, even if it is the null string. If None, returns with no action.
         '''
+        if 'frame_body' not in self.ls_fields:    # frame has no frame body
+            return
         if new_frmbdy is None:   # beware, new_frmbody may be ''
             if self.dc_fldvals.has_key('frame_body'):
                 new_frmbdy = self.dc_fldvals['frame_body']

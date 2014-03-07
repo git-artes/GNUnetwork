@@ -88,10 +88,10 @@
     <li> <strong class="uidlink"><a href="gn.libutils.sched_bytype.Item-class.html">gn.libutils.sched_bytype.Item</a></strong>:
       <em class="summary">A class to define items to enqueue, dequeue.</em>
     </li>
-    <li> <strong class="uidlink"><a href="gn.libadaptlay80211.schedLayer3.Layer3-class.html">gn.libadaptlay80211.schedLayer3.Layer3</a></strong>:
+    <li> <strong class="uidlink"><a href="gn.libadaptationlayer.schedLayer3.Layer3-class.html">gn.libadaptationlayer.schedLayer3.Layer3</a></strong>:
       <em class="summary">Subclass of Scheduler for adapting layers 3 and 2.</em>
     </li>
-    <li> <strong class="uidlink"><a href="gn.libadaptationlayer.schedLayer3.Layer3-class.html">gn.libadaptationlayer.schedLayer3.Layer3</a></strong>:
+    <li> <strong class="uidlink"><a href="gn.libadaptlay80211.schedLayer3.Layer3-class.html">gn.libadaptlay80211.schedLayer3.Layer3</a></strong>:
       <em class="summary">Subclass of Scheduler for adapting layers 3 and 2.</em>
     </li>
     <li> <strong class="uidlink"><a href="gn.libmanagement.NetworkConfiguration.NetworkConfiguration-class.html">gn.libmanagement.NetworkConfiguration.NetworkConfiguration</a></strong>:
@@ -221,10 +221,10 @@
     <li> <strong class="uidlink"><a href="gn.libmacTDMA.MacTdma.ProcessingL2Events-class.html">gn.libmacTDMA.MacTdma.ProcessingL2Events</a></strong>:
       <em class="summary">The TDMA MAC controller, a Thread.</em>
     </li>
-    <li> <strong class="uidlink"><a href="gn.libadaptationlayer.schedLayer3.ReadLayer2-class.html">gn.libadaptationlayer.schedLayer3.ReadLayer2</a></strong>:
+    <li> <strong class="uidlink"><a href="gn.libadaptlay80211.schedLayer3.ReadLayer2-class.html">gn.libadaptlay80211.schedLayer3.ReadLayer2</a></strong>:
       <em class="summary">Subclass of Scheduler for adapting layers 3 and 2.</em>
     </li>
-    <li> <strong class="uidlink"><a href="gn.libadaptlay80211.schedLayer3.ReadLayer2-class.html">gn.libadaptlay80211.schedLayer3.ReadLayer2</a></strong>:
+    <li> <strong class="uidlink"><a href="gn.libadaptationlayer.schedLayer3.ReadLayer2-class.html">gn.libadaptationlayer.schedLayer3.ReadLayer2</a></strong>:
       <em class="summary">Subclass of Scheduler for adapting layers 3 and 2.</em>
     </li>
     <li> <strong class="uidlink"><a href="gn.libadaptationlayer.schedLayer3.ReadLayer3-class.html">gn.libadaptationlayer.schedLayer3.ReadLayer3</a></strong>:
@@ -234,6 +234,12 @@
       <em class="summary">Subclass of Scheduler for adapting layers 3 and 2.</em>
     </li>
     <li> <strong class="uidlink"><a href="gn.libmanagement.DiscoveryPeeringFSM.ReadQueueTxEmulator-class.html">gn.libmanagement.DiscoveryPeeringFSM.ReadQueueTxEmulator</a></strong>
+    </li>
+    <li> <strong class="uidlink"><a href="gn.libadaptationlayer.scheduler.Scheduler-class.html">gn.libadaptationlayer.scheduler.Scheduler</a></strong>:
+      <em class="summary">This class gets L1 frames from a queue.</em>
+    </li>
+    <li> <strong class="uidlink"><a href="gn.libadaptlay80211.scheduler.Scheduler-class.html">gn.libadaptlay80211.scheduler.Scheduler</a></strong>:
+      <em class="summary">This class gets L1 frames from a queue.</em>
     </li>
     <li> <strong class="uidlink"><a href="gn.libutils.gnscheduler.Scheduler-class.html">gn.libutils.gnscheduler.Scheduler</a></strong>:
       <em class="summary">Gets elements from input queues, processes, puts elements in output
@@ -246,9 +252,6 @@
       <em class="summary">Subclass of Scheduler for output on shortest queue.</em>
     </li>
     </ul>
-    </li>
-    <li> <strong class="uidlink"><a href="gn.libadaptlay80211.scheduler.Scheduler-class.html">gn.libadaptlay80211.scheduler.Scheduler</a></strong>:
-      <em class="summary">This class gets L1 frames from a queue.</em>
     </li>
     <li> <strong class="uidlink">libutils.gnscheduler.Scheduler</strong>:
       <em class="summary">Gets elements from input queues, processes, puts elements in output
@@ -268,18 +271,15 @@
     </li>
     </ul>
     </li>
-    <li> <strong class="uidlink"><a href="gn.libadaptationlayer.scheduler.Scheduler-class.html">gn.libadaptationlayer.scheduler.Scheduler</a></strong>:
-      <em class="summary">This class gets L1 frames from a queue.</em>
-    </li>
     <li> <strong class="uidlink"><a href="gn.libtimer.timer.Timer-class.html">gn.libtimer.timer.Timer</a></strong>:
       <em class="summary">A timer (thread) that waits an interval and generates a Timer 
         Event.</em>
     </li>
-    <li> <strong class="uidlink"><a href="gn.libadaptlay80211.transmitFrame.TransmitFrame-class.html">gn.libadaptlay80211.transmitFrame.TransmitFrame</a></strong>:
+    <li> <strong class="uidlink"><a href="gn.libadaptationlayer.transmitFrame.TransmitFrame-class.html">gn.libadaptationlayer.transmitFrame.TransmitFrame</a></strong>:
       <em class="summary">Puts L1 frames into a queue, gets events from the L2 queues AND 
         generates frames.</em>
     </li>
-    <li> <strong class="uidlink"><a href="gn.libadaptationlayer.transmitFrame.TransmitFrame-class.html">gn.libadaptationlayer.transmitFrame.TransmitFrame</a></strong>:
+    <li> <strong class="uidlink"><a href="gn.libadaptlay80211.transmitFrame.TransmitFrame-class.html">gn.libadaptlay80211.transmitFrame.TransmitFrame</a></strong>:
       <em class="summary">Puts L1 frames into a queue, gets events from the L2 queues AND 
         generates frames.</em>
     </li>
@@ -333,7 +333,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Mar  4 10:15:08 2014
+    Generated by Epydoc 3.0.1 on Fri Mar  7 12:20:30 2014
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

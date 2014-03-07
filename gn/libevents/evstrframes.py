@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''Use of events with string frames.
+'''Use of events with string frames, version 2.
 
-This module defines two functions, mkevent() to make an Event object from a nickname and frame, and mkframe() to make a string frame from an Event object.
+This module uses a simplified frame format based on strings, aimed at testing; a primary concern is legilibilty, though some packing is done to keep frame length short.
+
+This module defines two functions, mkevent() to make an Event object from a nickname or string frame, and mkframe() to make a string frame from an Event object.
 '''
 
 import events
@@ -11,81 +13,79 @@ import if_events
 import sys
 
 
-def mkevent(pnickname=None, pframe=None):
+def mkevent(pnickname=None, pframe=None, pev_dc={}):
     '''Creates an event from a nickname or from a frame.
     
-    @param pnickname: the event nickname.
-    @param pframe: a frame in bin dta format (confirm!)
+    This function accepts either an event nickname or a string frame, but not both. If an event nickname is given, an Event object of that nickname is created; if a string frame is given, an Event object is created from that frame.
+    @param pnickname: the event nickname, default None.
+    @param pframe: a frame in string format, default None.
+    @param pev_dc: a dictionary {field_name: value} for event creation; defaults to an empty dictionary. Disregarded if a frame is given.
     @return: an Event object.
     '''
    
     if not pnickname and not pframe:
-        print 'No nickname or frame received.'
-        return None
+        raise events.EventNameException('No event nickname or frame received')
+    if pnickname and pframe:
+        raise events.EventNameException( \
+            'Both event nickname and frame received')
     if pnickname:
-        return if_events.mkevent(pnickname, ev_dc={'src_addr':'', 'dst_addr':''})
+        return if_events.mkevent(pnickname, pev_dc)
     if pframe:
-        #print "evstrframes.frame:", pframe
         ev_dc = {}
         try:        
             nickname, ev_dc  = pframe.split(',',1)
-            #print ev_dc
+            # TODO: this function should adjust frame_length. How?
+            #    frame_lenght must be set in ev_dc of Event. Is it used?
             ev = if_events.mkevent(nickname, frmpkt=pframe, ev_dc=eval(ev_dc))
         except:
-            print "Cannot generates event: malformed packet"
-            ev =None
-        #ev.src_addr=src_addr
-        #ev.dst_addr = dst_addr
-        #print "evstrframes.mkevent:"
-        #print ev
+            raise events.EventNameException( \
+                'cannot generates event: malformed packet')
         return  ev
 
 
 def mkframe(ev_obj):
-    '''Returns a frame with the event information.
+    '''Creates a string frame from an Event object.
     
+    Receives an Event object, returns a string frame with the event information.
     @param ev_obj: an Event object.
-    @return: a frame in bin data format (confirm!).
+    @return: a frame in string format.
     '''
     if not isinstance(ev_obj, events.Event):
         raise EventNameException('Parameter is not an Event object.')
         return None
-    if not ev_obj.ev_dc:
-        raise EventNameException('ev_dc not in event object.')
-    if not ev_obj.ev_dc.has_key('src_addr') or not ev_obj.ev_dc.has_key('dst_addr'):
-        raise EventNameException('ev_dc does not contain src_addr, dst_addr keys.')
-    if not ev_obj.nickname:
-        raise EventNameException('even with no nickname.')
-    #print 'evstrframes.mkframe, event object:'
+
+    # unnecessary, ev_dc always included in mkevent, even if empty
+    #if not ev_obj.ev_dc:
+    #    raise if_events.EventNameException('ev_dc not in event object.')
+
+    # TODO: see if all these validations are required, or force fields
+    #   to be present by other means, e.g. a default ev_dc
+    # WARNING: following lines impose values on these fields!
+    #if not ev_obj.ev_dc.has_key('src_addr') or \
+    #    not ev_obj.ev_dc.has_key('dst_addr'):
+    #    raise if_events.EventNameException( \
+    #        'ev_dc does not contain src_addr, dst_addr keys.')
+    #if not ev_obj.nickname:
+    #    raise if_events.EventNameException( 'even with no nickname.')
     if not ev_obj.ev_dc['src_addr']:
         ev_obj.ev_dc['src_addr'] = ''
     if not ev_obj.ev_dc['dst_addr']:
         ev_obj.ev_dc['dst_addr'] = ''
     if not ev_obj.ev_dc['peerlinkId']:
         ev_obj.ev_dc['peerlinkId'] = 0
-    #print ev_obj
-    frame = "" + ev_obj.nickname + "," + str(ev_obj.ev_dc)
-    #print frame
-    #sys.exit()
+    ### end of WARNING
+    frame = '' + ev_obj.nickname + ',' + str(ev_obj.ev_dc)
+
     return frame
 
 
-def test():
-    ev = if_events.mkevent("MgmtBeacon", ev_dc={})
-    ev.ev_dc['src_addr'] = "100"
-    ev.ev_dc['dst_addr'] =  "150"
-    print "=== Event to frame:"; print ev
-    frame=mkframe(ev)
-    print "=== Frame:", frame
-    evfromframe = mkevent(pframe=frame) 
-    print "=== Event from frame:"; print evfromframe
-    return
-
 if __name__ == '__main__':
+    import doctest
+    testfilename = sys.argv[0][:-2] + 'txt'
     try:
-        test()
-    except KeyboardInterrupt:
+        doctest.testfile(testfilename)
+    except:      # no text file present
         pass
-        
+
 
 

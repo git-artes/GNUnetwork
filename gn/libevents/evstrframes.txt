@@ -1,0 +1,72 @@
+GN evstrframes, doctest file
+
+
+>>> from evstrframes import *
+>>> import if_events
+
+>>> ev = if_events.mkevent("MgmtBeacon", ev_dc={})
+>>> ev.ev_dc['src_addr'] = "111"
+>>> ev.ev_dc['dst_addr'] =  "112"
+>>> print "=== Event to frame:"; print ev
+=== Event to frame:
+Event class name: EventFrameMgmt
+  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon'
+  src_addr: 111
+  peerlinkId: 0
+  payload: 
+  duration: 10
+  frame_length: 50
+  dst_addr: 112
+  Frame packet: 
+
+>>> frame = mkframe(ev)
+>>> print "=== Frame:", frame
+=== Frame: MgmtBeacon,{'src_addr': '111', 'peerlinkId': 0, 'payload': '', 'duration': 10, 'frame_length': 50, 'dst_addr': '112'}
+
+>>> evfromframe = mkevent(pframe=frame) 
+>>> print "=== Event from frame:"; print evfromframe
+=== Event from frame:
+Event class name: EventFrameMgmt
+  Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon'
+  src_addr: 111
+  peerlinkId: 0
+  payload: 
+  duration: 10
+  frame_length: 50
+  dst_addr: 112
+  Frame packet: MgmtBeacon,{'src_addr': '111', 'peerlinkId': 0, 'payload': '', 'duration': 10, 'frame_length': 50, 'dst_addr': '112'}
+
+>>> evfromframe == ev
+True
+
+>>> ev_dc = {'src_addr':'111', 'dst_addr':'112', 'peerlinkId':222, 'duration':333}
+>>> ev = if_events.mkevent("MgmtBeacon", ev_dc=ev_dc)
+>>> frame = mkframe(ev)
+>>> evfromframe = mkevent(pframe=frame)
+>>> ev == evfromframe, len(frame), ev.ev_dc['frame_length']
+(True, 120, 50)
+
+>>> ev = if_events.mkevent("ActionConfirm", ev_dc=ev_dc)
+>>> frame = mkframe(ev)
+>>> evfromframe = mkevent(pframe=frame)
+>>> ev == evfromframe, len(frame), ev.ev_dc['frame_length']
+(True, 123, 50)
+
+>>> ev = if_events.mkevent("CtrlACK", ev_dc=ev_dc)
+>>> frame = mkframe(ev)
+>>> evfromframe = mkevent(pframe=frame)
+>>> ev == evfromframe, len(frame), ev.ev_dc['frame_length']
+(True, 117, 50)
+
+>>> ev_dc['payload'] = 'a testing payload in DataData event'
+>>> ev = if_events.mkevent("DataData", ev_dc=ev_dc)
+>>> frame = mkframe(ev)
+>>> evfromframe = mkevent(pframe=frame)
+>>> ev == evfromframe, len(frame), ev.ev_dc['frame_length']
+(True, 153, 50)
+
+
+
+
+
+

@@ -62,10 +62,13 @@
 </table>
 <!-- ==================== MODULE DESCRIPTION ==================== -->
 <h1 class="epydoc">Module evstrframes</h1><p class="nomargin-top"><span class="codelink"><a href="gn.libevents.evstrframes-pysrc.html">source&nbsp;code</a></span></p>
-<p>Use of events with string frames.</p>
+<p>Use of events with string frames, version 2.</p>
+  <p>This module uses a simplified frame format based on strings, aimed at 
+  testing; a primary concern is legilibilty, though some packing is done to
+  keep frame length short.</p>
   <p>This module defines two functions, mkevent() to make an Event object 
-  from a nickname and frame, and mkframe() to make a string frame from an 
-  Event object.</p>
+  from a nickname or string frame, and mkframe() to make a string frame 
+  from an Event object.</p>
 
 <!-- ==================== FUNCTIONS ==================== -->
 <a name="section-Functions"></a>
@@ -91,7 +94,8 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="gn.libevents.evstrframes-module.html#mkevent" class="summary-sig-name">mkevent</a>(<span class="summary-sig-arg">pnickname</span>=<span class="summary-sig-default">None</span>,
-        <span class="summary-sig-arg">pframe</span>=<span class="summary-sig-default">None</span>)</span><br />
+        <span class="summary-sig-arg">pframe</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">pev_dc</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>)</span><br />
       Creates an event from a nickname or from a frame.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="gn.libevents.evstrframes-pysrc.html#mkevent">source&nbsp;code</a></span>
@@ -109,25 +113,9 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="gn.libevents.evstrframes-module.html#mkframe" class="summary-sig-name">mkframe</a>(<span class="summary-sig-arg">ev_obj</span>)</span><br />
-      Returns a frame with the event information.</td>
+      Creates a string frame from an Event object.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="gn.libevents.evstrframes-pysrc.html#mkframe">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="test"></a><span class="summary-sig-name">test</span>()</span></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="gn.libevents.evstrframes-pysrc.html#test">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -187,7 +175,8 @@
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">mkevent</span>(<span class="sig-arg">pnickname</span>=<span class="sig-default">None</span>,
-        <span class="sig-arg">pframe</span>=<span class="sig-default">None</span>)</span>
+        <span class="sig-arg">pframe</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">pev_dc</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="gn.libevents.evstrframes-pysrc.html#mkevent">source&nbsp;code</a></span>&nbsp;
@@ -195,11 +184,17 @@
   </tr></table>
   
   <p>Creates an event from a nickname or from a frame.</p>
+  <p>This function accepts either an event nickname or a string frame, but 
+  not both. If an event nickname is given, an Event object of that nickname
+  is created; if a string frame is given, an Event object is created from 
+  that frame.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>pnickname</code></strong> - the event nickname.</li>
-        <li><strong class="pname"><code>pframe</code></strong> - a frame in bin dta format (confirm!)</li>
+        <li><strong class="pname"><code>pnickname</code></strong> - the event nickname, default None.</li>
+        <li><strong class="pname"><code>pframe</code></strong> - a frame in string format, default None.</li>
+        <li><strong class="pname"><code>pev_dc</code></strong> - a dictionary {field_name: value} for event creation; defaults to 
+          an empty dictionary. Disregarded if a frame is given.</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>an Event object.</dd>
@@ -220,14 +215,16 @@
     </td>
   </tr></table>
   
-  <p>Returns a frame with the event information.</p>
+  <p>Creates a string frame from an Event object.</p>
+  <p>Receives an Event object, returns a string frame with the event 
+  information.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>ev_obj</code></strong> - an Event object.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>a frame in bin data format (confirm!).</dd>
+        <dd>a frame in string format.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -263,7 +260,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Mar  4 10:15:08 2014
+    Generated by Epydoc 3.0.1 on Fri Mar  7 12:20:30 2014
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

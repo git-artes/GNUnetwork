@@ -27,10 +27,8 @@ gn.libadaptlay80211	gn.libadaptlay80211-module.html
 gn.libadaptlay80211.__package__	gn.libadaptlay80211-module.html#__package__
 gn.libadaptlay80211.schedEvToFr	gn.libadaptlay80211.schedEvToFr-module.html
 gn.libadaptlay80211.schedEvToFr.__package__	gn.libadaptlay80211.schedEvToFr-module.html#__package__
-gn.libadaptlay80211.schedEvToFr.test	gn.libadaptlay80211.schedEvToFr-module.html#test
 gn.libadaptlay80211.schedFrToEv	gn.libadaptlay80211.schedFrToEv-module.html
 gn.libadaptlay80211.schedFrToEv.__package__	gn.libadaptlay80211.schedFrToEv-module.html#__package__
-gn.libadaptlay80211.schedFrToEv.test	gn.libadaptlay80211.schedFrToEv-module.html#test
 gn.libadaptlay80211.schedLayer3	gn.libadaptlay80211.schedLayer3-module.html
 gn.libadaptlay80211.schedLayer3.IFF_TAP	gn.libadaptlay80211.schedLayer3-module.html#IFF_TAP
 gn.libadaptlay80211.schedLayer3.open_tun_interface	gn.libadaptlay80211.schedLayer3-module.html#open_tun_interface
@@ -61,7 +59,6 @@ gn.libevents.evstrframes	gn.libevents.evstrframes-module.html
 gn.libevents.evstrframes.mkframe	gn.libevents.evstrframes-module.html#mkframe
 gn.libevents.evstrframes.__package__	gn.libevents.evstrframes-module.html#__package__
 gn.libevents.evstrframes.mkevent	gn.libevents.evstrframes-module.html#mkevent
-gn.libevents.evstrframes.test	gn.libevents.evstrframes-module.html#test
 gn.libevents.evtimer	gn.libevents.evtimer-module.html
 gn.libevents.evtimer.dc_nicknames	gn.libevents.evtimer-module.html#dc_nicknames
 gn.libevents.evtimer.__package__	gn.libevents.evtimer-module.html#__package__

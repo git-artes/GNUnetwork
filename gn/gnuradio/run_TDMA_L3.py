@@ -172,7 +172,6 @@ def main():
                       default='bpsk',
                       help="Select modulation from: %s [default=%%default]"
                             % (', '.join(mods.keys()),))
-
     parser.add_option("-s", "--size", type="eng_float", default=100,
                       help="set packet size [default=%default]")
     parser.add_option("-M", "--megabytes", type="eng_float", default=1.0,
@@ -222,7 +221,7 @@ def main():
 #    l2Mgmt=StartL2Mgmt(schL1_L2.mgmt_q1,schL1_L2.tx_ev_q,options.mac,"256","Red IIE")
 #    l2Mgmt.start()
     L2_ctrl_rx_q =Queue.Queue(10)
-    L2_data_rx_q =Queue.Queue(15) 
+    L2_data_rx_q =Queue.Queue(5) 
     L2_event_tx_q = Queue.Queue(10)
     l3= schedLayer3.Layer3(L2_data_rx_q,L2_event_tx_q,'/dev/net/tun',options.mac,options.mac_dst)
     "OJO POR AHORA LE ESTOY PASANDO A LA MAC TDMA LA COLA DE MGMT Y NO LA CTRL PORQUE EL CANAL DE CONTRL ES UN BEACON____!!!!!!!"    
@@ -230,7 +229,7 @@ def main():
         net_conf = NetworkConfiguration.NetworkConfiguration(options.mac,'my network',256,1)   
         net_conf.slots = 3 
         " The first slot  is the control slot, the others are for data"
-        net_conf.control_time = 3
+        net_conf.control_time = 0.9
         " Each slot has 1 second"
         net_conf.list_nodes.append(options.mac)
         net_conf.list_nodes.append(options.mac_dst)

@@ -87,11 +87,11 @@ class DiscoveryPeeringController(threading.Thread) :
                             #print "Evento 3: ", event,'  my mac: ',self.my_addr,'\n'
                             self.my_peers.printPeersTable()
                     else:
-                        pass
-#                        print "Error: wrong MAC address, destination address:", \
-#                            event.ev_dc['dst_addr'], " source address : ", \
-#                            event.ev_dc['src_addr']," my address : ", \
-#                            self.my_addr               
+                        
+                        print "Error: wrong MAC address, destination address:", \
+                            event.ev_dc['dst_addr'], " source address : ", \
+                            event.ev_dc['src_addr']," my address : ", \
+                            self.my_addr               
     
                 else: 
                     print "Error: wrong event type"

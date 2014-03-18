@@ -32,12 +32,13 @@ class SchedEvToFr(gnscheduler.Scheduler):
         '''
         in_qu = self.in_queues[0]
         event = in_qu.get(True)
-
+        
         frmobj = if_events.evtofrm(event)
         frame = frmobj.mkpkt()       
 
         out_queue = self.out_queues['frames']
         out_queue.put(frame, False)   # add to queue, don't block 
+        print "frame : ", repr(frame)
         in_qu.task_done()
 
 

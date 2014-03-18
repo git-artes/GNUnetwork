@@ -33,10 +33,10 @@ class SchedFrToEv(gnscheduler.Scheduler):
         '''
         in_qu = self.in_queues[0]
         frame = in_qu.get(True)
-
+        print " recibi frame : ", repr(frame)
         frm_obj = if_frames.objfrompkt(frame)
         event = if_events.frmtoev(frm_obj)
-
+        print "recibi event : ", event
         if event != None:
             for item_type in self.out_queues.keys():
                 if  event.ev_type == item_type:

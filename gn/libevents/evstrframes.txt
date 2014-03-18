@@ -7,21 +7,22 @@ GN evstrframes, doctest file
 >>> ev = if_events.mkevent("MgmtBeacon", ev_dc={})
 >>> ev.ev_dc['src_addr'] = "111"
 >>> ev.ev_dc['dst_addr'] =  "112"
->>> print "=== Event to frame:"; print ev
-=== Event to frame:
+>>> print "=== Event:"; print ev
+=== Event:
 Event class name: EventFrameMgmt
   Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon'
   src_addr: 111
-  peerlinkId: 0
-  payload: 
   duration: 10
-  frame_length: 50
+  peerlinkId: 0
+  frame_length: 0
   dst_addr: 112
   Frame packet: 
+  Payload: ''
 
 >>> frame = mkframe(ev)
+>>> ev.ev_dc['frame_length'] = len(frame)
 >>> print "=== Frame:", frame
-=== Frame: MgmtBeacon,{'src_addr': '111', 'peerlinkId': 0, 'payload': '', 'duration': 10, 'frame_length': 50, 'dst_addr': '112'}
+=== Frame: MgmtBeacon,{'src_addr': '111', 'duration': 10, 'peerlinkId': 0, 'frame_length': 0, 'dst_addr': '112'}
 
 >>> evfromframe = mkevent(pframe=frame) 
 >>> print "=== Event from frame:"; print evfromframe
@@ -30,12 +31,11 @@ Event class name: EventFrameMgmt
   Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon'
   src_addr: 111
   peerlinkId: 0
-  payload: 
   duration: 10
-  frame_length: 50
+  frame_length: 101
   dst_addr: 112
-  Frame packet: MgmtBeacon,{'src_addr': '111', 'peerlinkId': 0, 'payload': '', 'duration': 10, 'frame_length': 50, 'dst_addr': '112'}
-
+  Frame packet: MgmtBeacon,{'src_addr': '111', 'duration': 10, 'peerlinkId': 0, 'frame_length': 0, 'dst_addr': '112'}
+  Payload: ''
 >>> evfromframe == ev
 True
 
@@ -44,26 +44,26 @@ True
 >>> frame = mkframe(ev)
 >>> evfromframe = mkevent(pframe=frame)
 >>> ev == evfromframe, len(frame), ev.ev_dc['frame_length']
-(True, 120, 50)
+(True, 104, 104)
 
 >>> ev = if_events.mkevent("ActionConfirm", ev_dc=ev_dc)
 >>> frame = mkframe(ev)
 >>> evfromframe = mkevent(pframe=frame)
 >>> ev == evfromframe, len(frame), ev.ev_dc['frame_length']
-(True, 123, 50)
+(True, 107, 107)
 
 >>> ev = if_events.mkevent("CtrlACK", ev_dc=ev_dc)
 >>> frame = mkframe(ev)
 >>> evfromframe = mkevent(pframe=frame)
 >>> ev == evfromframe, len(frame), ev.ev_dc['frame_length']
-(True, 117, 50)
+(True, 101, 101)
 
 >>> ev_dc['payload'] = 'a testing payload in DataData event'
 >>> ev = if_events.mkevent("DataData", ev_dc=ev_dc)
 >>> frame = mkframe(ev)
 >>> evfromframe = mkevent(pframe=frame)
 >>> ev == evfromframe, len(frame), ev.ev_dc['frame_length']
-(True, 153, 50)
+(True, 152, 152)
 
 
 

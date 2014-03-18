@@ -54,6 +54,7 @@ def mkfrmobj(pkt):
     else:
         _fb_obj = None
 
+    fr_obj.frmkpkt = pkt
     return fr_obj
 
 
@@ -221,6 +222,7 @@ class AFrame(Frame):
             self._fb_obj = None     # required to recognize FB with data
             self.dc_frbd_fldvals = {}
         self.frmpkt = None          # load using self.mkpkt()
+        #self.frmpkt = self.mkpkt()
         return
 
 

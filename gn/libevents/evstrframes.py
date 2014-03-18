@@ -13,23 +13,23 @@ import if_events
 import sys
 
 
-def mkevent(pnickname=None, pframe=None, pev_dc={}):
+def mkevent(pnickname=None, pframe=None, pev_dc={}, payload=''):
     '''Creates an event from a nickname or from a frame.
     
     This function accepts either an event nickname or a string frame, but not both. If an event nickname is given, an Event object of that nickname is created; if a string frame is given, an Event object is created from that frame.
     @param pnickname: the event nickname, default None.
     @param pframe: a frame in string format, default None.
     @param pev_dc: a dictionary {field_name: value} for event creation; defaults to an empty dictionary. Disregarded if a frame is given.
+    @param payload: the payload, not included in dictionary to preserve binary string format as received.
     @return: an Event object.
     '''
-   
     if not pnickname and not pframe:
         raise events.EventNameException('No event nickname or frame received')
     if pnickname and pframe:
         raise events.EventNameException( \
             'Both event nickname and frame received')
     if pnickname:
-        return if_events.mkevent(pnickname, pev_dc)
+        return if_events.mkevent(pnickname, ev_dc=pev_dc)
     if pframe:
         ev_dc = {}
         try:        
@@ -37,9 +37,10 @@ def mkevent(pnickname=None, pframe=None, pev_dc={}):
             # TODO: this function should adjust frame_length. How?
             #    frame_lenght must be set in ev_dc of Event. Is it used?
             ev = if_events.mkevent(nickname, frmpkt=pframe, ev_dc=eval(ev_dc))
+            ev.payload = payload
         except:
             raise events.EventNameException( \
-                'cannot generates event: malformed packet')
+                'cannot generate event: malformed packet')
         return  ev
 
 
@@ -74,8 +75,12 @@ def mkframe(ev_obj):
     if not ev_obj.ev_dc['peerlinkId']:
         ev_obj.ev_dc['peerlinkId'] = 0
     ### end of WARNING
+    #
+    # frame_length cannot be included in packet, alters frame_length!
+    #    other encoding must be used to inclue frame_length in packet
     frame = '' + ev_obj.nickname + ',' + str(ev_obj.ev_dc)
-
+    ev_obj.frmpkt = frame
+    ev_obj.ev_dc['frame_length'] = len(ev_obj.frmpkt)
     return frame
 
 

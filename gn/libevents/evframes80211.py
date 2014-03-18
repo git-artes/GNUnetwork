@@ -33,16 +33,18 @@ class EventFrame(Event):
             'src_addr': 'addr_1', \
             'dst_addr': 'addr_1', \
             'duration': 10, \
-            'frame_length': 50, \
+
+            'frame_length': 0, \
             'peerlinkId': 0, \
-            'payload' : '',\
             }
+        self.payload = ''
         self.ev_dc.update(ev_dc)
         return
 
     def __str__(self):
         ss = Event.__str__(self)
         ss += '\n  Frame packet: ' + str(self.frmpkt)
+        ss += '\n  Payload: ' + repr(self.payload)
         return ss
 
     def __eq__(self, other):
@@ -50,12 +52,14 @@ class EventFrame(Event):
         if self.nickname != other.nickname or \
             self.ev_type != other.ev_type or \
             self.ev_subtype != other.ev_subtype:
-            eq = False
+            return False
         #self.frmpkt = frmpkt
         #self.frmobj = None    # ref to Frame obj associated with this event
         for fld in self.ev_dc.keys():
             if self.ev_dc[fld] != other.ev_dc[fld]:
                 eq = False
+                #print "Events not equal,", fld+':', \
+                #    self.ev_dc[fld], other.ev_dc[fld]
                 break
         return eq
 

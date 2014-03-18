@@ -42,5 +42,13 @@ $ git branch -d events2       # borra branch events2
 
 $ git push gn master          # no sé si lo requiere, lo hice igual
 
-Observación: la rama events2 no desaparece del web, aunque se le pidió borrar, pero el master queda actualizado con los cambios.
+Borrar rama (branch) en el repositorio remoto:
+  1. Ir a la página web del proyecto, https://github.com/vagonbar/GNUnetwork
+  2. En línea donde indica commits, branches, releases, contributors, clic en branches.
+  3. Elegir la rama a borrar, botón "Delete branch".
+
+
+Observaciones.
+  1: si se hace 'git merge --no-ff events2' se fuerza la creación de un commit del merge, lo que deja documentados todos los merge.
+  2: la rama events2 no desaparece del web, aunque se le pidió borrar, pero el master queda actualizado con los cambios.
 

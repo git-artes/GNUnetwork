@@ -49,13 +49,22 @@ def mkevent(nickname, **kwargs):
         ev_dc = kwargs['ev_dc']
     if kwargs.has_key('frmpkt'):
         frmpkt = kwargs['frmpkt']
-        
+        ev_dc['frame_length'] = len(frmpkt)
+    else:
+        ev_dc['frame_length'] = 0
+        frmpkt = ''
+    if kwargs.has_key('payload'):
+        payload = kwargs['payload']
+    else:
+        payload = ''
     if evtimer.dc_nicknames.has_key(nickname):
         ptype, psubtype, eventclass = evtimer.dc_nicknames[nickname]
         return eventclass(nickname, ptype, psubtype, ev_dc)    
     elif evframes80211.dc_nicknames.has_key(nickname):
         ev_type, ev_subtype, eventclass = evframes80211.dc_nicknames[nickname]
-        return eventclass(nickname, ev_type, ev_subtype, frmpkt, ev_dc)
+        ev = eventclass(nickname, ev_type, ev_subtype, frmpkt, ev_dc)
+        ev.payload = payload
+        return ev
     else:
         raise EventNameException(nickname + ' is not a valid nickname.')
 
@@ -69,7 +78,9 @@ def frmtoev(frmobj):
 
     # load event fields common to all types of frames
     ev_dc = {}
+    payload = ''
     ev_dc['duration'] = frmobj.dc_fldvals['duration']
+    ev_dc['frame_length'] = frmobj.frame_len
 
     # determine frame type; if Action, determine type of action frame
     # load event fields accordint to type of frame
@@ -97,7 +108,7 @@ def frmtoev(frmobj):
         nickname = 'DataData'
         ev_dc['src_addr'] = frmobj.dc_fldvals['address_1'] # Mgmt, Data frames
         ev_dc['dst_addr'] = frmobj.dc_fldvals['address_2'] # Mgmt, Data frames
-        ev_dc['payload'] = frmobj.dc_fldvals['frame_body']
+        payload = frmobj.dc_fldvals['frame_body']
     elif frmobj.frmtype in ['RTS', 'CTS', 'ACK']:    # Ctrl frames
         nickname = 'Ctrl' + frmobj.frmtype[-3:]      # CtrlRTS --> RTS
         if frmobj.dc_fldvals.has_key('ta'):
@@ -107,7 +118,8 @@ def frmtoev(frmobj):
         raise MacFrameException(frmogj.frmtype + ' not a valid frame type')
         
     # make Event object
-    ev = mkevent(nickname, ev_dc=ev_dc)
+    ev = mkevent(nickname, ev_dc=ev_dc, payload=payload)
+    ev.ev_dc['frame_length'] = frmobj.frame_len    # adjust frame length
     ev.frmpkt = frmobj.frmpkt
     ev.frmobj = frmobj    # ref to Frame obj associated with this event
     return ev
@@ -146,7 +158,7 @@ def evtofrm(evobj, fr_dc_fldvals={}, fr_dc_frbd_fldvals={}):
     elif 'Data' in evobj.nickname:      # a Data event
         dc_fldvals['address_1'] = evobj.ev_dc['src_addr'] # Mgmt, Data frames
         dc_fldvals['address_2'] = evobj.ev_dc['dst_addr'] # Mgmt, Data frames
-        dc_fldvals['frame_body'] = evobj.ev_dc['payload']
+        dc_fldvals['frame_body'] = evobj.payload
     else:                               # an unknown type of event
         msg = 'not a valid event nickname for field settings'
         raise EventFrameException(evobj.nickname + msg)
@@ -155,8 +167,9 @@ def evtofrm(evobj, fr_dc_fldvals={}, fr_dc_frbd_fldvals={}):
     # make Frame object, record frame length
     frmobj = if_frames.mkframeobj(frmname, dc_fldvals=dc_fldvals, \
         dc_frbd_fldvals=dc_frbd_fldvals) 
-    evobj.ev_dc['frame_len'] = frmobj.frame_len
+    #evobj.ev_dc['frame_length'] = frmobj.frame_len
     evobj.frmpkt = frmobj.mkpkt()
+    evobj.ev_dc['frame_length'] = len(evobj.frmpkt)
     evobj.frmobj = frmobj    # ref to Frame obj associated with this event
     return frmobj
 

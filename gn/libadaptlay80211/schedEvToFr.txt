@@ -19,39 +19,38 @@ Event class name: EventFrameMgmt
   Nickname: 'MgmtBeacon'; Type: 'Mgmt'; SubType: 'Beacon'
   src_addr: 100
   peerlinkId: 0
-  payload: 
   duration: 10
-  frame_length: 50
+  frame_length: 0
   dst_addr: 150
   Frame packet: 
+  Payload: ''
 Event class name: EventFrame
   Nickname: 'CtrlRTS'; Type: 'Ctrl'; SubType: 'RTS'
   src_addr: 100
   peerlinkId: 0
-  payload: 
   duration: 10
-  frame_length: 50
+  frame_length: 0
   dst_addr: 150
   Frame packet: 
+  Payload: ''
 Event class name: EventFrame
   Nickname: 'CtrlCTS'; Type: 'Ctrl'; SubType: 'CTS'
   src_addr: 100
   peerlinkId: 0
-  payload: 
   duration: 10
-  frame_length: 50
+  frame_length: 0
   dst_addr: 150
   Frame packet: 
+  Payload: ''
 Event class name: EventFrame
   Nickname: 'DataData'; Type: 'Data'; SubType: 'Data'
   src_addr: 100
   peerlinkId: 0
-  payload: 
   duration: 10
-  frame_length: 50
+  frame_length: 0
   dst_addr: 150
   Frame packet: 
-
+  Payload: ''
 
 >>> print 'Input queue size', ev_q.qsize()
 Input queue size 4

@@ -127,7 +127,7 @@ class ReadLayer3(threading.Thread):
                 event = if_events.mkevent("DataData")
                 event.ev_dc['src_addr'] = self.my_addr
                 event.ev_dc['dst_addr'] = self.dst_addr
-                event.ev_dc['payload'] = payload
+                event.payload = payload
                 try:
                     self.out_queue.put(event, False)   # add to queue, don't block  
                     module_logger.debug(str(self.my_addr) +' L3: event from L3 transmited, queue size :  '+ str(self.out_queue.qsize()) )
@@ -165,13 +165,15 @@ class ReadLayer2(threading.Thread):
         '''
         while not self.finished :
             event = self.in_queue.get()
-            payload = event.ev_dc['payload']
+            payload = event.payload
             module_logger.debug(' Length of payload recieved from usrp  and send it to virtual interface: ' + str(len(payload)) )
             os.write(self.tun_fd, payload)
         return
     def stop(self):
         self.finished = True
         self._Thread__stop()
+
+
 def test():
     '''Tests the SchedLayer3 subclass.
 

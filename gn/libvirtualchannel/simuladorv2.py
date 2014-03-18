@@ -12,8 +12,10 @@ import Queue
 import libmanagement.NetworkConfiguration as NetworkConfiguration
 import libmanagement.DiscoveryPeeringController as DiscoveryPeeringController
 import libmanagement.Beacon as Beacon
-import libadaptationlayer.schedEvToFr as schedEvToFr
-import libadaptationlayer.schedFrToEv as schedFrToEv
+#import libadaptationlayer.schedEvToFr as schedEvToFr
+#import libadaptationlayer.schedFrToEv as schedFrToEv
+import libadaptlay80211.schedEvToFr as schedEvToFr
+import libadaptlay80211.schedFrToEv as schedFrToEv
 import virtualchannel
 
 
@@ -40,7 +42,7 @@ def simulates():
     tx1.start()
 
     # Network configuration: MAC Addr, name of network and broadcast Addr    
-    net_conf1 = NetworkConfiguration.NetworkConfiguration("100",'my network',"256",1)
+    net_conf1 = NetworkConfiguration.NetworkConfiguration("000100",'my network',"000256",1)
     net_conf1.retry_timeout = 5    
     # Starts the Controller of The FSM for Peering Discovering
     dpcontrol1 =  DiscoveryPeeringController.DiscoveryPeeringController(net_conf1,None,mgmt_q1,tx_ev_q1)
@@ -73,7 +75,7 @@ def simulates():
     tx2.start()
 
     # Network configuration: the MAC Addr, the name of the network and the broadcast Addr    
-    net_conf2 = NetworkConfiguration.NetworkConfiguration("101",'my network',"256",1)
+    net_conf2 = NetworkConfiguration.NetworkConfiguration("000101",'my network',"000256",1)
     net_conf2.retry_timeout = 5    
     # Starts the Controller of The FSM for Peering Discovering"
     dpcontrol2 =  DiscoveryPeeringController.DiscoveryPeeringController(net_conf2,None,mgmt_q2,tx_ev_q2)
@@ -109,7 +111,7 @@ def simulates():
     tx3.start()
 
     # Network configuration: the MAC Addr, the name of the network and the broadcast Addr"    
-    net_conf3 = NetworkConfiguration.NetworkConfiguration("102",'my network',"256",1)
+    net_conf3 = NetworkConfiguration.NetworkConfiguration("000102",'my network',"000256",1)
     net_conf3.retry_timeout = 5    
     # Starts the Controller of The FSM for Peering Discovering"
     dpcontrol3 =  DiscoveryPeeringController.DiscoveryPeeringController(net_conf3,None,mgmt_q3,tx_ev_q3)

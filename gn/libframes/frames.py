@@ -150,7 +150,7 @@ class Frame(object):
            msg = 'Lengths differ in frame_len and dc_fields'
            raise FrameException(msg)
         """
-        return reslt
+        return rslt
 
 
     def setfrmbdy(self, new_frmbdy=None):

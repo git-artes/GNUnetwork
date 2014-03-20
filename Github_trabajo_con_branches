@@ -44,8 +44,9 @@ $ git push gn master          # no sé si lo requiere, lo hice igual
 
 Borrar rama (branch) en el repositorio remoto:
   1. Ir a la página web del proyecto, https://github.com/vagonbar/GNUnetwork
-  2. En línea donde indica commits, branches, releases, contributors, clic en branches.
-  3. Elegir la rama a borrar, botón "Delete branch".
+  2. Sign in!
+  3. En línea donde indica commits, branches, releases, contributors, clic en branches.
+  4. Elegir la rama a borrar, botón "Delete branch".
 
 
 Observaciones.

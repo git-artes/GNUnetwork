@@ -39,8 +39,10 @@ def mkevent(pnickname=None, pframe=None, pev_dc={}, payload=''):
             ev = if_events.mkevent(nickname, frmpkt=pframe, ev_dc=eval(ev_dc))
             ev.payload = payload
         except:
-            raise events.EventNameException( \
-                'cannot generate event: malformed packet')
+            #raise events.EventNameException( \
+            #    'cannot generate event: malformed packet')
+            print 'evstrframes: cannot generate event: malformed packet'
+            return None
         return  ev
 
 

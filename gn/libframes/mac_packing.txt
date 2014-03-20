@@ -1,7 +1,8 @@
+===
+=== mac_packing.txt:  Doctests for packing and unpacking frames
+===
 
-
-mac_packing.txt:  Doctests for packing and unpacking frames
-
+2014-03-20: changed output to reflect ad-hoc addition of peerlinkId in frame body.
 
 >>> import mac_frmbld
 
@@ -9,24 +10,25 @@ mac_packing.txt:  Doctests for packing and unpacking frames
 >>> be_obj = mac_frmbld.AMgmtFrame('Beacon', dc_frbd_fldvals=dc_fb_fldvals)
 
 >>> be_obj.consistchk()
+True
 >>> be_pkt = be_obj.mkpkt()
 >>> print len(be_pkt), be_obj.frame_len
-86 86
+88 88
 
 >>> fr_obj = mac_frmbld.mkfrmobj(be_pkt)
 
 >>> print fr_obj
 Frame type  : Beacon
 Bit or bytes: bytes
-Frame length: 86
+Frame length: 88
 frame_ctrl: bytes, no bitmask   0    2  False     !H :  32768
   duration: bytes, no bitmask   2    4  False     !H :  0
  address_1: bytes, no bitmask   4   10  False    !6s :  'dt-ad1'
  address_2: bytes, no bitmask  10   16  False    !6s :  'dt-ad2'
  address_3: bytes, no bitmask  16   22  False    !6s :  'dt-ad3'
   seq_ctrl: bytes, no bitmask  22   24  False     !H :  0
-frame_body: bytes, no bitmask  24   82  False   !58s :  '\x00\x00\x00\x00\x00\x00\x00\x01\x00\x01\x00\x01..a new SSID......................------------'
-       fcs: bytes, no bitmask  -4   86  False     !I :  0
+frame_body: bytes, no bitmask  24   84  False   !60s :  '\x00\x00\x00\x00\x00\x00\x00\x01\x00\x01\x00\x01..a new SSID......................------------\x00\x00'
+       fcs: bytes, no bitmask  -4   88  False     !I :  0
 <BLANKLINE>
 
 >>> print fr_obj._fc_obj
@@ -49,11 +51,12 @@ Frame length: 2
 >>> print fr_obj._fb_obj
 Frame type  : FrameBody
 Bit or bytes: bytes
-Frame length: 58
+Frame length: 60
  Timestamp: bytes, no bitmask   0    8  False     !Q :  1
 BeaconInterval: bytes, no bitmask   8   10  False     !H :  1
 CapabilitiesInfo: bytes, no bitmask  10   12  False     !H :  1
       SSID: bytes, no bitmask  12   46  False   !34s :  '..a new SSID......................'
 SupportedRates: bytes, no bitmask  46   58  False   !12s :  '------------'
+peerlinkId: bytes, no bitmask  58   60  False     !H :  0
 <BLANKLINE>
 

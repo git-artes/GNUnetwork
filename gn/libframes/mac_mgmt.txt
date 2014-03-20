@@ -11,15 +11,15 @@
 >>> print be_ob1
 Frame type  : Beacon
 Bit or bytes: bytes
-Frame length: 86
+Frame length: 88
 frame_ctrl: bytes, no bitmask   0    2  False     !H :  32768
   duration: bytes, no bitmask   2    4  False     !H :  0
  address_1: bytes, no bitmask   4   10  False    !6s :  'dt-ad1-'
  address_2: bytes, no bitmask  10   16  False    !6s :  'dt-ad2-'
  address_3: bytes, no bitmask  16   22  False    !6s :  'dt-ad3-'
   seq_ctrl: bytes, no bitmask  22   24  False     !H :  0
-frame_body: bytes, no bitmask  24   82  False   !58s :  '\x00\x00\x00\x00\x00\x00\x00\x01\x00\x01\x00\x01\x00 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS------------'
-       fcs: bytes, no bitmask  -4   86  False     !I :  0
+frame_body: bytes, no bitmask  24   84  False   !60s :  '\x00\x00\x00\x00\x00\x00\x00\x01\x00\x01\x00\x01\x00 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS------------\x00\x00'
+       fcs: bytes, no bitmask  -4   88  False     !I :  0
 <BLANKLINE>
 
 Set field values for fields packed in frame body
@@ -30,12 +30,13 @@ Set field values for fields packed in frame body
 >>> print be_ob2._fb_obj
 Frame type  : FrameBody
 Bit or bytes: bytes
-Frame length: 58
+Frame length: 60
  Timestamp: bytes, no bitmask   0    8  False     !Q :  11
 BeaconInterval: bytes, no bitmask   8   10  False     !H :  12
 CapabilitiesInfo: bytes, no bitmask  10   12  False     !H :  13
       SSID: bytes, no bitmask  12   46  False   !34s :  'el Ssid Campeador!----------------'
 SupportedRates: bytes, no bitmask  46   58  False   !12s :  'supp rates--'
+peerlinkId: bytes, no bitmask  58   60  False     !H :  0
 <BLANKLINE>
 
 >>> ret = be_ob1.mkhexfl('aux/pk_mgmt_be1')
@@ -47,15 +48,15 @@ SupportedRates: bytes, no bitmask  46   58  False   !12s :  'supp rates--'
 >>> print ob1
 Frame type  : Beacon
 Bit or bytes: bytes
-Frame length: 86
+Frame length: 88
 frame_ctrl: bytes, no bitmask   0    2  False     !H :  32768
   duration: bytes, no bitmask   2    4  False     !H :  0
  address_1: bytes, no bitmask   4   10  False    !6s :  'dt-ad1'
  address_2: bytes, no bitmask  10   16  False    !6s :  'dt-ad2'
  address_3: bytes, no bitmask  16   22  False    !6s :  'dt-ad3'
   seq_ctrl: bytes, no bitmask  22   24  False     !H :  0
-frame_body: bytes, no bitmask  24   82  False   !58s :  '\x00\x00\x00\x00\x00\x00\x00\x01\x00\x01\x00\x01\x00 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS------------'
-       fcs: bytes, no bitmask  -4   86  False     !I :  0
+frame_body: bytes, no bitmask  24   84  False   !60s :  '\x00\x00\x00\x00\x00\x00\x00\x01\x00\x01\x00\x01\x00 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS------------\x00\x00'
+       fcs: bytes, no bitmask  -4   88  False     !I :  0
 <BLANKLINE>
     
 

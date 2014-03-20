@@ -2,6 +2,10 @@
 ==== mac_action.txt : Management, Action
 ====
 
+2014-03-20: changed output to reflect ad-hoc addition of peerlinkId in frame body.
+
+
+
 >>> import os
 >>> import mac_frmbld
 
@@ -11,25 +15,26 @@ Action frame, Mesh Peering Open, Category=13, Action=1
 >>> print ac_ob1
 Frame type  : Action
 Bit or bytes: bytes
-Frame length: 33
+Frame length: 35
 frame_ctrl: bytes, no bitmask   0    2  False     !H :  53248
   duration: bytes, no bitmask   2    4  False     !H :  0
  address_1: bytes, no bitmask   4   10  False    !6s :  'dt-ad1-'
  address_2: bytes, no bitmask  10   16  False    !6s :  'dt-ad2-'
  address_3: bytes, no bitmask  16   22  False    !6s :  'dt-ad3-'
   seq_ctrl: bytes, no bitmask  22   24  False     !H :  0
-frame_body: bytes, no bitmask  24   29  False    !5s :  '\r\x01\x00\x00\x00'
-       fcs: bytes, no bitmask  -4   33  False     !I :  0
+frame_body: bytes, no bitmask  24   31  False    !7s :  '\r\x01\x00\x00\x00\x00\x00'
+       fcs: bytes, no bitmask  -4   35  False     !I :  0
 <BLANKLINE>
 
 >>> print ac_ob1._fb_obj
 Frame type  : FrameBody
 Bit or bytes: bytes
-Frame length: 5
+Frame length: 7
   Category: bytes, no bitmask   0    1  False     !B :  13
     Action: bytes, no bitmask   1    2  False     !B :  1
     Dialog: bytes, no bitmask   2    3  False     !B :  0
     TCPreq: bytes, no bitmask   3    5  False     !H :  0
+peerlinkId: bytes, no bitmask   5    7  False     !H :  0
 <BLANKLINE>
 
 >>> print ac_ob1._fc_obj
@@ -51,7 +56,7 @@ Frame length: 2
 
 >>> ac_ob1_pk = ac_ob1.mkpkt()
 >>> ac_ob1_pk, len(ac_ob1_pk)
-('\xd0\x00\x00\x00dt-ad1dt-ad2dt-ad3\x00\x00\r\x01\x00\x00\x00\x00\x00\x00\x00', 33)
+('\xd0\x00\x00\x00dt-ad1dt-ad2dt-ad3\x00\x00\r\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00', 35)
 >>> ret = ac_ob1.mkhexfl('aux/pk_act1')
 
 Action frame, Mesh Peering Confirm, Category=13, Action=2

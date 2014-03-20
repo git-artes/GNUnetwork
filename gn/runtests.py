@@ -18,7 +18,7 @@ curdir = os.getcwd()
 omitdirs = ['/old/', '/gnu/']
 lststfiles = []
 # selects .txt files in directory tree except if dir in omitdirs
-for dirpath, dirnames, filenames in os.walk('..'):
+for dirpath, dirnames, filenames in os.walk('.'):
     for fname in filenames:
         #if fl.endswith('.py'):
         #    nmfl = fl.partition('.py')[0]

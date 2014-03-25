@@ -12,15 +12,20 @@ import libmanagement.NetworkConfiguration as NetworkConfiguration
 import libtimer.timer as Timer
 import random
 
-SIFSTime = 1
-DIFSTime = 1
-CTSTime = 1
+Loses = 10
+aSIFSTime = 1
+aDIFSTime = 1
+# "CTS_Time” shall be calculated using the length of the CTS frame and the data rate at which the RTS frame used for the most recent NAV update was received.
+CTS_Time = 14/34000  # 14 bytes, 34M ??
 aSlotTime = 1
 aRTSThreshold = 60
-dot11LongRetryLimit = 50
-dot11ShortRetryLimit = 50
-CWmin = 4
-CWmax = 32
+aPHY_RX_START_Delay = 10
+dot11LongRetryLimit = 5
+dot11ShortRetryLimit = 5
+CWmin = 15
+CWmax = 1023
+CTSTout = aSIFSTime + aSlotTime + aPHY_RX_START_Delay
+ACKTout = aSIFSTime + aSlotTime + aPHY_RX_START_Delay
 
 class ieee80211mac() :
     """   The 802.11 mac finite state machine.
@@ -37,7 +42,6 @@ class ieee80211mac() :
 		self.net_conf = net_conf
 		self.tname = tname
 		self.timer_q = timer_q
-		self.tout = 100
 		
 		self.LRC = 0 # Long Retry Counter
 		self.SRC = 0 # Short Retry Counter
@@ -60,12 +64,14 @@ class ieee80211mac() :
 		self.mac_fsm.add_transition_any  (					'IDLE', 		   self.Error, 	   	'IDLE'    	)
 
 		self.mac_fsm.add_transition      ('ACK',            'WAIT_ACK',        self.rcvACK, 	'IDLE'    	)
-		self.mac_fsm.add_transition      ('TimerTimer',     'WAIT_ACK',        self.sndData,    'WAIT_ACK'	)
+		self.mac_fsm.add_transition      ('ACKTout',     	'WAIT_ACK',        self.sndData,    'WAIT_ACK'	)
+		self.mac_fsm.add_transition      ('DataAbort',     	'WAIT_ACK',        self.sndData,    'WAIT_ACK'	)
 		self.mac_fsm.add_transition      ('RTS',            'WAIT_ACK',        self.rcvRTS,     'WAIT_CTS'	)
 		self.mac_fsm.add_transition_any  (					'WAIT_ACK', 	   self.Error, 	   	'WAIT_ACK'	)
 
 		self.mac_fsm.add_transition      ('CTS',            'WAIT_CTS',        self.sndData,    'WAIT_ACK'	)
-		self.mac_fsm.add_transition      ('TimerTimer',     'WAIT_CTS',        self.sndRTS,     'WAIT_CTS'	)
+		self.mac_fsm.add_transition      ('CTSTout', 	    'WAIT_CTS',        self.sndRTS,     'WAIT_CTS'	)
+		self.mac_fsm.add_transition      ('RTSAbort', 	    'WAIT_CTS',        self.sndRTS,     'WAIT_CTS'	)
 		self.mac_fsm.add_transition      ('RTS',            'WAIT_CTS',        self.rcvRTS,     'WAIT_CTS'	)
 		self.mac_fsm.add_transition_any  (					'WAIT_CTS', 	   self.Error, 	   	'WAIT_CTS'	)
 
@@ -79,17 +85,33 @@ class ieee80211mac() :
 		self.datatosend = self.mac_fsm.memory
 		if ( event.ev_dc['frame_length'] > aRTSThreshold ):
 			self.sndRTS( fsm )
-			self.start_timer()
+			log( self.tname, 'MAC: start timer' )
+			self.rtstimer=Timer.Timer( self.timer_q, CTSTout, dot11ShortRetryLimit, 'TimerCTSTout', 'TimerRTSAbort' )
+			self.rtstimer.start()
 			self.mac_fsm.next_state = 'WAIT_CTS'
 		else:
 			self.sndData( fsm )
-			self.start_timer()
+			if ( self.datatosend.ev_dc['frame_length'] > aRTSThreshold ):
+				self.datatimer=Timer.Timer( self.timer_q, ACKTout, dot11ShortRetryLimit, 'TimerACKTout', 'TimerDataAbort' )
+			else:
+				self.datatimer=Timer.Timer( self.timer_q, ACKTout, dot11LongRetryLimit, 'TimerACKTout', 'TimerDataAbort' )
+			log( self.tname, 'MAC: start timer' )
+			self.datatimer.start()
 		return True
 
     def sndData ( self, fsm ):
-		log( self.tname, 'MAC: Send Data' )
-		##self.snd_frame( self.mac_fsm.memory )
-		self.snd_frame( self.datatosend )
+		event = self.mac_fsm.memory
+		if ( event.ev_subtype == 'ACKTout' ):
+			if ( event.nickname == 'TimerDataAbort' ):
+				log( self.tname, 'MAC: Send Data EXAUSTED' )
+				self.datatimer.stop()
+				return False
+			elif ( event.nickname == 'TimerACKTout' ):
+				log( self.tname, 'MAC: Send Data. Retry' )
+				self.snd_frame( self.datatosend )
+		else:
+			##self.snd_frame( self.mac_fsm.memory )
+			self.snd_frame( self.datatosend )
 		return True
 
     def snd_frame( self, event ):
@@ -97,41 +119,45 @@ class ieee80211mac() :
 		txok = False;
 		while ( txok == False ):
 			log( self.tname, 'MAC: loop LRC: ' + str(self.LRC) + ', SRC: ' + str( self.SRC) )
-			if ( self.SRC == 0 and self.LRC == 0 ):		# 1er intento
-				self.backoff()
-			else:
-				self.CW = max( self.CW*2+1, CWmax )
-				log( self.tname, 'MAC: Send Frame new CW' + str( self.CW ) )
-				if ( event.ev_dc['frame_length'] > aRTSThreshold ):
-					self.LRC += 1
-					if ( self.LRC >= dot11LongRetryLimit ):
-						self.discard()
-						self.CW = CWmin
-						self.LRC = 0
-						log( self.tname, 'MAC: LRC > ' + str( dot11LongRetryLimit ) )
-						return False
-				else:
-					self.SRC += 1
-					if ( self.SRC >= dot11ShortRetryLimit ):
-						self.discard()
-						self.CW = CWmin
-						self.SRC = 0
-						log( self.tname, 'MAC: SRC > ' + str( dot11ShortRetryLimit ) )
-						return False
+			#if ( self.SRC == 0 and self.LRC == 0 ):		# 1er intento
+			#	self.backoff()
+			if ( not ( event.ev_dc['frame_length'] > aRTSThreshold and self.LRC == 0 ) and not ( event.ev_dc['frame_length'] <= aRTSThreshold and self.SRC == 0 ) ):
+#				# self.backoff()
+#			else:
+				self.CW = min( self.CW*2+1, CWmax )
+				log( self.tname, 'MAC: Send Frame new CW ' + str( self.CW ) )
 				self.backoff()
 			if ( self.freeChannel() ):
 				self.sendtoL1( event )
 				log( self.tname, 'MAC: Send Frame (done)' )
 				txok = True
+				break;
+			if ( event.ev_dc['frame_length'] > aRTSThreshold ):
+				self.LRC += 1
+				if ( self.LRC >= dot11LongRetryLimit ):
+					self.discard()
+					self.CW = CWmin
+					self.LRC = 0
+					log( self.tname, 'MAC: LRC > ' + str( dot11LongRetryLimit ) )
+					return False
+			else:
+				self.SRC += 1
+				if ( self.SRC >= dot11ShortRetryLimit ):
+					self.discard()
+					self.CW = CWmin
+					self.SRC = 0
+					log( self.tname, 'MAC: SRC > ' + str( dot11ShortRetryLimit ) )
+					return False
+			self.backoff()
 			log( self.tname, "MAC: Send Frame: keep waiting" )
 		log( self.tname, 'MAC: Send Frame (done)' )
 		return True
 		
     def sndRTS ( self, fsm ):
 		log( self.tname, 'MAC: Send RTS' )
+		rcv_event = self.mac_fsm.memory
 		event = if_events.mkevent("CtrlRTS")
 		event.ev_dc['src_addr']=self.net_conf.station_id
-		rcv_event = self.mac_fsm.memory
 		event.ev_dc['dst_addr']= rcv_event.ev_dc['dst_addr']
 		event.ev_dc['duration']=0;
 		self.snd_frame( event )
@@ -162,7 +188,8 @@ class ieee80211mac() :
 		log( self.tname, 'MAC: Update NAV' )
 		event = self.mac_fsm.memory
 		if ( fsm.input_symbol == "RTS" ):
-			waitT = 2*SIFSTime + CTSTime + 2*aSlotTime
+			#waitT = 2*aSIFSTime + CTS_Time + 2*aSlotTime # tutorial
+			waitT = 2*aSIFSTime + CTS_Time + aPHY_RX_START_Delay + 2*aSlotTime # norma
 			time.sleep( waitT )
 			self.NAV = self.currentTime()
 		else:
@@ -177,7 +204,7 @@ class ieee80211mac() :
 		event.ev_dc['src_addr']=self.net_conf.station_id
 		rcv_event = self.mac_fsm.memory
 		event.ev_dc['dst_addr']= rcv_event.ev_dc['src_addr']
-		self.snd_frame( event )
+		# self.snd_frame( event )
 		return True
 
     def rcvACK ( self, fsm ):
@@ -190,6 +217,7 @@ class ieee80211mac() :
 				self.LRC = 0
 			else:
 				self.SRC = 0
+			self.datatimer.stop()
 			## TODO fragmentation 
 		else:
 			log( self.tname, 'MAC: Receive ACK (not for me, ignoring)' )
@@ -202,7 +230,7 @@ class ieee80211mac() :
 		return True
 				
     def backoff( self ):
-		log( self.tname, 'MAC: backoff BC: ' + str(self.BC) )
+		log( self.tname, 'MAC: backoff BC: ' + str(self.BC) + ' CW: ' + str(self.CW) )
 		if ( self.BC == 0 ):
 			self.BC = random.randint( 0, self.CW )
 			log( self.tname, 'MAC: backoff new BC: ' + str(self.BC) )
@@ -212,10 +240,12 @@ class ieee80211mac() :
 				while ( not self.freeChannel() ):
 					self.waitfree()
 				self.BC -= 1
+				log( self.tname, 'MAC: backoff new BC decrement: ' + str(self.BC) )
 			else:
 				while ( not self.freeChannel() ):
 					self.waitfree()
-				time.sleep( DIFSTime )
+				log( self.tname, 'MAC: backoff sleep aDIFSTime' )
+				time.sleep( aDIFSTime )
 		return True
 
     def rcvL1 ( self, fsm ):
@@ -225,7 +255,7 @@ class ieee80211mac() :
 		if ( event.ev_dc['dst_addr'] == self.net_conf.station_id ):
 			log( self.tname, 'MAC: Receive L1 data (for me)' )
 			self.tx_ql3.put( event, False )
-			time.sleep( SIFSTime )
+			time.sleep( aSIFSTime )
 			self.sndACK( fsm )
 		else:
 			log( self.tname, 'MAC: Receive L1 data (not for me, ignoring)' )
@@ -237,27 +267,24 @@ class ieee80211mac() :
 		return time.time()
 
     def freeChannel( self ):
-		log( self.tname, 'MAC: freeChannel?' )
+		#log( self.tname, 'MAC: freeChannel?' )
 		test = random.randint(0,100);
-		if ( test <= 50 ):
+		if ( test > Loses ):
+			log( self.tname, 'MAC: freeChannel: FREE' )
 			return True
 		else:
+			log( self.tname, 'MAC: freeChannel: BUSY' )
 			return False
 
     def waitfree( self ):
 		log( self.tname, 'MAC: waitfree' )
 		while ( not self.freeChannel() ):
 			time.sleep( 1 )
+		log( self.tname, 'MAC: waitfree, now free' )
 		return True
 
     def discard( self ):
 		log( self.tname, 'MAC: discard' )
-		return True
-
-    def start_timer( self ):
-		log( self.tname, 'MAC: start timer' )
-		timer=Timer.Timer( self.timer_q, self.tout, 1, "TimerTimer" )
-		timer.start()
 		return True
 
 def test():

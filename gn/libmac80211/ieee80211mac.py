@@ -16,7 +16,7 @@ Loses = 10
 aSIFSTime = 1
 aDIFSTime = 1
 # "CTS_Time” shall be calculated using the length of the CTS frame and the data rate at which the RTS frame used for the most recent NAV update was received.
-CTS_Time = 14/34000  # 14 bytes, 34M ??
+CTS_Time = 14*8/34000  # 14 bytes, 34M ??
 aSlotTime = 1
 aRTSThreshold = 60
 aPHY_RX_START_Delay = 10
@@ -209,7 +209,7 @@ class ieee80211mac() :
 		event.ev_dc['src_addr']=self.net_conf.station_id
 		rcv_event = self.mac_fsm.memory
 		event.ev_dc['dst_addr']= rcv_event.ev_dc['src_addr']
-		#self.snd_frame( event )
+		self.snd_frame( event )
 		return True
 
     def rcvACK ( self, fsm ):

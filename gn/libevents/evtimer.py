@@ -37,9 +37,9 @@ dc_nicknames = { \
     'TimerTOR2'       : ('Timer',  'TOR2',    EventTimer     ), \
     'TimerTimer'      : ('Timer',  'Timer',   EventTimer     ), \
 	'TimerCTSTout'    : ('Timer',  'CTSTout', EventTimer     ), \
-	'TimerRTSAbort'   : ('Timer',  'RTSAbort', EventTimer     ), \
+	'TimerRTSAbort'   : ('Timer',  'CTSTout', EventTimer     ), \
 	'TimerACKTout'    : ('Timer',  'ACKTout', EventTimer     ), \
-	'TimerDataAbort'  : ('Timer',  'DataAbort', EventTimer     ) \
+	'TimerDataAbort'  : ('Timer',  'ACKTout', EventTimer     ) \
     }
 
 

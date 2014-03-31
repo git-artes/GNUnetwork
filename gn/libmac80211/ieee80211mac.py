@@ -65,13 +65,13 @@ class ieee80211mac() :
 
 		self.mac_fsm.add_transition      ('ACK',            'WAIT_ACK',        self.rcvACK, 	'IDLE'    	)
 		self.mac_fsm.add_transition      ('ACKTout',     	'WAIT_ACK',        self.sndData,    'WAIT_ACK'	)
-		self.mac_fsm.add_transition      ('DataAbort',     	'WAIT_ACK',        self.sndData,    'WAIT_ACK'	)
+		self.mac_fsm.add_transition      ('DataAbort',     	'WAIT_ACK',        self.sndData,    'IDLE'		)
 		self.mac_fsm.add_transition      ('RTS',            'WAIT_ACK',        self.rcvRTS,     'WAIT_CTS'	)
 		self.mac_fsm.add_transition_any  (					'WAIT_ACK', 	   self.Error, 	   	'WAIT_ACK'	)
 
 		self.mac_fsm.add_transition      ('CTS',            'WAIT_CTS',        self.sndData,    'WAIT_ACK'	)
 		self.mac_fsm.add_transition      ('CTSTout', 	    'WAIT_CTS',        self.sndRTS,     'WAIT_CTS'	)
-		self.mac_fsm.add_transition      ('RTSAbort', 	    'WAIT_CTS',        self.sndRTS,     'WAIT_CTS'	)
+		self.mac_fsm.add_transition      ('RTSAbort', 	    'WAIT_CTS',        self.sndRTS,     'IDLE'		)
 		self.mac_fsm.add_transition      ('RTS',            'WAIT_CTS',        self.rcvRTS,     'WAIT_CTS'	)
 		self.mac_fsm.add_transition_any  (					'WAIT_CTS', 	   self.Error, 	   	'WAIT_CTS'	)
 
@@ -86,15 +86,15 @@ class ieee80211mac() :
 		if ( event.ev_dc['frame_length'] > aRTSThreshold ):
 			self.sndRTS( fsm )
 			log( self.tname, 'MAC: start timer' )
-			self.rtstimer=Timer.Timer( self.timer_q, CTSTout, dot11ShortRetryLimit, 'TimerCTSTout', 'TimerRTSAbort' )
+			self.rtstimer=Timer.Timer( self.timer_q, CTSTout, dot11ShortRetryLimit, 'TimerCTSTout', None, 'TimerRTSAbort' )
 			self.rtstimer.start()
 			self.mac_fsm.next_state = 'WAIT_CTS'
 		else:
 			self.sndData( fsm )
 			if ( self.datatosend.ev_dc['frame_length'] > aRTSThreshold ):
-				self.datatimer=Timer.Timer( self.timer_q, ACKTout, dot11ShortRetryLimit, 'TimerACKTout', 'TimerDataAbort' )
+				self.datatimer=Timer.Timer( self.timer_q, ACKTout, dot11ShortRetryLimit, 'TimerACKTout', None, 'TimerDataAbort' )
 			else:
-				self.datatimer=Timer.Timer( self.timer_q, ACKTout, dot11LongRetryLimit, 'TimerACKTout', 'TimerDataAbort' )
+				self.datatimer=Timer.Timer( self.timer_q, ACKTout, dot11LongRetryLimit, 'TimerACKTout', None, 'TimerDataAbort' )
 			log( self.tname, 'MAC: start timer' )
 			self.datatimer.start()
 		return True
@@ -104,10 +104,32 @@ class ieee80211mac() :
 		if ( event.ev_subtype == 'ACKTout' ):
 			if ( event.nickname == 'TimerDataAbort' ):
 				log( self.tname, 'MAC: Send Data EXAUSTED' )
+				self.discard()
+				self.CW = CWmin
+				self.SRC = 0
+				self.LRC = 0
 				self.datatimer.stop()
 				return False
 			elif ( event.nickname == 'TimerACKTout' ):
 				log( self.tname, 'MAC: Send Data. Retry' )
+				self.datatosend.ev_dc['retry'] = 1;
+				if ( event.ev_dc['frame_length'] > aRTSThreshold ):
+					self.LRC += 1
+					if ( self.LRC >= dot11LongRetryLimit ):
+						self.discard()
+						self.datatimer.stop()
+						self.CW = CWmin
+						self.LRC = 0
+						log( self.tname, 'MAC: LRC > ' + str( dot11LongRetryLimit ) )
+						return False
+				else:
+					self.SRC += 1
+					if ( self.SRC >= dot11ShortRetryLimit ):
+						self.discard()
+						self.CW = CWmin
+						self.SRC = 0
+						log( self.tname, 'MAC: SRC > ' + str( dot11ShortRetryLimit ) )
+						return False
 				self.snd_frame( self.datatosend )
 		else:
 			##self.snd_frame( self.mac_fsm.memory )
@@ -132,23 +154,6 @@ class ieee80211mac() :
 				log( self.tname, 'MAC: Send Frame (done)' )
 				txok = True
 				break;
-			if ( event.ev_dc['frame_length'] > aRTSThreshold ):
-				self.LRC += 1
-				if ( self.LRC >= dot11LongRetryLimit ):
-					self.discard()
-					self.CW = CWmin
-					self.LRC = 0
-					log( self.tname, 'MAC: LRC > ' + str( dot11LongRetryLimit ) )
-					return False
-			else:
-				self.SRC += 1
-				if ( self.SRC >= dot11ShortRetryLimit ):
-					self.discard()
-					self.CW = CWmin
-					self.SRC = 0
-					log( self.tname, 'MAC: SRC > ' + str( dot11ShortRetryLimit ) )
-					return False
-			self.backoff()
 			log( self.tname, "MAC: Send Frame: keep waiting" )
 		log( self.tname, 'MAC: Send Frame (done)' )
 		return True
@@ -204,7 +209,7 @@ class ieee80211mac() :
 		event.ev_dc['src_addr']=self.net_conf.station_id
 		rcv_event = self.mac_fsm.memory
 		event.ev_dc['dst_addr']= rcv_event.ev_dc['src_addr']
-		# self.snd_frame( event )
+		#self.snd_frame( event )
 		return True
 
     def rcvACK ( self, fsm ):
@@ -285,6 +290,8 @@ class ieee80211mac() :
 
     def discard( self ):
 		log( self.tname, 'MAC: discard' )
+		self.datatosend = 0
+		self.mac_fsm.next_state = 'IDLE'
 		return True
 
 def test():

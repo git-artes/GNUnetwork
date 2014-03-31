@@ -33,7 +33,7 @@ class EventFrame(Event):
             'src_addr': 'addr_1', \
             'dst_addr': 'addr_1', \
             'duration': 10, \
-
+            'retry': 0, \
             'frame_length': 0, \
             'peerlinkId': 0, \
             }
